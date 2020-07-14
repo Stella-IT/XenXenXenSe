@@ -6,6 +6,9 @@ __pycache__/
 # Visual Studio Code
 .vscode/
 
+## Covers macOS Specific files
+.DS_Store
+
 ## Covers Project XenXenXenSe Specific Files
 # Config Files
 /config.py
