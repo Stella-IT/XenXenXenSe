@@ -7,11 +7,16 @@ Try not to confuse with [ZenZenZenSe (前前前世)](https://en.wikipedia.org/wi
 ## What is this?
 Contrary to XenAPI which requires specific instruction of that calls command, get reference, request. Instead, it uses advantages of Object Oriented Asynchrounous Python and RESTful API to create "translation layer" for XenAPI.
 
-## API Docs
-Working in progress
-
 ## Where does Stella IT use this?
 This is a "Core Component" of Stella IT's VM Management and control system.
+
+## Guide
+### API Docs
+Working in progress
+
+## Developer
+### Commit Conventions
+We use [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) for commit message.
 
 ## License
 Distributed under GNU AGPLv3 *(GNU Affero General Public License Version 3)*.  
