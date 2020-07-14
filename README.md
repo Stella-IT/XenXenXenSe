@@ -1,7 +1,7 @@
 ![XenXenXenSe Project banner](demonstration/banner.png)
 
 # Project XenXenXenSe
-A Modern RESTful API implemenation of XenAPI for Citrix XenServer® and XCP-ng.  
+A Modern RESTful API implemenation of XenAPI for Citrix Hypervisor® and XCP-ng.  
 Try not to confuse with [ZenZenZenSe (前前前世)](https://en.wikipedia.org/wiki/Zenzenzense). 
 
 ## What is this?
@@ -11,8 +11,17 @@ Contrary to XenAPI which requires specific instruction of that calls command, ge
 This is a "Core Component" of Stella IT's VM Management and control system.
 
 ## Guide
+### How to Install
+1. Clone this repository
+2. Copy config.py.example to config.py
+3. Enter your credentials
+4. run `pipenv install`
+5. activate virtualenv by `pipenv shell`
+6. run server by `python3 main.py`
+
 ### API Docs
-Working in progress
+Working in progress.  
+Please refer to /docs of API Server for this time.  
 
 ## Developer
 ### Commit Conventions

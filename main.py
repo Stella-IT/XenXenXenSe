@@ -43,7 +43,7 @@ def main():
     figlet = Figlet()
 
     print(figlet.renderText("XenXenXenSe"))
-    print("Project XenXenXenSe : a RESTful API implementation for Citrix XenServer® and XCP-ng")
+    print("Project XenXenXenSe : a RESTful API implementation for Citrix Hypervisor® and XCP-ng")
     print()
     print("Copyright (c) Stella IT.")
     print("This software is distributed under Affero GNU Public License v3.")
