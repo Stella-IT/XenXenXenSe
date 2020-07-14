@@ -21,7 +21,7 @@ This is a "Core Component" of Stella IT's VM Management and control system.
 
 ### API Docs
 Working in progress.  
-Please refer to /docs of API Server for this time.  
+Please refer to automatic documentation page of FastAPI (available at /docs) for this time.  
 
 ## Developer
 ### Commit Conventions
