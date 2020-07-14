@@ -19,3 +19,6 @@ If you need commercial license, feel free to contact us at [contact@stella-it.co
 
 ### License FAQ
 See [LICENSE_FAQ.md](LICENSE_FAQ.md).  
+
+## Copyright
+Copyright (c) Stella IT Co, Ltd.
