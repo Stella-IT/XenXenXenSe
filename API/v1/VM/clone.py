@@ -1,0 +1,49 @@
+from fastapi import APIRouter
+
+from API.v1.Interface import NameArgs
+from XenXenXenSe.VM import VM
+from XenXenXenSe.session import create_session
+
+from MySQL.VM import update_vm
+
+router = APIRouter()
+
+
+# @_clone.post("/{cluster_id}/vm/{vm_uuid}/clone")
+
+@router.post("/{cluster_id}/template/{vm_uuid}/clone")
+async def instance_clone(cluster_id: str, vm_uuid: str, args: NameArgs):
+    """ Clone Instance (VM/Template) """
+    session = create_session(cluster_id)
+    vm: VM = VM.get_by_uuid(session, vm_uuid)
+    if vm is not None:
+        newVM = vm.clone(args.name)
+        if newVM is not None:
+            ret = {"success": True, "data": newVM.serialize()}
+        else:
+            ret = {"success": False}
+    else:
+        ret = {"success": False}
+
+    session.xenapi.session.logout()
+    return ret
+
+
+@router.get("/{cluster_id}/template/{vm_uuid}/clone/{clone_name}")
+async def instance_clone_inurl(cluster_id: str, vm_uuid: str, clone_name: str):
+    """ Clone Instance (VM/Template) """
+    session = create_session(cluster_id)
+    vm: VM = VM.get_by_uuid(session, vm_uuid)
+    if vm is not None:
+        newVM = vm.clone(clone_name)
+        if newVM is not None:
+            ret = {"success": True, "data": newVM.serialize()}
+        else:
+            ret = {"success": False}
+    else:
+        ret = {"success": False}
+
+    update_vm(cluster_id, newVM)
+
+    session.xenapi.session.logout()
+    return ret
