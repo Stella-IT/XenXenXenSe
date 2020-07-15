@@ -3,7 +3,7 @@ from fastapi import APIRouter
 from XenXenXenSe.VM import VM
 from XenXenXenSe.session import create_session
 
-from MySQL.VM import update_vm
+from MySQL.VM import vm
 
 router = APIRouter()
 
@@ -12,10 +12,10 @@ router = APIRouter()
 async def vm_power(cluster_id: str, vm_uuid: str):
     """ Get VM's power status, Can be "Paused", "Halted", "Running" """
     session = create_session(cluster_id)
-    vm: VM = VM.get_by_uuid(session, vm_uuid)
+    _vm: VM = VM.get_by_uuid(session, vm_uuid)
 
-    if vm is not None:
-        ret = {"success": True, "data": vm.get_power_state()}
+    if _vm is not None:
+        ret = {"success": True, "data": _vm.get_power_state()}
     else:
         ret = {"success": False}
 
@@ -28,13 +28,13 @@ async def vm_start(cluster_id: str, vm_uuid: str):
     """ Start the VM
         System powerstate must be checked beforehand """
     session = create_session(cluster_id)
-    vm: VM = VM.get_by_uuid(session, vm_uuid)
+    _vm: VM = VM.get_by_uuid(session, vm_uuid)
     if vm is not None:
-        ret = {"success": vm.start()}
+        ret = {"success": _vm.start()}
     else:
         ret = {"success": False}
 
-    update_vm(cluster_id, vm)
+    vm.update_vm(cluster_id, _vm)
 
     session.xenapi.session.logout()
     return ret
@@ -46,13 +46,13 @@ async def vm_shutdown(cluster_id: str, vm_uuid: str):
         System powerstate must be checked beforehand """
 
     session = create_session(cluster_id)
-    vm: VM = VM.get_by_uuid(session, vm_uuid)
-    if vm is not None:
-        ret = {"success": vm.shutdown()}
+    _vm: VM = VM.get_by_uuid(session, vm_uuid)
+    if _vm is not None:
+        ret = {"success": _vm.shutdown()}
     else:
         ret = {"success": False}
 
-    update_vm(cluster_id, vm)
+    vm.update_vm(cluster_id, _vm)
 
     session.xenapi.session.logout()
     return ret
@@ -63,13 +63,13 @@ async def vm_power_force_shutdown(cluster_id: str, vm_uuid: str):
     """ Force Shutdown the VM """
 
     session = create_session(cluster_id)
-    vm: VM = VM.get_by_uuid(session, vm_uuid)
-    if vm is not None:
-        ret = {"success": vm.force_shutdown()}
+    _vm: VM = VM.get_by_uuid(session, vm_uuid)
+    if _vm is not None:
+        ret = {"success": _vm.force_shutdown()}
     else:
         ret = {"success": False}
 
-    update_vm(cluster_id, vm)
+    vm.update_vm(cluster_id, _vm)
 
     session.xenapi.session.logout()
     return ret
@@ -80,13 +80,13 @@ async def vm_power_restart(cluster_id: str, vm_uuid: str):
     """ Restart VM, can return false if the system does not support ACPI shutdown.
         System powerstate must be checked beforehand """
     session = create_session(cluster_id)
-    vm: VM = VM.get_by_uuid(session, vm_uuid)
-    if vm is not None:
-        ret = {"success": vm.reboot()}
+    _vm: VM = VM.get_by_uuid(session, vm_uuid)
+    if _vm is not None:
+        ret = {"success": _vm.reboot()}
     else:
         ret = {"success": False}
 
-    update_vm(cluster_id, vm)
+    vm.update_vm(cluster_id, _vm)
 
     session.xenapi.session.logout()
     return ret
@@ -96,13 +96,13 @@ async def vm_power_restart(cluster_id: str, vm_uuid: str):
 async def vm_power_suspend(cluster_id: str, vm_uuid: str):
     """ Suspend the VM """
     session = create_session(cluster_id)
-    vm: VM = VM.get_by_uuid(session, vm_uuid)
-    if vm is not None:
-        ret = {"success": vm.suspend()}
+    _vm: VM = VM.get_by_uuid(session, vm_uuid)
+    if _vm is not None:
+        ret = {"success": _vm.suspend()}
     else:
         ret = {"success": False}
 
-    update_vm(cluster_id, vm)
+    vm.update_vm(cluster_id, _vm)
 
     session.xenapi.session.logout()
     return ret
@@ -112,13 +112,13 @@ async def vm_power_suspend(cluster_id: str, vm_uuid: str):
 async def vm_power_resume(cluster_id: str, vm_uuid: str):
     """ Resume the VM """
     session = create_session(cluster_id)
-    vm: VM = VM.get_by_uuid(session, vm_uuid)
-    if vm is not None:
-        ret = {"success": vm.resume()}
+    _vm: VM = VM.get_by_uuid(session, vm_uuid)
+    if _vm is not None:
+        ret = {"success": _vm.resume()}
     else:
         ret = {"success": False}
 
-    update_vm(cluster_id, vm)
+    vm.update_vm(cluster_id, _vm)
 
     session.xenapi.session.logout()
     return ret
@@ -128,28 +128,29 @@ async def vm_power_resume(cluster_id: str, vm_uuid: str):
 async def vm_power_pause(cluster_id: str, vm_uuid: str):
     """ Pause the VM """
     session = create_session(cluster_id)
-    vm: VM = VM.get_by_uuid(session, vm_uuid)
-    if vm is not None:
-        ret = {"success": vm.pause()}
+    _vm: VM = VM.get_by_uuid(session, vm_uuid)
+    if _vm is not None:
+        ret = {"success": _vm.pause()}
     else:
         ret = {"success": False}
 
-    update_vm(cluster_id, vm)
+    vm.update_vm(cluster_id, _vm)
 
     session.xenapi.session.logout()
     return ret
+
 
 @router.get("/{cluster_id}/vm/{vm_uuid}/power/unpause")
 async def vm_power_unpause(cluster_id: str, vm_uuid: str):
     """ Unpause the VM """
     session = create_session(cluster_id)
-    vm: VM = VM.get_by_uuid(session, vm_uuid)
-    if vm is not None:
-        ret = {"success": vm.unpause()}
+    _vm: VM = VM.get_by_uuid(session, vm_uuid)
+    if _vm is not None:
+        ret = {"success": _vm.unpause()}
     else:
         ret = {"success": False}
 
-    update_vm(cluster_id, vm)
+    vm.update_vm(cluster_id, _vm)
 
     session.xenapi.session.logout()
     return ret

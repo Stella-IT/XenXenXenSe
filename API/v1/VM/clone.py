@@ -4,7 +4,7 @@ from API.v1.Interface import NameArgs
 from XenXenXenSe.VM import VM
 from XenXenXenSe.session import create_session
 
-from MySQL.VM import update_vm
+from MySQL.VM import vm
 
 router = APIRouter()
 
@@ -15,9 +15,9 @@ router = APIRouter()
 async def instance_clone(cluster_id: str, vm_uuid: str, args: NameArgs):
     """ Clone Instance (VM/Template) """
     session = create_session(cluster_id)
-    vm: VM = VM.get_by_uuid(session, vm_uuid)
-    if vm is not None:
-        newVM = vm.clone(args.name)
+    _vm: VM = VM.get_by_uuid(session, vm_uuid)
+    if _vm is not None:
+        newVM = _vm.clone(args.name)
         if newVM is not None:
             ret = {"success": True, "data": newVM.serialize()}
         else:
@@ -33,9 +33,9 @@ async def instance_clone(cluster_id: str, vm_uuid: str, args: NameArgs):
 async def instance_clone_inurl(cluster_id: str, vm_uuid: str, clone_name: str):
     """ Clone Instance (VM/Template) """
     session = create_session(cluster_id)
-    vm: VM = VM.get_by_uuid(session, vm_uuid)
-    if vm is not None:
-        newVM = vm.clone(clone_name)
+    _vm: VM = VM.get_by_uuid(session, vm_uuid)
+    if _vm is not None:
+        newVM = _vm.clone(clone_name)
         if newVM is not None:
             ret = {"success": True, "data": newVM.serialize()}
         else:
@@ -43,7 +43,7 @@ async def instance_clone_inurl(cluster_id: str, vm_uuid: str, clone_name: str):
     else:
         ret = {"success": False}
 
-    update_vm(cluster_id, newVM)
+    vm.update_vm(cluster_id, newVM)
 
     session.xenapi.session.logout()
     return ret

@@ -1,8 +1,10 @@
-enabled = False
+class status:
+    enabled = False
 
-def get_enabled():
-  return enabled
+    @classmethod
+    def get_enabled(cls):
+        return cls.enabled
 
-def set_enabled(status):
-  global enabled
-  enabled = status
+    @classmethod
+    def set_enabled(cls, status):
+        cls.enabled = status
