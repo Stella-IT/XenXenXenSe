@@ -22,7 +22,7 @@ __author__ = 'Stella IT <admin@stella-it.com>'
 __copyright__ = 'Copyright 2020, Stella IT'
 
 # Override XML RPC Settings for 64bit support
-xmlrpc.client.MAXINT =  2**63-1
+xmlrpc.client.MAXINT = 2**63-1
 xmlrpc.client.MININT = -2**63
 
 app = FastAPI(
@@ -32,62 +32,63 @@ app = FastAPI(
 )
 
 app.include_router(_v1_router)
-terminating = False
-
-def main():
-    global terminating
-
-    # print banner
-    from pyfiglet import Figlet
-
-    figlet = Figlet()
-
-    print(figlet.renderText("XenXenXenSe"))
-    print("Project XenXenXenSe : a RESTful API implementation for Citrix Hypervisor® and XCP-ng")
-    print()
-    print("Copyright (c) Stella IT.")
-    print("This software is distributed under Affero GNU Public License v3.")
-    print()
-    print()
-    print("Detected Clusters")
-    for credentials in xen_credentials:
-        print("*",credentials)
-
-    init_connection()
-    print()
-
-    is_dev = (("-d" in sys.argv) or ("--dev" in sys.argv))
-
-    schedule_thread = Thread(target=schedule_process)
-    schedule_thread.start()
-
-    if is_dev:
-        # development environment
-        print("Running in development mode!")
-        uvicorn.run("main:app", host="127.0.0.1", port=8000, reload=True)
-
-    else:
-        # production environment
-        uvicorn.run(app, host="127.0.0.1", port=8000)
-
-    terminating = True
-    schedule_thread.join()
 
 
-def schedule_process():
-    global terminating
+class root:
+    terminating = False
 
-    print("Data Caching Schedule handling has been started!")
-    print()
-    try:
-        while not terminating:
-            schedule.run_pending()
-            time.sleep(1)
-    except:
-        terminating = True
+    @classmethod
+    def main(cls):
+        # print banner
+        from pyfiglet import Figlet
 
-    print()
-    print("Schedule handling is terminating!")
+        figlet = Figlet()
+
+        print(figlet.renderText("XenXenXenSe"))
+        print("Project XenXenXenSe : a RESTful API implementation for Citrix Hypervisor® and XCP-ng")
+        print()
+        print("Copyright (c) Stella IT.")
+        print("This software is distributed under Affero GNU Public License v3.")
+        print()
+        print()
+        print("Detected Clusters")
+        for credentials in xen_credentials:
+            print("*", credentials)
+
+        init_connection()
+        print()
+
+        is_dev = (("-d" in sys.argv) or ("--dev" in sys.argv))
+
+        schedule_thread = Thread(target=cls.schedule_process)
+        schedule_thread.start()
+
+        if is_dev:
+            # development environment
+            print("Running in development mode!")
+            uvicorn.run("main:app", host="127.0.0.1", port=8000, reload=True)
+
+        else:
+            # production environment
+            uvicorn.run(app, host="127.0.0.1", port=8000)
+
+        cls.terminating = True
+        schedule_thread.join()
+
+    @classmethod
+    def schedule_process(cls):
+        print("Data Caching Schedule handling has been started!")
+        print()
+        try:
+            while not cls.terminating:
+                schedule.run_pending()
+                time.sleep(1)
+        except:
+            cls.terminating = True
+
+        print()
+        print("Schedule handling is terminating!")
+
 
 if __name__ == "__main__":
-    main()
+    root.main()
