@@ -1,10 +1,4 @@
-import sys
-
 from fastapi import FastAPI
-
-import schedule
-import time
-import signal
 
 from config import xen_credentials
 from core import XenXenXenSeCore
