@@ -34,7 +34,7 @@ app = FastAPI(
 app.include_router(_v1_router)
 
 
-class root:
+class Root:
     terminating = False
 
     @classmethod
