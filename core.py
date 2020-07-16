@@ -88,11 +88,11 @@ class XenXenXenSeCore:
         schedule_thread = Thread(target=self.schedule_process)
         schedule_thread.start()
 
-        # Run API Server
-        self.run_api_server(development_mode)
-
         # Run DB Cache Service
         self.connect_db()
+
+        # Run API Server
+        self.run_api_server(development_mode)
 
         # Termination
         self.terminating = True
