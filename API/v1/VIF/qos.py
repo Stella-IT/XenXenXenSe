@@ -38,6 +38,7 @@ async def vif_get_qos_type_by_uuid(cluster_id: str, vif_uuid: str):
     session.xenapi.session.logout()
     return ret
 
+
 @router.get("/{cluster_id}/vif/{vif_uuid}/qos/speed")
 async def vif_get_qos_speed_by_uuid(cluster_id: str, vif_uuid: str):
     """ Set VIF QoS Type by UUID """
@@ -51,6 +52,7 @@ async def vif_get_qos_speed_by_uuid(cluster_id: str, vif_uuid: str):
 
     session.xenapi.session.logout()
     return ret
+
 
 @router.get("/{cluster_id}/vif/{vif_uuid}/qos/speed/{speed}")
 async def vif_set_qos_speed_by_uuid(cluster_id: str, vif_uuid: str, speed: str):

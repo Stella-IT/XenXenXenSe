@@ -7,7 +7,7 @@ from XenXenXenSe.session import create_session
 router = APIRouter()
 
 
-@router.get("/{cluster_id}/_vm/{vm_uuid}/platform")
+@router.get("/{cluster_id}/vm/{vm_uuid}/platform")
 @router.get("/{cluster_id}/template/{vm_uuid}/platform")
 async def instance_get_platform(cluster_id: str, vm_uuid: str):
     """ Get Instance (VM/Template) Platform """
@@ -21,7 +21,8 @@ async def instance_get_platform(cluster_id: str, vm_uuid: str):
     session.xenapi.session.logout()
     return ret
 
-@router.get("/{cluster_id}/_vm/{vm_uuid}/platform/{name}")
+
+@router.get("/{cluster_id}/vm/{vm_uuid}/platform/{name}")
 @router.get("/{cluster_id}/template/{vm_uuid}/platform/{name}")
 async def instance_set_platform_property_byname(cluster_id: str, vm_uuid: str, name: str):
     """ Get Instance (VM/Template) Platform Property by Name """
@@ -36,7 +37,7 @@ async def instance_set_platform_property_byname(cluster_id: str, vm_uuid: str, n
     return ret
 
 
-@router.get("/{cluster_id}/_vm/{vm_uuid}/platform/{name}/{var}")
+@router.get("/{cluster_id}/vm/{vm_uuid}/platform/{name}/{var}")
 @router.get("/{cluster_id}/template/{vm_uuid}/platform/{name}/{var}")
 async def instance_set_platform_property_byname_inurl(cluster_id: str, vm_uuid: str, name: str, var: str):
     """ Set Instance (VM/Template) Platform Property by Name """

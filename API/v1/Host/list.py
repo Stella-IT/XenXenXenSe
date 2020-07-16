@@ -6,7 +6,7 @@ from XenXenXenSe.session import create_session
 router = APIRouter()
 
 
-@router.get("/{cluster_id}/_host/list")
+@router.get("/{cluster_id}/host/list")
 async def host_list(cluster_id: str):
     """ Get All from Existance Host """
     session = create_session(cluster_id)

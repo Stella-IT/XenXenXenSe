@@ -6,7 +6,7 @@ from XenXenXenSe.session import create_session
 router = APIRouter()
 
 
-@router.get("/{cluster_id}/_vm/{vm_uuid}/guest")
+@router.get("/{cluster_id}/vm/{vm_uuid}/guest")
 async def vm_guest(cluster_id: str, vm_uuid: str):
     """ Get VM Guest Info """
     session = create_session(cluster_id)

@@ -6,7 +6,8 @@ from XenXenXenSe.session import create_session
 
 router = APIRouter()
 
-@router.get("/{cluster_id}/_vm/{vm_uuid}/vif")
+
+@router.get("/{cluster_id}/vm/{vm_uuid}/vif")
 async def instance_vif(cluster_id: str, vm_uuid: str):
     """ Show Instnace VIFs """
 
@@ -29,7 +30,7 @@ async def instance_vif(cluster_id: str, vm_uuid: str):
     session.xenapi.session.logout()
     return ret
 
-@router.get("/{cluster_id}/_vm/{vm_uuid}/vif/qos")
+@router.get("/{cluster_id}/vm/{vm_uuid}/vif/qos")
 async def vif_get_qos_by_uuid(cluster_id: str, vm_uuid: str):
     """ Set VIF QoS by VM """
     session = create_session(cluster_id)
@@ -53,7 +54,7 @@ async def vif_get_qos_by_uuid(cluster_id: str, vm_uuid: str):
     session.xenapi.session.logout()
     return ret
 
-@router.get("/{cluster_id}/_vm/{vm_uuid}/vif/qos/speed/{speed}")
+@router.get("/{cluster_id}/vm/{vm_uuid}/vif/qos/speed/{speed}")
 async def vif_set_qos_speed_by_vm(cluster_id: str, vm_uuid: str, speed: str):
     """ Set VIF QoS Speed by VM """
     from XenXenXenSe.VIF import VIF
@@ -93,7 +94,7 @@ async def vif_set_qos_speed_by_vm(cluster_id: str, vm_uuid: str, speed: str):
     return ret
 
 
-@router.get("/{cluster_id}/_vm/{vm_uuid}/vifs")
+@router.get("/{cluster_id}/vm/{vm_uuid}/vifs")
 async def instance_vifs(cluster_id: str, vm_uuid: str):
     """ Show Instnace VIFs """
 

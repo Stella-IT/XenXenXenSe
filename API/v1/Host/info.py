@@ -6,7 +6,7 @@ from XenXenXenSe.session import create_session
 router = APIRouter()
 
 
-@router.get("/{cluster_id}/_host/{host_uuid}")
+@router.get("/{cluster_id}/host/{host_uuid}")
 async def host_get_by_uuid(cluster_id: str, host_uuid: str):
     """ Get Host by UUID """
     session = create_session(cluster_id)

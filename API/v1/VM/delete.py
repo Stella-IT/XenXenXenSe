@@ -8,8 +8,8 @@ from MySQL.VM import XenVm
 router = APIRouter()
 
 
-@router.get("/{cluster_id}/_vm/{vm_uuid}/delete")
-@router.delete("/{cluster_id}/_vm/{vm_uuid}")
+@router.get("/{cluster_id}/vm/{vm_uuid}/delete")
+@router.delete("/{cluster_id}/vm/{vm_uuid}")
 async def vm_delete(cluster_id: str, vm_uuid: str):
     """ Delete VM """
     session = create_session(cluster_id)
