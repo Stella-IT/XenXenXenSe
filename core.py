@@ -89,7 +89,7 @@ class XenXenXenSeCore:
         schedule_thread.start()
 
         # Run API Server
-        self.run_server(development_mode)
+        self.run_api_server(development_mode)
 
         # Termination
         self.terminating = True
