@@ -34,7 +34,7 @@ app = FastAPI(
 app.include_router(_v1_router)
 
 
-class Root:
+class XenXenXenSeCore:
     terminating = False
 
     @classmethod
@@ -91,4 +91,4 @@ class Root:
 
 
 if __name__ == "__main__":
-    root.main()
+    XenXenXenSeCore.main()
