@@ -6,7 +6,7 @@ from XenXenXenSe.session import create_session
 router = APIRouter()
 
 
-@router.get("/{cluster_id}/vm/{vm_uuid}/console")
+@router.get("/{cluster_id}/_vm/{vm_uuid}/console")
 async def vm_console(cluster_id: str, vm_uuid: str):
     """ Get the first console of the VM """
     session = create_session(cluster_id)
@@ -21,7 +21,7 @@ async def vm_console(cluster_id: str, vm_uuid: str):
     return ret
 
 
-@router.get("/{cluster_id}/vm/{vm_uuid}/consoles")
+@router.get("/{cluster_id}/_vm/{vm_uuid}/consoles")
 async def vm_consoles(cluster_id: str, vm_uuid: str):
     """ Get all consoles are available to the VM """
 

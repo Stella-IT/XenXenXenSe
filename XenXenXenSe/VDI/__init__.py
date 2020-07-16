@@ -36,7 +36,7 @@ class VDI():
 
     @staticmethod
     def get_all(session):
-        """ returns SR object that exists on host """
+        """ returns SR object that exists on _host """
         try:
             vdis = session.xenapi.VDI.get_all()
 

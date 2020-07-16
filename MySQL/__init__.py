@@ -17,8 +17,8 @@ def sync_mysql_host_database():
         from XenXenXenSe.session import create_session
         from XenXenXenSe.Host import Host
         from XenXenXenSe.VM import VM
-        from .Host import host
-        from .VM import vm
+        from .Host import XenHost
+        from .VM import XenVm
 
         for cluster_id in xen_credentials:
             session = create_session(cluster_id)
@@ -27,9 +27,9 @@ def sync_mysql_host_database():
 
             hosts = Host.list_host(session)
             for _host in hosts:
-                host.update_host(cluster_id, _host)
+                XenHost.update(cluster_id, _host)
 
-            host.remove_orphaned_host(cluster_id)
+            XenHost.remove_orphaned(cluster_id)
 
         print("MySQL Sync: MySQL Host Sync Completed!")
         print()
@@ -44,11 +44,11 @@ def sync_mysql_database():
         print("MySQL Sync: MySQL Sync Triggered!")
 
         from config import xen_credentials
+        from .Host import XenHost
+        from .VM import XenVm
         from XenXenXenSe.session import create_session
         from XenXenXenSe.Host import Host
         from XenXenXenSe.VM import VM
-        from .Host import host
-        from .VM import vm
 
         for cluster_id in xen_credentials:
             session = create_session(cluster_id)
@@ -58,18 +58,18 @@ def sync_mysql_database():
             print("MySQL Sync: MySQL Host Sync Triggered!")
             hosts = Host.list_host(session)
             for host in hosts:
-                host.update_host(cluster_id, host)
+                host.update(cluster_id, host)
 
-            host.remove_orphaned_host(cluster_id)
+            XenHost.remove_orphaned(cluster_id)
 
             # ===================================
 
             print("MySQL Sync: MySQL VM Sync Triggered!")
             vms = VM.list_vm(session)
             for _vm in vms:
-                vm.update_vm(cluster_id, _vm)
+                XenVm.update(cluster_id, _vm)
 
-            vm.remove_orphaned_vm(cluster_id)
+            XenVm.remove_orphaned(cluster_id)
 
         print("MySQL Sync: MySQL Sync Completed!")
         print()

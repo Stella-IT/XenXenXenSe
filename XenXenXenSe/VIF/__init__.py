@@ -1,6 +1,7 @@
 from XenXenXenSe.Console import Console
 from XenXenXenSe.GuestMetrics import GuestMetrics
 
+
 class VIF():
     """ The Virtual Interface """
 
@@ -48,7 +49,7 @@ class VIF():
 
         return {
             "attached": self.get_attached(),
-            "vm": vm,
+            "_vm": vm,
             "uuid": self.get_uuid(),
             "mac": self.get_mac(),
             "mtu": self.get_mtu(),

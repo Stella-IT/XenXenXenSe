@@ -6,8 +6,8 @@ from XenXenXenSe.session import create_session
 
 router = APIRouter()
 
-@router.get("/{cluster_id}/vm/{vm_uuid}/vbd")
-@router.get("/{cluster_id}/vm/{vm_uuid}/vbds")
+@router.get("/{cluster_id}/_vm/{vm_uuid}/vbd")
+@router.get("/{cluster_id}/_vm/{vm_uuid}/vbds")
 async def instance_vbds(cluster_id: str, vm_uuid: str):
     """ Show Instance VBDs """
 

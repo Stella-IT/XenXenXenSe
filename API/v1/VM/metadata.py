@@ -4,12 +4,12 @@ from API.v1.Interface import NameArgs, DescriptionArgs
 from XenXenXenSe.VM import VM
 from XenXenXenSe.session import create_session
 
-from MySQL.VM import vm
+from MySQL.VM import XenVm
 
 router = APIRouter()
 
 
-@router.get("/{cluster_id}/vm/{vm_uuid}/name")
+@router.get("/{cluster_id}/_vm/{vm_uuid}/name")
 @router.get("/{cluster_id}/template/{vm_uuid}/name")
 async def instance_get_name(cluster_id: str, vm_uuid: str):
     """ Get Instance (VM/Template) Name """
@@ -24,7 +24,7 @@ async def instance_get_name(cluster_id: str, vm_uuid: str):
     return ret
 
 
-@router.get("/{cluster_id}/vm/{vm_uuid}/description")
+@router.get("/{cluster_id}/_vm/{vm_uuid}/description")
 @router.get("/{cluster_id}/template/{vm_uuid}/description")
 async def instance_get_description(cluster_id: str, vm_uuid: str):
     """ Get Instance (VM/Template) Description (needs troubleshooting) """
@@ -39,7 +39,7 @@ async def instance_get_description(cluster_id: str, vm_uuid: str):
     return ret
 
 
-@router.put("/{cluster_id}/vm/{vm_uuid}/name")
+@router.put("/{cluster_id}/_vm/{vm_uuid}/name")
 @router.put("/{cluster_id}/template/{vm_uuid}/name")
 async def instance_set_name(cluster_id: str, vm_uuid: str, args: NameArgs):
     """ Set Instance (VM/Template) Name """
@@ -50,13 +50,13 @@ async def instance_set_name(cluster_id: str, vm_uuid: str, args: NameArgs):
     else:
         ret = {"success": False}
 
-    vm.update_vm(cluster_id, _vm)
+    XenVm.update(cluster_id, _vm)
 
     session.xenapi.session.logout()
     return ret
 
 
-@router.get("/{cluster_id}/vm/{vm_uuid}/name/{new_name}")
+@router.get("/{cluster_id}/_vm/{vm_uuid}/name/{new_name}")
 @router.get("/{cluster_id}/template/{vm_uuid}/name/{new_name}")
 async def instance_set_name_inurl(cluster_id: str, vm_uuid: str, new_name: str):
     """ Set Instance (VM/Template) Name """
@@ -67,13 +67,13 @@ async def instance_set_name_inurl(cluster_id: str, vm_uuid: str, new_name: str):
     else:
         ret = {"success": False}
 
-    vm.update_vm(cluster_id, _vm)
+    XenVm.update(cluster_id, _vm)
 
     session.xenapi.session.logout()
     return ret
 
 
-@router.put("/{cluster_id}/vm/{vm_uuid}/description")
+@router.put("/{cluster_id}/_vm/{vm_uuid}/description")
 @router.put("/{cluster_id}/template/{vm_uuid}/description")
 async def instance_set_description(cluster_id: str, vm_uuid: str, args: DescriptionArgs):
     """ Set Instance (VM/Template) Description """
@@ -88,7 +88,7 @@ async def instance_set_description(cluster_id: str, vm_uuid: str, args: Descript
     return ret
 
 
-@router.get("/{cluster_id}/vm/{vm_uuid}/description/{new_description}")
+@router.get("/{cluster_id}/_vm/{vm_uuid}/description/{new_description}")
 @router.get("/{cluster_id}/template/{vm_uuid}/description/{new_description}")
 async def instance_set_description_inurl(cluster_id: str, vm_uuid: str, new_description: str):
     """ Set Instance (VM/Template) Description """
@@ -99,7 +99,7 @@ async def instance_set_description_inurl(cluster_id: str, vm_uuid: str, new_desc
     else:
         ret = {"success": False}
 
-    vm.update_vm(cluster_id, _vm)
+    XenVm.update(cluster_id, _vm)
 
     session.xenapi.session.logout()
     return ret

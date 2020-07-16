@@ -6,7 +6,7 @@ from XenXenXenSe.session import create_session
 router = APIRouter()
 
 
-@router.get("/{cluster_id}/vm/list")
+@router.get("/{cluster_id}/_vm/list")
 async def vm_list(cluster_id: str):
     """ Gets VMs available on Xen Server """
 

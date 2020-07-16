@@ -1,5 +1,6 @@
 from XenXenXenSe.VDI import VDI
 
+
 class VBD():
     """ The Virtual Block Device Object """
 
@@ -23,7 +24,7 @@ class VBD():
 
     @staticmethod
     def get_all(session):
-        """ returns VBDs existing on this host """
+        """ returns VBDs existing on this _host """
         try:
             vbds = session.xenapi.VBD.get_all()
             vbd_list = []
@@ -47,7 +48,7 @@ class VBD():
             vdi = vdi.serialize()
 
         return {
-            "vm": vm,
+            "_vm": vm,
             "vdi": vdi,
             "bootable": self.get_bootable(),
             "attached": self.get_currently_attached(),

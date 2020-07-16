@@ -7,7 +7,7 @@ from XenXenXenSe.session import create_session
 router = APIRouter()
 
 
-@router.get("/{cluster_id}/vm/{vm_uuid}/bios")
+@router.get("/{cluster_id}/_vm/{vm_uuid}/bios")
 @router.get("/{cluster_id}/template/{vm_uuid}/bios")
 async def instance_get_bios(cluster_id: str, vm_uuid: str):
     """ Get Instance (VM/Template) BIOS """
@@ -21,7 +21,7 @@ async def instance_get_bios(cluster_id: str, vm_uuid: str):
     session.xenapi.session.logout()
     return ret
 
-@router.get("/{cluster_id}/vm/{vm_uuid}/bios/{name}")
+@router.get("/{cluster_id}/_vm/{vm_uuid}/bios/{name}")
 @router.get("/{cluster_id}/template/{vm_uuid}/bios/{name}")
 async def instance_set_bios_property_byname(cluster_id: str, vm_uuid: str, name: str):
     """ Get Instance (VM/Template) BIOS Property by Name """
@@ -36,7 +36,7 @@ async def instance_set_bios_property_byname(cluster_id: str, vm_uuid: str, name:
     return ret
 
 
-@router.get("/{cluster_id}/vm/{vm_uuid}/bios/{name}/{var}")
+@router.get("/{cluster_id}/_vm/{vm_uuid}/bios/{name}/{var}")
 @router.get("/{cluster_id}/template/{vm_uuid}/bios/{name}/{var}")
 async def instance_set_bios_property_byname_inurl(cluster_id: str, vm_uuid: str, name: str, var: str):
     """ Set Instance (VM/Template) BIOS Property by Name """
