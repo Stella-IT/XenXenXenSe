@@ -1,4 +1,4 @@
-class VDI():
+class VDI:
     """ The Virtual Disk Image Object """
 
     def __init__(self, session, vdi):

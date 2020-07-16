@@ -1,4 +1,4 @@
-class Console():
+class Console:
     """ The Virtual Console """
 
     def __init__(self, session, console):

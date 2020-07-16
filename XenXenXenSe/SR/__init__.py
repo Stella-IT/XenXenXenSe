@@ -1,7 +1,7 @@
 from XenXenXenSe.VDI import VDI
 
 
-class SR():
+class SR:
     """ The Storage Repository Object """
 
     def __init__(self, session, sr):

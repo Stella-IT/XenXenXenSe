@@ -1,7 +1,7 @@
 from XenXenXenSe.VDI import VDI
 
 
-class VBD():
+class VBD:
     """ The Virtual Block Device Object """
 
     def __init__(self, session, vbd):

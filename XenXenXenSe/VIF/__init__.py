@@ -2,7 +2,7 @@ from XenXenXenSe.Console import Console
 from XenXenXenSe.GuestMetrics import GuestMetrics
 
 
-class VIF():
+class VIF:
     """ The Virtual Interface """
 
     def __init__(self, session, vif):

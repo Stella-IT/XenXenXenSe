@@ -2,7 +2,7 @@ from XenXenXenSe.Console import Console
 from XenXenXenSe.GuestMetrics import GuestMetrics
 
 
-class VM():
+class VM:
     """ The Virtual Machine Object """
 
     def __init__(self, session, vm):
