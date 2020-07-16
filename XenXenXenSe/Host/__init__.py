@@ -1,4 +1,4 @@
-class Host:
+class Host():
     """ The Host Object """
 
     def __init__(self, session, host):
