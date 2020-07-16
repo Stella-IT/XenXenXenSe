@@ -91,6 +91,9 @@ class XenXenXenSeCore:
         # Run API Server
         self.run_api_server(development_mode)
 
+        # Run DB Cache Service
+        self.connect_db()
+
         # Termination
         self.terminating = True
 
