@@ -49,7 +49,7 @@ class VDI:
             print("VDI.get_all Exception", e)
             return None
 
-    def serialize(self):
+    def serialize(self) -> dict:
         return {
             "name": self.get_name(),
             "description": self.get_description(),

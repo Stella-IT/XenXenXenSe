@@ -1,5 +1,5 @@
-from XenXenXenSe.Console import Console
 from XenXenXenSe.GuestMetrics import GuestMetrics
+from XenXenXenSe.Console import Console
 
 
 class VIF:
@@ -41,7 +41,7 @@ class VIF:
             print("VIF.get_all Exception", e)
             return None
 
-    def serialize(self):
+    def serialize(self) -> dict:
         """ Returns Info for of the VM """
         vm = self.get_vm()
         if vm is not None:

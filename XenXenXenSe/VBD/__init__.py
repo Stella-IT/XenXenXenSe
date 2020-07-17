@@ -37,7 +37,7 @@ class VBD:
             print("VBD.get_all Exception", e)
             return None
 
-    def serialize(self):
+    def serialize(self) -> dict:
         vm = self.get_VM()
         vdi = self.get_VDI()
         

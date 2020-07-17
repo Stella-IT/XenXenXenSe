@@ -52,7 +52,7 @@ class Host:
             print("Host.list_host Exception", e)
             return None
 
-    def serialize(self):
+    def serialize(self) -> dict:
 
         return {
             "uuid": self.get_uuid(),

@@ -1,19 +1,20 @@
 import pymysql
 import schedule
 
-from config import mysql_credentials, mysql_update_rate, mysql_host_update_rate
-from .Status import status
+from config import mysql_host_update_rate
+from config import mysql_credentials
+from config import mysql_update_rate
+from config import xen_credentials
+from MySQL.Status import status
 
 
 # =========================================
-
 
 def sync_mysql_host_database():
     if status.get_enabled():
         print()
         print("MySQL Sync: MySQL Host Sync Triggered!")
 
-        from config import xen_credentials
         from XenXenXenSe.session import create_session
         from XenXenXenSe.Host import Host
         from XenXenXenSe.VM import VM
@@ -26,8 +27,8 @@ def sync_mysql_host_database():
             # ==================================
 
             hosts = Host.list_host(session)
-            for _host in hosts:
-                XenHost.update(cluster_id, _host)
+            for host in hosts:
+                XenHost.update(cluster_id, host)
 
             XenHost.remove_orphaned(cluster_id)
 
@@ -43,12 +44,11 @@ def sync_mysql_database():
         print()
         print("MySQL Sync: MySQL Sync Triggered!")
 
-        from config import xen_credentials
-        from .Host import XenHost
         from .VM import XenVm
-        from XenXenXenSe.session import create_session
-        from XenXenXenSe.Host import Host
+        from .Host import XenHost
         from XenXenXenSe.VM import VM
+        from XenXenXenSe.Host import Host
+        from XenXenXenSe.session import create_session
 
         for cluster_id in xen_credentials:
             session = create_session(cluster_id)

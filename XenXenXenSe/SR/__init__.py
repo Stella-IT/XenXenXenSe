@@ -52,7 +52,7 @@ class SR:
             print("SR.get_by_uuid Exception", e)
             return None
 
-    def serialize(self):
+    def serialize(self) -> dict:
         """ Returns Info of this SR """
         vdis = self.get_VDIs()
         vdi_list = []
