@@ -4,7 +4,7 @@ from API.v1.Interface import NameArgs, DescriptionArgs
 from XenXenXenSe.VM import VM
 from XenXenXenSe.session import create_session
 
-from MySQL.VM import update_vm
+from MySQL.VM import vm
 
 router = APIRouter()
 
@@ -14,9 +14,9 @@ router = APIRouter()
 async def instance_get_name(cluster_id: str, vm_uuid: str):
     """ Get Instance (VM/Template) Name """
     session = create_session(cluster_id)
-    vm: VM = VM.get_by_uuid(session, vm_uuid)
-    if vm is not None:
-        ret = {"success": True, "data": vm.get_name()}
+    _vm: VM = VM.get_by_uuid(session, vm_uuid)
+    if _vm is not None:
+        ret = {"success": True, "data": _vm.get_name()}
     else:
         ret = {"success": False}
 
@@ -29,9 +29,9 @@ async def instance_get_name(cluster_id: str, vm_uuid: str):
 async def instance_get_description(cluster_id: str, vm_uuid: str):
     """ Get Instance (VM/Template) Description (needs troubleshooting) """
     session = create_session(cluster_id)
-    vm: VM = VM.get_by_uuid(session, vm_uuid)
-    if vm is not None:
-        ret = {"success": True, "data": vm.get_description()}
+    _vm: VM = VM.get_by_uuid(session, vm_uuid)
+    if _vm is not None:
+        ret = {"success": True, "data": _vm.get_description()}
     else:
         ret = {"success": False}
 
@@ -44,13 +44,13 @@ async def instance_get_description(cluster_id: str, vm_uuid: str):
 async def instance_set_name(cluster_id: str, vm_uuid: str, args: NameArgs):
     """ Set Instance (VM/Template) Name """
     session = create_session(cluster_id)
-    vm: VM = VM.get_by_uuid(session, vm_uuid)
-    if vm is not None:
-        ret = {"success": vm.set_name(args.name)}
+    _vm: VM = VM.get_by_uuid(session, vm_uuid)
+    if _vm is not None:
+        ret = {"success": _vm.set_name(args.name)}
     else:
         ret = {"success": False}
 
-    update_vm(cluster_id, vm)
+    vm.update_vm(cluster_id, _vm)
 
     session.xenapi.session.logout()
     return ret
@@ -61,13 +61,13 @@ async def instance_set_name(cluster_id: str, vm_uuid: str, args: NameArgs):
 async def instance_set_name_inurl(cluster_id: str, vm_uuid: str, new_name: str):
     """ Set Instance (VM/Template) Name """
     session = create_session(cluster_id)
-    vm: VM = VM.get_by_uuid(session, vm_uuid)
-    if vm is not None:
-        ret = {"success": vm.set_name(new_name)}
+    _vm: VM = VM.get_by_uuid(session, vm_uuid)
+    if _vm is not None:
+        ret = {"success": _vm.set_name(new_name)}
     else:
         ret = {"success": False}
 
-    update_vm(cluster_id, vm)
+    vm.update_vm(cluster_id, _vm)
 
     session.xenapi.session.logout()
     return ret
@@ -78,9 +78,9 @@ async def instance_set_name_inurl(cluster_id: str, vm_uuid: str, new_name: str):
 async def instance_set_description(cluster_id: str, vm_uuid: str, args: DescriptionArgs):
     """ Set Instance (VM/Template) Description """
     session = create_session(cluster_id)
-    vm: VM = VM.get_by_uuid(session, vm_uuid)
-    if vm is not None:
-        ret = {"success": vm.set_description(args.description)}
+    _vm: VM = VM.get_by_uuid(session, vm_uuid)
+    if _vm is not None:
+        ret = {"success": _vm.set_description(args.description)}
     else:
         ret = {"success": False}
 
@@ -93,13 +93,13 @@ async def instance_set_description(cluster_id: str, vm_uuid: str, args: Descript
 async def instance_set_description_inurl(cluster_id: str, vm_uuid: str, new_description: str):
     """ Set Instance (VM/Template) Description """
     session = create_session(cluster_id)
-    vm: VM = VM.get_by_uuid(session, vm_uuid)
-    if vm is not None:
-        ret = {"success": vm.set_description(new_description)}
+    _vm: VM = VM.get_by_uuid(session, vm_uuid)
+    if _vm is not None:
+        ret = {"success": _vm.set_description(new_description)}
     else:
         ret = {"success": False}
 
-    update_vm(cluster_id, vm)
+    vm.update_vm(cluster_id, _vm)
 
     session.xenapi.session.logout()
     return ret
