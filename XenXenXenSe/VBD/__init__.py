@@ -1,6 +1,7 @@
 from XenXenXenSe.VDI import VDI
 
-class VBD():
+
+class VBD:
     """ The Virtual Block Device Object """
 
     def __init__(self, session, vbd):
@@ -23,7 +24,7 @@ class VBD():
 
     @staticmethod
     def get_all(session):
-        """ returns VBDs existing on this host """
+        """ returns VBDs existing on this _host """
         try:
             vbds = session.xenapi.VBD.get_all()
             vbd_list = []
@@ -36,7 +37,7 @@ class VBD():
             print("VBD.get_all Exception", e)
             return None
 
-    def serialize(self):
+    def serialize(self) -> dict:
         vm = self.get_VM()
         vdi = self.get_VDI()
         
@@ -47,7 +48,7 @@ class VBD():
             vdi = vdi.serialize()
 
         return {
-            "vm": vm,
+            "_vm": vm,
             "vdi": vdi,
             "bootable": self.get_bootable(),
             "attached": self.get_currently_attached(),

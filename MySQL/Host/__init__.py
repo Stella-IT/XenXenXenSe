@@ -5,31 +5,31 @@ from config import mysql_credentials
 from MySQL.Status import status
 
 
-class host:
+class XenHost:
     sql = ""
 
     @classmethod
-    def update_host(cls, cluster_id, host: Host):
+    def update(cls, cluster_id, _host: Host):
 
-        if host is None:
+        if _host is None:
             print("nope")
             return
 
         if status.get_enabled():
             try:
                 connection = pymysql.connect(**mysql_credentials, cursorclass=pymysql.cursors.DictCursor)
-                uuid = host.get_uuid()
+                uuid = _host.get_uuid()
 
                 with connection.cursor() as cursor:
                     cls.sql = "SELECT * FROM `hosts` WHERE `cluster_id`=%s AND `host_uuid`=%s"
                     cursor.execute(cls.sql, (cluster_id, uuid))
 
-                    cpu_info = host.get_cpu_info()
+                    cpu_info = _host.get_cpu_info()
 
                     cpu = cpu_info['modelname']
                     speed = float(cpu_info['speed'])
-                    free_memory = int(host.get_free_memory())
-                    memory = int(host.get_total_memory())
+                    free_memory = int(_host.get_free_memory())
+                    memory = int(_host.get_total_memory())
 
                     if cursor.rowcount == 0:
                         cls.sql = "INSERT INTO `hosts` (`cluster_id`, `host_uuid`, `cpu`, `cpu_speed`, `free_memory`, `memory`) VALUES (%s, %s, %s, %s, %s, %s)"
@@ -49,15 +49,15 @@ class host:
                             cls.sql = "UPDATE `hosts` SET `lastUpdate`=NOW(), `cpu`=%s, `cpu_speed`=%s, `free_memory`=%s, `memory`=%s WHERE `cluster_id`=%s AND `host_uuid`=%s"
                             cursor.execute(cls.sql, (cpu, speed, free_memory, memory, cluster_id, uuid))
                         else:
-                            sql = "UPDATE `hosts` SET `lastUpdate`=NOW() WHERE `cluster_id`=%s AND `host_uuid`=%s"
+                            cls.sql = "UPDATE `hosts` SET `lastUpdate`=NOW() WHERE `cluster_id`=%s AND `host_uuid`=%s"
                             cursor.execute(cls.sql, (cluster_id, uuid))
 
                 connection.commit()
             except Exception as e:
-                print("MySQL Sync: update_host failed.", e, cls.sql)
+                print("MySQL Sync: update failed.", e, cls.sql)
 
     @classmethod
-    def remove_orphaned_host(cls, cluster_id):
+    def remove_orphaned(cls, cluster_id):
         if status.get_enabled():
             try:
                 connection = pymysql.connect(**mysql_credentials, cursorclass=pymysql.cursors.DictCursor)
@@ -75,12 +75,12 @@ class host:
                         host_uuid = host_v['host_uuid']
 
                         session = create_session(cluster_id)
-                        host = Host.get_by_uuid(session, host_uuid)
+                        _host = Host.get_by_uuid(session, host_uuid)
 
-                        if host is None:
+                        if _host is None:
                             cls.sql = "DELETE FROM `hosts` WHERE `cluster_id`=%s AND `host_uuid`=%s"
                             cursor.execute(cls.sql, (cluster_id, host_uuid))
 
                 connection.commit()
             except Exception as e:
-                print("MySQL Sync: remove_orphaned_host failed.", e)
+                print("MySQL Sync: remove_orphaned failed.", e)

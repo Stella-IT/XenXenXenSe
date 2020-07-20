@@ -1,7 +1,8 @@
 from XenXenXenSe.Console import Console
 from XenXenXenSe.GuestMetrics import GuestMetrics
 
-class VM():
+
+class VM:
     """ The Virtual Machine Object """
 
     def __init__(self, session, vm):
@@ -70,7 +71,7 @@ class VM():
             return None
 
     def is_template(self):
-        """ Returns rather this vm is template """
+        """ Returns rather this _vm is template """
         try:
             return self.session.xenapi.VM.get_is_a_template(self.vm)
         except Exception as e:

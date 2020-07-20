@@ -6,5 +6,5 @@ class status:
         return cls.enabled
 
     @classmethod
-    def set_enabled(cls, status):
-        cls.enabled = status
+    def set_enabled(cls, _status):
+        cls.enabled = _status

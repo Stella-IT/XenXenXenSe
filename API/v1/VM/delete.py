@@ -3,7 +3,7 @@ from fastapi import APIRouter
 from XenXenXenSe.VM import VM
 from XenXenXenSe.session import create_session
 
-from MySQL.VM import vm
+from MySQL.VM import XenVm
 
 router = APIRouter()
 
@@ -19,7 +19,7 @@ async def vm_delete(cluster_id: str, vm_uuid: str):
     else:
         ret = {"success": False}
 
-    vm.remove_orphaned_vm(cluster_id)
+    XenVm.remove_orphaned(cluster_id)
 
     session.xenapi.session.logout()
     return ret

@@ -4,7 +4,7 @@ from API.v1.Interface import NameArgs, DescriptionArgs
 from XenXenXenSe.VM import VM
 from XenXenXenSe.session import create_session
 
-from MySQL.VM import vm
+from MySQL.VM import XenVm
 
 router = APIRouter()
 
@@ -50,7 +50,7 @@ async def instance_set_name(cluster_id: str, vm_uuid: str, args: NameArgs):
     else:
         ret = {"success": False}
 
-    vm.update_vm(cluster_id, _vm)
+    XenVm.update(cluster_id, _vm)
 
     session.xenapi.session.logout()
     return ret
@@ -67,7 +67,7 @@ async def instance_set_name_inurl(cluster_id: str, vm_uuid: str, new_name: str):
     else:
         ret = {"success": False}
 
-    vm.update_vm(cluster_id, _vm)
+    XenVm.update(cluster_id, _vm)
 
     session.xenapi.session.logout()
     return ret
@@ -99,7 +99,7 @@ async def instance_set_description_inurl(cluster_id: str, vm_uuid: str, new_desc
     else:
         ret = {"success": False}
 
-    vm.update_vm(cluster_id, _vm)
+    XenVm.update(cluster_id, _vm)
 
     session.xenapi.session.logout()
     return ret

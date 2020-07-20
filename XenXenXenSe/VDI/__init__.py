@@ -1,4 +1,4 @@
-class VDI():
+class VDI:
     """ The Virtual Disk Image Object """
 
     def __init__(self, session, vdi):
@@ -36,7 +36,7 @@ class VDI():
 
     @staticmethod
     def get_all(session):
-        """ returns SR object that exists on host """
+        """ returns SR object that exists on _host """
         try:
             vdis = session.xenapi.VDI.get_all()
 
@@ -49,7 +49,7 @@ class VDI():
             print("VDI.get_all Exception", e)
             return None
 
-    def serialize(self):
+    def serialize(self) -> dict:
         return {
             "name": self.get_name(),
             "description": self.get_description(),
