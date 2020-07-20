@@ -6,6 +6,7 @@ from XenXenXenSe.session import create_session
 
 router = APIRouter()
 
+
 @router.get("/{cluster_id}/vm/{vm_uuid}/cd")
 async def get_cd(cluster_id: str, vm_uuid: str):
     session = create_session(cluster_id)

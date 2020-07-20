@@ -1,4 +1,4 @@
-class GuestMetrics():
+class GuestMetrics:
     def __init__(self, session, guest):
         self.session = session
         self.guest = guest

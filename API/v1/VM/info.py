@@ -34,4 +34,3 @@ async def vm_get_vCPU_platform(cluster_id: str, vm_uuid: str):
 
     session.xenapi.session.logout()
     return ret
-    

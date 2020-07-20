@@ -1,15 +1,15 @@
 import sys
-
-import schedule
 import time
 import signal
-
 import uvicorn
+import schedule
+
 from API.v1 import router as _v1_router
 from threading import Thread
 
 # Temp solution
 from MySQL import init_connection
+
 
 class XenXenXenSeCore:
     def __init__(self, app, xen_credentials):
@@ -22,7 +22,7 @@ class XenXenXenSeCore:
 
     @classmethod
     def show_banner(self, add_padding=False):
-        ''' Show banner for XenXenXenSe Project '''
+        """ Show banner for XenXenXenSe Project """
         from pyfiglet import Figlet
         figlet = Figlet()
 
@@ -36,16 +36,15 @@ class XenXenXenSeCore:
             print()
 
     def print_xen_hostnames(self, show_title=False):
-        ''' Print Xen Hostnames to screen '''
+        """ Print Xen Hostnames to screen """
         if show_title:
             print("Detected Clusters")
 
         for credentials in self.xen_credentials:
             print("*", credentials)
 
-    
     def run_api_server(self, development_mode=False):
-        ''' Run API Server '''
+        """ Run API Server """
         if development_mode:
             # development environment
             print("Running in development mode!")
@@ -55,14 +54,13 @@ class XenXenXenSeCore:
             # production environment
             uvicorn.run(self.app, host="127.0.0.1", port=8000)
 
-    def connect_db(self):
-
+    @staticmethod
+    def connect_db():
         # Temporary Solution, will refactor to OOP Python. - @zeroday0619 Plz help!
         init_connection()
 
-
     def schedule_process(self):
-        ''' The Thread content to run on scheduler '''
+        """ The Thread content to run on scheduler """
         print("Data Caching Schedule handling has been started!")
         print()
         try:

@@ -1,9 +1,9 @@
-from fastapi import FastAPI
-
-from config import xen_credentials
-from core import XenXenXenSeCore
-
 import xmlrpc
+
+from fastapi import FastAPI
+from core import XenXenXenSeCore
+from config import xen_credentials
+
 
 # Flag is StellaIT{Pororo}
 # https://developer-docs.citrix.com/projects/citrix-hypervisor-management-api/en/latest/api-ref-autogen/
