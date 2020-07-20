@@ -1,7 +1,8 @@
-from XenXenXenSe.Console import Console
 from XenXenXenSe.GuestMetrics import GuestMetrics
+from XenXenXenSe.Console import Console
 
-class VIF():
+
+class VIF:
     """ The Virtual Interface """
 
     def __init__(self, session, vif):
@@ -40,7 +41,7 @@ class VIF():
             print("VIF.get_all Exception", e)
             return None
 
-    def serialize(self):
+    def serialize(self) -> dict:
         """ Returns Info for of the VM """
         vm = self.get_vm()
         if vm is not None:
@@ -48,7 +49,7 @@ class VIF():
 
         return {
             "attached": self.get_attached(),
-            "vm": vm,
+            "_vm": vm,
             "uuid": self.get_uuid(),
             "mac": self.get_mac(),
             "mtu": self.get_mtu(),

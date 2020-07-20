@@ -6,6 +6,7 @@ from XenXenXenSe.session import create_session
 
 router = APIRouter()
 
+
 @router.get("/{cluster_id}/vm/{vm_uuid}/vif")
 async def instance_vif(cluster_id: str, vm_uuid: str):
     """ Show Instnace VIFs """

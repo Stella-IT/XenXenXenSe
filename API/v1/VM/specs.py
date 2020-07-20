@@ -4,7 +4,7 @@ from API.v1.Interface import VCpuArgs, MemoryArgs
 from XenXenXenSe.VM import VM
 from XenXenXenSe.session import create_session
 
-from MySQL.VM import vm
+from MySQL.VM import XenVm
 
 router = APIRouter()
 
@@ -46,7 +46,7 @@ async def vm_set_vCPU(cluster_id: str, vm_uuid: str, args: VCpuArgs):
     else:
         ret = {"success": False}
 
-    vm.update_vm(cluster_id, _vm)
+    XenVm.update(cluster_id, _vm)
 
     session.xenapi.session.logout()
     return ret
@@ -62,7 +62,7 @@ async def vm_set_vCPU_inurl(cluster_id: str, vm_uuid: str, vCPU_count: int):
     else:
         ret = {"success": False}
 
-    vm.update_vm(cluster_id, _vm)
+    XenVm.update(cluster_id, _vm)
 
     session.xenapi.session.logout()
     return ret
@@ -93,7 +93,7 @@ async def vm_set_memory(cluster_id: str, vm_uuid: str, args: MemoryArgs):
     else:
         ret = {"success": False}
 
-    vm.update_vm(cluster_id, _vm)
+    XenVm.update(cluster_id, _vm)
 
     session.xenapi.session.logout()
     return ret
@@ -109,7 +109,7 @@ async def vm_set_memory_inurl(cluster_id: str, vm_uuid: str, memory_size: int):
     else:
         ret = {"success": False}
 
-    vm.update_vm(cluster_id, _vm)
+    XenVm.update(cluster_id, _vm)
 
     session.xenapi.session.logout()
     return ret

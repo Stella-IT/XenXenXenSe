@@ -3,7 +3,7 @@ from fastapi import APIRouter
 from XenXenXenSe.VM import VM
 from XenXenXenSe.session import create_session
 
-from MySQL.VM import vm
+from MySQL.VM import XenVm
 
 router = APIRouter()
 
@@ -29,12 +29,12 @@ async def vm_start(cluster_id: str, vm_uuid: str):
         System powerstate must be checked beforehand """
     session = create_session(cluster_id)
     _vm: VM = VM.get_by_uuid(session, vm_uuid)
-    if vm is not None:
+    if XenVm is not None:
         ret = {"success": _vm.start()}
     else:
         ret = {"success": False}
 
-    vm.update_vm(cluster_id, _vm)
+    XenVm.update(cluster_id, _vm)
 
     session.xenapi.session.logout()
     return ret
@@ -52,7 +52,7 @@ async def vm_shutdown(cluster_id: str, vm_uuid: str):
     else:
         ret = {"success": False}
 
-    vm.update_vm(cluster_id, _vm)
+    XenVm.update(cluster_id, _vm)
 
     session.xenapi.session.logout()
     return ret
@@ -69,7 +69,7 @@ async def vm_power_force_shutdown(cluster_id: str, vm_uuid: str):
     else:
         ret = {"success": False}
 
-    vm.update_vm(cluster_id, _vm)
+    XenVm.update(cluster_id, _vm)
 
     session.xenapi.session.logout()
     return ret
@@ -86,7 +86,7 @@ async def vm_power_restart(cluster_id: str, vm_uuid: str):
     else:
         ret = {"success": False}
 
-    vm.update_vm(cluster_id, _vm)
+    XenVm.update(cluster_id, _vm)
 
     session.xenapi.session.logout()
     return ret
@@ -102,7 +102,7 @@ async def vm_power_suspend(cluster_id: str, vm_uuid: str):
     else:
         ret = {"success": False}
 
-    vm.update_vm(cluster_id, _vm)
+    XenVm.update(cluster_id, _vm)
 
     session.xenapi.session.logout()
     return ret
@@ -118,7 +118,7 @@ async def vm_power_resume(cluster_id: str, vm_uuid: str):
     else:
         ret = {"success": False}
 
-    vm.update_vm(cluster_id, _vm)
+    XenVm.update(cluster_id, _vm)
 
     session.xenapi.session.logout()
     return ret
@@ -134,7 +134,7 @@ async def vm_power_pause(cluster_id: str, vm_uuid: str):
     else:
         ret = {"success": False}
 
-    vm.update_vm(cluster_id, _vm)
+    XenVm.update(cluster_id, _vm)
 
     session.xenapi.session.logout()
     return ret
@@ -150,7 +150,7 @@ async def vm_power_unpause(cluster_id: str, vm_uuid: str):
     else:
         ret = {"success": False}
 
-    vm.update_vm(cluster_id, _vm)
+    XenVm.update(cluster_id, _vm)
 
     session.xenapi.session.logout()
     return ret

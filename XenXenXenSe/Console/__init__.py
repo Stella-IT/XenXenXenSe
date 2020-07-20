@@ -1,11 +1,11 @@
-class Console():
+class Console:
     """ The Virtual Console """
 
     def __init__(self, session, console):
         self.session = session
         self.console = console
 
-    def serialize(self):
+    def serialize(self) -> dict:
         return {
             "location": self.get_location(),
             "protocol": self.get_protocol(),
