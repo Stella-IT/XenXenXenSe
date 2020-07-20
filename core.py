@@ -30,6 +30,13 @@ class XenXenXenSeCore:
         return json.loads(os.environ['DOCKER_XEN_CREDENTIALS'])
 
     @classmethod
+    def get_docker_mysql_credentials(self):
+        if "DOCKER_MYSQL_CREDENTIALS" in os.environ:
+            return json.loads(os.environ['DOCKER_MYSQL_CREDENTIALS'])
+        else:
+            return None
+
+    @classmethod
     def show_banner(self, add_padding=False):
         """ Show banner for XenXenXenSe Project """
         from pyfiglet import Figlet
