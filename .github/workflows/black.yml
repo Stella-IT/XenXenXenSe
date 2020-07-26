@@ -6,18 +6,8 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
-      - uses: ricardochaves/python-lint@v1.1.0
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+      - uses: lgeiger/black-action@v1.0.1
         with:
-          use-pylint: true
-          use-pycodestyle: false
-          use-flake8: false
-          use-black: false
-          use-mypy: false
-          use-isort: false
-          extra-pylint-options: ""
-          extra-pycodestyle-options: ""
-          extra-flake8-options: ""
-          extra-black-options: ""
-          extra-mypy-options: ""
-          extra-isort-options: ""
+          args: ". -t py38 --diff"
