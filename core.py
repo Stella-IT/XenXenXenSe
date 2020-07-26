@@ -1,3 +1,5 @@
+import os
+import json
 import sys
 import time
 import signal
@@ -10,7 +12,6 @@ from threading import Thread
 # Temp solution
 from MySQL import init_connection
 
-
 class XenXenXenSeCore:
     def __init__(self, app, xen_credentials):
         self.xen_credentials = xen_credentials
@@ -19,6 +20,21 @@ class XenXenXenSeCore:
 
         # include API router
         self.app.include_router(_v1_router)
+
+    @classmethod
+    def is_docker(self):
+        return "DOCKER_XEN_CREDENTIALS" in os.environ
+
+    @classmethod
+    def get_docker_xen_credentials(self):
+        return json.loads(os.environ['DOCKER_XEN_CREDENTIALS'])
+
+    @classmethod
+    def get_docker_mysql_credentials(self):
+        if "DOCKER_MYSQL_CREDENTIALS" in os.environ:
+            return json.loads(os.environ['DOCKER_MYSQL_CREDENTIALS'])
+        else:
+            return None
 
     @classmethod
     def show_banner(self, add_padding=False):
