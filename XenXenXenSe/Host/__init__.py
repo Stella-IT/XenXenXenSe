@@ -1,3 +1,5 @@
+from deprecated import deprecated
+
 class Host:
     """ The Host Object """
 
@@ -52,6 +54,7 @@ class Host:
             print("Host.list_host Exception", e)
             return None
 
+    @deprecated
     def serialize(self) -> dict:
 
         return {

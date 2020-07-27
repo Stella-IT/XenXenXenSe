@@ -3,6 +3,8 @@ from fastapi import APIRouter
 from XenXenXenSe.VM import VM
 from XenXenXenSe.session import create_session
 
+from .serialize import serialize
+
 router = APIRouter()
 
 
@@ -14,7 +16,7 @@ async def instance_info(cluster_id: str, vm_uuid: str):
     vm: VM = VM.get_by_uuid(session, vm_uuid)
 
     if vm is not None:
-        ret = {"success": True, "data": vm.serialize()}
+        ret = {"success": True, "data": serialize(vm)}
     else:
         ret = {"success": False}
 

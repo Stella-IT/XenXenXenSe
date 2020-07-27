@@ -1,5 +1,6 @@
-from XenXenXenSe.VDI import VDI
+from deprecated import deprecated
 
+from XenXenXenSe.VDI import VDI
 
 class VBD:
     """ The Virtual Block Device Object """
@@ -37,6 +38,7 @@ class VBD:
             print("VBD.get_all Exception", e)
             return None
 
+    @deprecated
     def serialize(self) -> dict:
         vm = self.get_VM()
         vdi = self.get_VDI()

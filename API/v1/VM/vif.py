@@ -4,6 +4,8 @@ from API.v1.Interface import NameArgs
 from XenXenXenSe.VM import VM
 from XenXenXenSe.session import create_session
 
+from ..VIF.serialize import serialize as _vif_serialize
+
 router = APIRouter()
 
 
@@ -17,11 +19,11 @@ async def instance_vif(cluster_id: str, vm_uuid: str):
 
     if vm is not None:
 
-        newVIF = vm.get_VIF()
+        new_vif = vm.get_VIF()
 
-        if newVIF is not None:
+        if new_vif is not None:
 
-            ret = {"success": True, "data": newVIF.serialize()}
+            ret = {"success": True, "data": _vif_serialize(new_vif)}
         else:
             ret = {"success": False}
     else:
@@ -104,14 +106,14 @@ async def instance_vifs(cluster_id: str, vm_uuid: str):
 
     if vm is not None:
 
-        newVIFs = vm.get_VIFs()
+        new_vifs = vm.get_VIFs()
 
         vif_serialized = []
 
-        if newVIFs is not None:
-            for vif in newVIFs:
+        if new_vifs is not None:
+            for vif in new_vifs:
                 if vif is not None:
-                    vif_serialized.append(vif.serialize())
+                    vif_serialized.append(_vif_serialize(vif))
 
             ret = {"success": True, "data": vif_serialized}
         else:

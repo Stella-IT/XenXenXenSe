@@ -1,6 +1,7 @@
+from deprecated import deprecated
+
 from XenXenXenSe.Console import Console
 from XenXenXenSe.GuestMetrics import GuestMetrics
-
 
 class VM:
     """ The Virtual Machine Object """
@@ -78,6 +79,7 @@ class VM:
             print("VM.get_uuid Exception", e)
             return None
 
+    @deprecated
     def serialize(self):
         """ Returns Info for of the VM """
         return {

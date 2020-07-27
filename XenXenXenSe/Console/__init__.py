@@ -1,3 +1,5 @@
+from deprecated import deprecated
+
 class Console:
     """ The Virtual Console """
 
@@ -5,6 +7,7 @@ class Console:
         self.session = session
         self.console = console
 
+    @deprecated
     def serialize(self) -> dict:
         return {
             "location": self.get_location(),

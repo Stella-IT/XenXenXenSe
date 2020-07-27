@@ -1,5 +1,6 @@
-from XenXenXenSe.VDI import VDI
+from deprecated import deprecated
 
+from XenXenXenSe.VDI import VDI
 
 class SR:
     """ The Storage Repository Object """
@@ -52,6 +53,7 @@ class SR:
             print("SR.get_by_uuid Exception", e)
             return None
 
+    @deprecated
     def serialize(self) -> dict:
         """ Returns Info of this SR """
         vdis = self.get_VDIs()

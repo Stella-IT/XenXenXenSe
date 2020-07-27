@@ -3,6 +3,8 @@ from fastapi import APIRouter
 from XenXenXenSe.VDI import VDI
 from XenXenXenSe.session import create_session
 
+from .serialize import serialize
+
 router = APIRouter()
 
 
@@ -14,7 +16,7 @@ async def vdi_list(cluster_id: str):
 
     vdi_list = []
     for vdi in vdis:
-        vdi_list.append(vdi.serialize())
+        vdi_list.append(serialize(vdi))
 
     if vdis is not None:
         ret = {"success": True, "data": vdi_list}

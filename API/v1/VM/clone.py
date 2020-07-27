@@ -5,6 +5,7 @@ from XenXenXenSe.VM import VM
 from XenXenXenSe.session import create_session
 
 from MySQL.VM import XenVm
+from .serialize import serialize
 
 router = APIRouter()
 
@@ -17,9 +18,9 @@ async def instance_clone(cluster_id: str, vm_uuid: str, args: NameArgs):
     session = create_session(cluster_id)
     _vm: VM = VM.get_by_uuid(session, vm_uuid)
     if _vm is not None:
-        newVM = _vm.clone(args.name)
-        if newVM is not None:
-            ret = {"success": True, "data": newVM.serialize()}
+        new_vm = _vm.clone(args.name)
+        if new_vm is not None:
+            ret = {"success": True, "data": serialize(new_vm)}
         else:
             ret = {"success": False}
     else:
@@ -35,9 +36,9 @@ async def instance_clone_inurl(cluster_id: str, vm_uuid: str, clone_name: str):
     session = create_session(cluster_id)
     _vm: VM = VM.get_by_uuid(session, vm_uuid)
     if _vm is not None:
-        newVM = _vm.clone(clone_name)
-        if newVM is not None:
-            ret = {"success": True, "data": newVM.serialize()}
+        new_vm = _vm.clone(clone_name)
+        if new_vm is not None:
+            ret = {"success": True, "data": serialize(new_vm)}
         else:
             ret = {"success": False}
     else:

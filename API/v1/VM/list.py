@@ -3,6 +3,8 @@ from fastapi import APIRouter
 from XenXenXenSe.VM import VM
 from XenXenXenSe.session import create_session
 
+from .serialize import serialize
+
 router = APIRouter()
 
 
@@ -15,7 +17,7 @@ async def vm_list(cluster_id: str):
 
     sat = []
     for vm in vms:
-        sat.append(vm.serialize())
+        sat.append(serialize(vm))
 
     ret = {"success": True, "data": sat}
     session.xenapi.session.logout()
@@ -30,7 +32,7 @@ async def template_list(cluster_id: str):
 
     sat = []
     for vm in vms:
-        sat.append(vm.serialize())
+        sat.append(serialize(vm))
 
     ret = {"success": True, "data": sat}
     session.xenapi.session.logout()
