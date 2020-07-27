@@ -3,6 +3,8 @@ from fastapi import APIRouter
 from XenXenXenSe.SR import SR
 from XenXenXenSe.session import create_session
 
+from .serialize import serialize
+
 router = APIRouter()
 
 
@@ -13,7 +15,7 @@ async def sr_get_by_uuid(cluster_id: str, sr_uuid: str):
     sr: SR = SR.get_by_uuid(session, sr_uuid)
 
     if sr is not None:
-        ret = {"success": True, "data": sr.serialize()}
+        ret = {"success": True, "data": serialize(sr)}
     else:
         ret = {"success": False}
 

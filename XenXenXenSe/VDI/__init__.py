@@ -1,3 +1,5 @@
+from deprecated import deprecated
+
 class VDI:
     """ The Virtual Disk Image Object """
 
@@ -49,6 +51,7 @@ class VDI:
             print("VDI.get_all Exception", e)
             return None
 
+    @deprecated
     def serialize(self) -> dict:
         return {
             "name": self.get_name(),

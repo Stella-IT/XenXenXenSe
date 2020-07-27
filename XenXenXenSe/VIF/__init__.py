@@ -1,3 +1,5 @@
+from deprecated import deprecated
+
 from XenXenXenSe.GuestMetrics import GuestMetrics
 from XenXenXenSe.Console import Console
 
@@ -41,6 +43,7 @@ class VIF:
             print("VIF.get_all Exception", e)
             return None
 
+    @deprecated
     def serialize(self) -> dict:
         """ Returns Info for of the VM """
         vm = self.get_vm()

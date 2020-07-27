@@ -3,6 +3,8 @@ from fastapi import APIRouter
 from XenXenXenSe.VM import VM
 from XenXenXenSe.session import create_session
 
+from ..Console.serialize import serialize as _console_serialize
+
 router = APIRouter()
 
 
@@ -13,7 +15,7 @@ async def vm_console(cluster_id: str, vm_uuid: str):
     vm: VM = VM.get_by_uuid(session, vm_uuid)
     if vm is not None:
         consoles = vm.get_consoles()
-        ret = {"success": True, "data": consoles[0].serialize()}
+        ret = {"success": True, "data": _console_serialize(consoles[0])}
     else:
         ret = {"success": False}
 
@@ -32,7 +34,7 @@ async def vm_consoles(cluster_id: str, vm_uuid: str):
 
         consoleList = []
         for console in consoles:
-            consoleList.append(console.serialize())
+            consoleList.append(_console_serialize(console))
 
         ret = {"success": True, "data": consoleList}
     else:

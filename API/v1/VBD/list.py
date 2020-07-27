@@ -3,6 +3,8 @@ from fastapi import APIRouter
 from XenXenXenSe.VBD import VBD
 from XenXenXenSe.session import create_session
 
+from .serialize import serialize
+
 router = APIRouter()
 
 
@@ -14,7 +16,7 @@ async def vbd_list(cluster_id: str):
 
     vbd_list = []
     for vbd in vbds:
-        vbd_list.append(vbd.serialize())
+        vbd_list.append(serialize(vbd))
 
     if vbds is not None:
         ret = {"success": True, "data": vbd_list}

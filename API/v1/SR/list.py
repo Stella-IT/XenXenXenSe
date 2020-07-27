@@ -3,6 +3,8 @@ from fastapi import APIRouter
 from XenXenXenSe.SR import SR
 from XenXenXenSe.session import create_session
 
+from .serialize import serialize
+
 router = APIRouter()
 
 
@@ -14,7 +16,7 @@ async def sr_list(cluster_id: str):
 
     sant_sr = []
     for sr in srs:
-        sant_sr.append(sr.serialize())
+        sant_sr.append(serialize(sr))
 
     ret = {
         "success": True,

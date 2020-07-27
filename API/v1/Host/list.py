@@ -3,6 +3,8 @@ from fastapi import APIRouter
 from XenXenXenSe.Host import Host
 from XenXenXenSe.session import create_session
 
+from .serialize import serialize
+
 router = APIRouter()
 
 
@@ -14,7 +16,7 @@ async def host_list(cluster_id: str):
 
     hosts_list = []
     for host in hosts:
-        hosts_list.append(host.serialize())
+        hosts_list.append(serialize(host))
 
     ret = {
         "success": True,
