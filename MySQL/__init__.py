@@ -2,10 +2,10 @@ import pymysql
 import schedule
 
 from config import mysql_host_update_rate
-from config import mysql_credentials
 from config import mysql_update_rate
-from config import xen_credentials
 from MySQL.Status import status
+
+from config import get_xen_clusters, get_mysql_credentials
 
 
 # =========================================
@@ -21,7 +21,7 @@ def sync_mysql_host_database():
         from .Host import XenHost
         from .VM import XenVm
 
-        for cluster_id in xen_credentials:
+        for cluster_id in get_xen_clusters():
             session = create_session(cluster_id)
 
             # ==================================
@@ -50,7 +50,7 @@ def sync_mysql_database():
         from XenXenXenSe.Host import Host
         from XenXenXenSe.session import create_session
 
-        for cluster_id in xen_credentials:
+        for cluster_id in get_xen_clusters():
             session = create_session(cluster_id)
 
             # ==================================
@@ -81,6 +81,8 @@ def init_connection():
     if status.get_enabled():
         print("MySQL Sync: Terminating Multiple Initialization")
         return
+
+    mysql_credentials = get_mysql_credentials()
 
     if mysql_credentials is None:
         print("MySQL Sync: MySQL Caching is disabled!")
