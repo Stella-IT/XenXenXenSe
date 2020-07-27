@@ -24,18 +24,11 @@ class XenXenXenSeCore:
 
     @classmethod
     def is_docker(cls):
-        return "DOCKER_XEN_CREDENTIALS" in os.environ
+        return "DOCKER_XXXS_CONFIG" in os.environ
 
     @classmethod
-    def get_docker_xen_credentials(cls):
-        return ujson.loads(os.environ['DOCKER_XEN_CREDENTIALS'])
-
-    @classmethod
-    def get_docker_mysql_credentials(cls):
-        if "DOCKER_MYSQL_CREDENTIALS" in os.environ:
-            return ujson.loads(os.environ['DOCKER_MYSQL_CREDENTIALS'])
-        else:
-            return None
+    def get_docker_config(cls):
+        return ujson.loads(os.environ['DOCKER_XXXS_CONFIG'])
 
     @classmethod
     def show_banner(cls, add_padding=False):
