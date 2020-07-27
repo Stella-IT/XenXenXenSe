@@ -3,7 +3,7 @@
 # set xen credentials
 xen_credentials = {
     "cluster-name": {
-        "XenHost": "http://your-cluster-hostname",
+        "host": "http://your-cluster-hostname",
         "username": "im-groot",
         "password": "my-password"
     }
@@ -12,7 +12,7 @@ xen_credentials = {
 # mysql server credentials for caching.
 # set it to None if you don't need it.
 mysql_credentials = {
-    "XenHost": "your-mysql-XenHost",
+    "host": "your-mysql-XenHost",
     "port": 3306,
     "user": "your-username",
     "password": "your-lovely-password",
