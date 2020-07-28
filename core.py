@@ -1,3 +1,5 @@
+import os
+import ujson
 import sys
 import time
 import signal
@@ -7,13 +9,13 @@ import schedule
 from API.v1 import router as _v1_router
 from threading import Thread
 
+from config import get_xen_clusters, get_mysql_credentials
+
 # Temp solution
 from MySQL import init_connection
 
-
 class XenXenXenSeCore:
-    def __init__(self, app, xen_credentials):
-        self.xen_credentials = xen_credentials
+    def __init__(self, app):
         self.terminating = False
         self.app = app
 
@@ -21,7 +23,15 @@ class XenXenXenSeCore:
         self.app.include_router(_v1_router)
 
     @classmethod
-    def show_banner(self, add_padding=False):
+    def is_docker(cls):
+        return "DOCKER_XXXS_CONFIG" in os.environ
+
+    @classmethod
+    def get_docker_config(cls):
+        return ujson.loads(os.environ['DOCKER_XXXS_CONFIG'])
+
+    @classmethod
+    def show_banner(cls, add_padding=False):
         """ Show banner for XenXenXenSe Project """
         from pyfiglet import Figlet
         figlet = Figlet()
@@ -40,15 +50,18 @@ class XenXenXenSeCore:
         if show_title:
             print("Detected Clusters")
 
-        for credentials in self.xen_credentials:
-            print("*", credentials)
+        for clusters in get_xen_clusters():
+            print("*", clusters)
 
     def run_api_server(self, development_mode=False):
         """ Run API Server """
         if development_mode:
             # development environment
-            print("Running in development mode!")
-            uvicorn.run("main:app", host="127.0.0.1", port=8000, reload=True)
+
+            raise OSError("ERROR: due to edits by @zeroday0619, development mode is deprecated. run reload stuff by YOURSELF.")
+            # print("Running in development mode!")
+
+            # uvicorn.run("", host="127.0.0.1", port=8000, reload=True)
 
         else:
             # production environment

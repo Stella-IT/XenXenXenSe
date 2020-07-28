@@ -4,6 +4,10 @@
 A Modern RESTful API implemenation of XenAPI for Citrix Hypervisor® and XCP-ng.  
 Try not to confuse with [ZenZenZenSe (前前前世)](https://en.wikipedia.org/wiki/Zenzenzense). 
 
+## Build Status
+![Lint](https://github.com/Stella-IT/XenXenXenSe/workflows/Lint/badge.svg) 
+![Unit Test](https://github.com/Stella-IT/XenXenXenSe/workflows/Unit%20Test/badge.svg)
+
 ## What is this?
 Contrary to XenAPI which requires specific instruction of that calls command, get reference, request. Instead, it uses advantages of Object Oriented Asynchrounous Python and RESTful API to create "translation layer" for XenAPI.
 
@@ -16,8 +20,7 @@ This is a "Core Component" of Stella IT's VM Management and control system.
 2. Copy config.py.example to config.py
 3. Enter your credentials
 4. run `pipenv install`
-5. activate virtualenv by `pipenv shell`
-6. run server by `python3 main.py`
+5. run server via `pipenv run start`
 
 ### API Docs
 Working in progress.  

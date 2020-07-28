@@ -1,7 +1,7 @@
 import pymysql
 from XenXenXenSe.VM import VM
 
-from config import mysql_credentials
+from config import get_mysql_credentials
 from MySQL.Status import status
 
 
@@ -16,7 +16,7 @@ class XenVm:
 
         if status.get_enabled():
             try:
-                connection = pymysql.connect(**mysql_credentials, cursorclass=pymysql.cursors.DictCursor)
+                connection = pymysql.connect(**get_mysql_credentials(), cursorclass=pymysql.cursors.DictCursor)
                 uuid = _vm.get_uuid()
 
                 with connection.cursor() as cursor:

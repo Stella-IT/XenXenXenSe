@@ -1,0 +1,10 @@
+{
+    "xen_clusters": {
+        "cluster-name": {
+            "host": "http://your-cluster-hostname",
+            "username": "im-groot",
+            "password": "my-password"
+        }
+    },
+    "mysql_credentials": null
+}

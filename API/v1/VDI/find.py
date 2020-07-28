@@ -5,6 +5,8 @@ from API.v1.Interface import NameArgs
 from XenXenXenSe.VDI import VDI
 from XenXenXenSe.session import create_session
 
+from .serialize import serialize
+
 router = APIRouter()
 
 
@@ -18,7 +20,7 @@ async def find_VDI_by_name(cluster_id: str, args: NameArgs):
     if vdis is not None:
         vdis_list = []
         for vdi in vdis:
-            vdis_list.append(vdi.serialize())
+            vdis_list.append(serialize(vdi))
       
         ret = {"success": True, "data": vdis_list}
     else:
@@ -38,7 +40,7 @@ async def insert_cd_inurl_name(cluster_id: str, iso_name: str):
     if vdis is not None:
         vdis_list = []
         for vdi in vdis:
-            vdis_list.append(vdi.serialize())
+            vdis_list.append(serialize(vdi))
       
         ret = {"success": True, "data": vdis_list}
     else:

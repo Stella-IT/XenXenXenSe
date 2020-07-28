@@ -5,6 +5,8 @@ from API.v1.Interface import NameArgs
 from XenXenXenSe.SR import SR
 from XenXenXenSe.session import create_session
 
+from .serialize import serialize
+
 router = APIRouter()
 
 
@@ -17,7 +19,7 @@ async def find_cd_by_name(cluster_id: str, args: NameArgs):
 
     srs_list = []
     for sr in srs:
-        srs_list.append(sr.serialize())
+        srs_list.append(serialize(sr))
 
     if sr is not None:
         ret = {"success": True, "data": srs_list}
@@ -37,7 +39,7 @@ async def insert_cd_inurl_name(cluster_id: str, iso_name: str):
     if srs is not None:
         srs_list = []
         for sr in srs:
-          srs_list.append(sr.serialize())
+          srs_list.append(serialize(sr))
       
         ret = {"success": True, "data": srs_list}
     else:

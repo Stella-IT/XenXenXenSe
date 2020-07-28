@@ -3,6 +3,8 @@ from fastapi import APIRouter
 from XenXenXenSe.VBD import VBD
 from XenXenXenSe.session import create_session
 
+from .serialize import serialize
+
 router = APIRouter()
 
 
@@ -13,7 +15,7 @@ async def vbd_get_by_uuid(cluster_id: str, vbd_uuid: str):
     vbd: VBD = VBD.get_by_uuid(session, vbd_uuid)
 
     if vbd is not None:
-        ret = {"success": True, "data": vbd.serialize()}
+        ret = {"success": True, "data": serialize(vbd)}
     else:
         ret = {"success": False}
 

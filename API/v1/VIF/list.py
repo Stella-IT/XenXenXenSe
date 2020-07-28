@@ -3,6 +3,8 @@ from fastapi import APIRouter
 from XenXenXenSe.VIF import VIF
 from XenXenXenSe.session import create_session
 
+from .serialize import serialize
+
 router = APIRouter()
 
 
@@ -14,7 +16,7 @@ async def vif_list(cluster_id: str):
 
     santilized_vifs = []
     for vif in vifs:
-        santilized_vifs.append(vif.serialize())
+        santilized_vifs.append(serialize(vif))
 
     ret = {
         "success": True,

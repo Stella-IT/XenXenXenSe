@@ -13,3 +13,10 @@ uvicorn = "*"
 pyfiglet = "*"
 pymysql = "*"
 schedule = "*"
+deprecated = "*"
+ujson = "*"
+requests = "*"
+
+[scripts]
+start = "python3 main.py"
+test = "python3 test.py"

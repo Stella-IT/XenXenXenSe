@@ -1,0 +1,17 @@
+{
+    "xen_clusters": {
+        "cluster-name": {
+            "host": "http://your-cluster-hostname",
+            "username": "im-groot",
+            "password": "my-password"
+        }
+    },
+    "mysql_credentials": {
+        "host": "your-mysql-XenHost",
+        "port": 3306,
+        "user": "your-username",
+        "password": "your-lovely-password",
+        "db": "your-db-name",
+        "charset": "utf8mb4"
+    }
+}

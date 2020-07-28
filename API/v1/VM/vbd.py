@@ -4,6 +4,8 @@ from API.v1.Interface import NameArgs
 from XenXenXenSe.VM import VM
 from XenXenXenSe.session import create_session
 
+from ..VBD.serialize import serialize as _vbd_serialize
+
 router = APIRouter()
 
 
@@ -25,7 +27,7 @@ async def instance_vbds(cluster_id: str, vm_uuid: str):
         if newVBDs is not None:
             for vbd in newVBDs:
                 if vbd is not None:
-                    vbd_serialized.append(vbd.serialize())
+                    vbd_serialized.append(_vbd_serialize(vbd))
 
             print(vbd_serialized)
 

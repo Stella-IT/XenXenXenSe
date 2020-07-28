@@ -1,8 +1,11 @@
+from deprecated import deprecated
+
 class GuestMetrics:
     def __init__(self, session, guest):
         self.session = session
         self.guest = guest
 
+    @deprecated
     def serialize(self):
         return {
             "uuid": self.get_uuid(),
