@@ -4,6 +4,10 @@
 A Modern RESTful API implemenation of XenAPI for Citrix Hypervisor® and XCP-ng.  
 Try not to confuse with [ZenZenZenSe (前前前世)](https://en.wikipedia.org/wiki/Zenzenzense). 
 
+## Build Status
+![Lint](https://github.com/Stella-IT/XenXenXenSe/workflows/Lint/badge.svg) 
+![Unit Test](https://github.com/Stella-IT/XenXenXenSe/workflows/Unit%20Test/badge.svg)
+
 ## What is this?
 Contrary to XenAPI which requires specific instruction of that calls command, get reference, request. Instead, it uses advantages of Object Oriented Asynchrounous Python and RESTful API to create "translation layer" for XenAPI.
 
