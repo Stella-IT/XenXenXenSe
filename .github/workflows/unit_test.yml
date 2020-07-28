@@ -14,5 +14,7 @@ jobs:
           pipenv install
       - name: Run test
         run: |
-          export DOCKER_XXXS_CONFIG="${ secrets.S4AIT_TESTSRV_XXXS_CONFIG }"
           pipenv run test
+        env:
+          DOCKER_XXXS_CONFIG: ${{ secrets.S4AIT_TESTSRV_XXXS_CONFIG }}
+
