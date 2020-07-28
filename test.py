@@ -30,14 +30,28 @@ def test_vm_list():
     print("OK")
 
 if __name__ == "__main__":
-    print("XenXenXenSei: Unit Test for GitHub Actions")
+
+    from pyfiglet import Figlet
+    figlet = Figlet()
+
+    print(figlet.renderText("XenXenXenSe"))
+
+    print("Project XenXenXenSe : a RESTful API implementation for Citrix Hypervisor® and XCP-ng")
+    print("Unit Test Script")
+    print()
+    print("Copyright (c) Stella IT.")
+    print("This software is distributed under Affero GNU Public License v3.")
+    print()
+    print("Warning: This software is supposed to be used with GitHub Actions.")
+    print("         This software is supposed to test against Stella IT's Internal Cloud Infrastructure Test Servers.")
+    print()
     print()
 
     try:
-        print("Testing /host/list ...", end='')
+        print("Testing /host/list against test cluster ...", end='')
         test_host_list()
 
-        print("Testing /vm/list ...", end='')
+        print("Testing /vm/list against test cluster ...", end='')
         test_vm_list()
 
         print("Test success!")
