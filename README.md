@@ -20,8 +20,7 @@ This is a "Core Component" of Stella IT's VM Management and control system.
 2. Copy config.py.example to config.py
 3. Enter your credentials
 4. run `pipenv install`
-5. activate virtualenv by `pipenv shell`
-6. run server by `python3 main.py`
+5. run server via `pipenv run start`
 
 ### API Docs
 Working in progress.  
