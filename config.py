@@ -11,7 +11,8 @@ def get_xen_clusters():
 
     # Docker check
     if XenXenXenSeCore.is_docker():
-        xen_clusters = XenXenXenSeCore.get_docker_xen_credentials()
+        if "xen_clusters" in XenXenXenSeCore.get_docker_config():
+            xen_clusters = XenXenXenSeCore.get_docker_config()['xen_clusters']
 
     return xen_clusters
 
@@ -23,7 +24,10 @@ def get_mysql_credentials():
     mysql_credentials = ujson.load(config_file)['mysql_credentials']
     config_file.close()
 
-    mysql_credentials = mysql_credentials if XenXenXenSeCore.get_docker_mysql_credentials() is None else XenXenXenSeCore.get_docker_mysql_credentials()
+     # Docker check
+    if XenXenXenSeCore.is_docker():
+        if "mysql_credentials" in XenXenXenSeCore.get_docker_config():
+            mysql_credentials = XenXenXenSeCore.get_docker_config()['mysql_credentials']
 
     return mysql_credentials
 
