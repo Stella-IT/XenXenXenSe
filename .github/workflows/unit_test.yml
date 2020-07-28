@@ -1,0 +1,17 @@
+name: Unit Test
+
+on: [push, pull_request]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+      - name: Installing dependencies
+        run: |
+          pipenv install
+      - name: Run test
+        run: |
+          export DOCKER_XXXS_CONFIG="${ secrets.S4AIT_TESTSRV_XXXS_CONFIG }"
+          pipenv run test
