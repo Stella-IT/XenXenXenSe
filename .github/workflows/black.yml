@@ -27,7 +27,7 @@ jobs:
           pipenv install pytest pytest-asyncio
       - name: Lint with black
         run: |
-          pipenv run black . --check
+          pipenv run black .
       - name: Run test
         run: |
           pipenv run test
