@@ -15,11 +15,11 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Set up Python ${{ matrix.python-version }}
-      - uses: actions/setup-python@v2
+        uses: actions/setup-python@v2
         with:
           python-version: ${{ matrix.python-version }}
-      - uses: dschep/install-pipenv-action@v1
       - name: Install dependencies
+        uses: dschep/install-pipenv-action@v1
         run: |
           pipenv install
           pipenv install black flake8 pytest pytest-asyncio
