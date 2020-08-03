@@ -39,8 +39,8 @@ async def insert_cd_inurl_name(cluster_id: str, iso_name: str):
     if srs is not None:
         srs_list = []
         for sr in srs:
-          srs_list.append(serialize(sr))
-      
+            srs_list.append(serialize(sr))
+
         ret = {"success": True, "data": srs_list}
     else:
         ret = {"success": False}

@@ -26,4 +26,4 @@ jobs:
           pipenv install --pre black
       - name: Lint with black
         run: |
-          pipenv run black .
+          pipenv run black . --check

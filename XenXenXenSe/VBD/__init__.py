@@ -2,6 +2,7 @@ from deprecated import deprecated
 
 from XenXenXenSe.VDI import VDI
 
+
 class VBD:
     """ The Virtual Block Device Object """
 
@@ -42,7 +43,7 @@ class VBD:
     def serialize(self) -> dict:
         vm = self.get_VM()
         vdi = self.get_VDI()
-        
+
         if vm is not None:
             vm = vm.serialize()
 
@@ -58,7 +59,7 @@ class VBD:
             "device": self.get_device(),
             "type": self.get_type(),
             "uuid": self.get_uuid(),
-            "mode": self.get_mode()
+            "mode": self.get_mode(),
         }
 
     def get_VM(self):

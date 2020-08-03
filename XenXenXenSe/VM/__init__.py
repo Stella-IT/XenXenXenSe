@@ -3,6 +3,7 @@ from deprecated import deprecated
 from XenXenXenSe.Console import Console
 from XenXenXenSe.GuestMetrics import GuestMetrics
 
+
 class VM:
     """ The Virtual Machine Object """
 
@@ -116,7 +117,9 @@ class VM:
     def get_guest_metrics(self):
         """ Returns Guest Metrics Object of the VM """
         try:
-            return GuestMetrics(self.session, self.session.xenapi.VM.get_guest_metrics(self.vm))
+            return GuestMetrics(
+                self.session, self.session.xenapi.VM.get_guest_metrics(self.vm)
+            )
         except Exception as e:
             print("VM.get_guest_metrics Exception", e)
             return None
@@ -283,9 +286,9 @@ class VM:
     def set_vCPUs(self, vCPUs):
         try:
             tmp_platform = self.session.xenapi.VM.get_platform(self.vm,)
-            vCPU_platform = { "cores-per-socket": str(vCPUs) }
+            vCPU_platform = {"cores-per-socket": str(vCPUs)}
 
-            platform = { **tmp_platform, **vCPU_platform }
+            platform = {**tmp_platform, **vCPU_platform}
 
             self.session.xenapi.VM.set_platform(self.vm, platform)
             self.session.xenapi.VM.set_VCPUs_max(self.vm, vCPUs)
@@ -298,7 +301,9 @@ class VM:
 
     def set_memory(self, memory):
         try:
-            self.session.xenapi.VM.set_memory_limits(self.vm, memory, memory, memory, memory)
+            self.session.xenapi.VM.set_memory_limits(
+                self.vm, memory, memory, memory, memory
+            )
         except Exception as e:
             print("VM.set_memory Exception", e)
             return False
@@ -353,7 +358,7 @@ class VM:
     def set_bios_strings(self, input_bios_str):
         try:
             tmp_bios_str = self.session.xenapi.VM.get_bios_strings(self.vm)
-            bios_str = { **tmp_bios_str, **input_bios_str }
+            bios_str = {**tmp_bios_str, **input_bios_str}
             self.session.xenapi.VM.set_bios_strings(self.vm, bios_str)
             return True
         except Exception as e:
@@ -465,6 +470,3 @@ class VM:
         except Exception as e:
             print("VM.get_Disks Exception", e)
             return None
-
-
-

@@ -39,14 +39,16 @@ async def instance_set_bios_property_byname(cluster_id: str, vm_uuid: str, name:
 
 @router.get("/{cluster_id}/vm/{vm_uuid}/bios/{name}/{var}")
 @router.get("/{cluster_id}/template/{vm_uuid}/bios/{name}/{var}")
-async def instance_set_bios_property_byname_inurl(cluster_id: str, vm_uuid: str, name: str, var: str):
+async def instance_set_bios_property_byname_inurl(
+    cluster_id: str, vm_uuid: str, name: str, var: str
+):
     """ Set Instance (VM/Template) BIOS Property by Name """
     session = create_session(cluster_id)
     vm: VM = VM.get_by_uuid(session, vm_uuid)
     if vm is not None:
         data = {}
         data[name] = var
-        
+
         ret = {"success": vm.set_bios_strings(data)}
     else:
         ret = {"success": False}

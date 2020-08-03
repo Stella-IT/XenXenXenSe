@@ -2,6 +2,7 @@ from XenXenXenSe.SR import SR
 
 from ..VDI.serialize import serialize as _vdi_serialize
 
+
 def serialize(sr: SR):
     vdis = sr.get_VDIs()
     vdi_list = []
@@ -19,5 +20,5 @@ def serialize(sr: SR):
         "uuid": sr.get_uuid(),
         "content_type": sr.get_content_type(),
         "type": sr.get_type(),
-        "vdis": vdi_list
+        "vdis": vdi_list,
     }

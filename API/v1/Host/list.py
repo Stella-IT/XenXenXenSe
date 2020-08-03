@@ -18,10 +18,7 @@ async def host_list(cluster_id: str):
     for host in hosts:
         hosts_list.append(serialize(host))
 
-    ret = {
-        "success": True,
-        "data": hosts_list
-    }
+    ret = {"success": True, "data": hosts_list}
 
     session.xenapi.session.logout()
     return ret

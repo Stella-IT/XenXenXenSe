@@ -12,6 +12,7 @@ router = APIRouter()
 
 # @_clone.post("/{cluster_id}/_vm/{vm_uuid}/clone")
 
+
 @router.post("/{cluster_id}/template/{vm_uuid}/clone")
 async def instance_clone(cluster_id: str, vm_uuid: str, args: NameArgs):
     """ Clone Instance (VM/Template) """

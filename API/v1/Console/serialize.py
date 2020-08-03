@@ -1,5 +1,6 @@
 from XenXenXenSe.Console import Console
 
+
 def serialize(console: Console):
     return {
         "location": console.get_location(),

@@ -1,5 +1,6 @@
 from XenXenXenSe.VM import VM
 
+
 def serialize(vm: VM):
     return {
         "name": vm.get_name(),
