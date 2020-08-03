@@ -5,6 +5,7 @@ verify_ssl = false
 
 [dev-packages]
 pylint = "*"
+pre-commit = "*"
 
 [packages]
 xenapi = "*"
@@ -16,7 +17,6 @@ schedule = "*"
 deprecated = "*"
 ujson = "*"
 requests = "*"
-pre-commit = "*"
 black = "*"
 
 [scripts]
