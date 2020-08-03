@@ -16,6 +16,7 @@ schedule = "*"
 deprecated = "*"
 ujson = "*"
 requests = "*"
+pre-commit = "*"
 
 [scripts]
 start = "python3 main.py"

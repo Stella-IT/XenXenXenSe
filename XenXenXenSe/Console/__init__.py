@@ -1,5 +1,6 @@
 from deprecated import deprecated
 
+
 class Console:
     """ The Virtual Console """
 
