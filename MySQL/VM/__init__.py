@@ -16,11 +16,15 @@ class XenVm:
 
         if status.get_enabled():
             try:
-                connection = pymysql.connect(**get_mysql_credentials(), cursorclass=pymysql.cursors.DictCursor)
+                connection = pymysql.connect(
+                    **get_mysql_credentials(), cursorclass=pymysql.cursors.DictCursor
+                )
                 uuid = _vm.get_uuid()
 
                 with connection.cursor() as cursor:
-                    cls.sql = "SELECT * FROM `vms` WHERE `cluster_id`=%s AND `vm_uuid`=%s"
+                    cls.sql = (
+                        "SELECT * FROM `vms` WHERE `cluster_id`=%s AND `vm_uuid`=%s"
+                    )
                     cursor.execute(cls.sql, (cluster_id, uuid))
 
                     vCPUs = int(_vm.get_vCPUs())
@@ -31,22 +35,36 @@ class XenVm:
 
                     if cursor.rowcount == 0:
                         cls.sql = "INSERT INTO `vms` (`cluster_id`, `vm_uuid`, `vCPUs`, `memory`, `name`, `description`, `power`) VALUES (%s, %s, %s, %s, %s, %s, %s)"
-                        cursor.execute(cls.sql, (cluster_id, uuid, vCPUs, memory, name, description, power))
+                        cursor.execute(
+                            cls.sql,
+                            (cluster_id, uuid, vCPUs, memory, name, description, power),
+                        )
 
                     else:
                         vm_data = cursor.fetchone()
 
                         is_different = (
-                                int(vm_data['vCPUs']) != vCPUs or
-                                int(vm_data['memory']) != memory or
-                                vm_data['name'] != name or
-                                vm_data['description'] != description or
-                                vm_data['power'] != power
+                            int(vm_data["vCPUs"]) != vCPUs
+                            or int(vm_data["memory"]) != memory
+                            or vm_data["name"] != name
+                            or vm_data["description"] != description
+                            or vm_data["power"] != power
                         )
 
                         if is_different:
                             cls.sql = "UPDATE `vms` SET `lastUpdate`=NOW(), `vCPUs`=%s, `memory`=%s, `name`=%s, `description`=%s, `power`=%s WHERE `cluster_id`=%s AND `vm_uuid`=%s"
-                            cursor.execute(cls.sql, (vCPUs, memory, name, description, power, cluster_id, uuid))
+                            cursor.execute(
+                                cls.sql,
+                                (
+                                    vCPUs,
+                                    memory,
+                                    name,
+                                    description,
+                                    power,
+                                    cluster_id,
+                                    uuid,
+                                ),
+                            )
 
                         else:
                             cls.sql = "UPDATE `vms` SET `lastUpdate`=NOW() WHERE `cluster_id`=%s AND `vm_uuid`=%s"
@@ -60,7 +78,9 @@ class XenVm:
     def remove_orphaned(cls, cluster_id):
         if status.get_enabled():
             try:
-                connection = pymysql.connect(**mysql_credentials, cursorclass=pymysql.cursors.DictCursor)
+                connection = pymysql.connect(
+                    **mysql_credentials, cursorclass=pymysql.cursors.DictCursor
+                )
 
                 with connection.cursor() as cursor:
                     from XenXenXenSe.session import create_session
@@ -71,8 +91,8 @@ class XenVm:
                     result = cursor.fetchall()
 
                     for vm_v in result:
-                        cluster_id = vm_v['cluster_id']
-                        vm_uuid = vm_v['vm_uuid']
+                        cluster_id = vm_v["cluster_id"]
+                        vm_uuid = vm_v["vm_uuid"]
                         print(cluster_id, vm_uuid)
 
                         session = create_session(cluster_id)

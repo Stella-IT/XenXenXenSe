@@ -21,7 +21,7 @@ async def find_VDI_by_name(cluster_id: str, args: NameArgs):
         vdis_list = []
         for vdi in vdis:
             vdis_list.append(serialize(vdi))
-      
+
         ret = {"success": True, "data": vdis_list}
     else:
         ret = {"success": False}
@@ -41,7 +41,7 @@ async def insert_cd_inurl_name(cluster_id: str, iso_name: str):
         vdis_list = []
         for vdi in vdis:
             vdis_list.append(serialize(vdi))
-      
+
         ret = {"success": True, "data": vdis_list}
     else:
         ret = {"success": False}

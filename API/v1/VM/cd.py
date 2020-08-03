@@ -29,6 +29,7 @@ async def get_cd(cluster_id: str, vm_uuid: str):
     session.xenapi.session.logout()
     return ret
 
+
 @router.get("/{cluster_id}/vm/{vm_uuid}/cd/insert/{vdi_uuid}")
 async def get_cd_insert_inurl(cluster_id: str, vm_uuid: str, vdi_uuid: str):
     session = create_session(cluster_id)
@@ -63,6 +64,7 @@ async def get_cd_insert_inurl(cluster_id: str, vm_uuid: str, vdi_uuid: str):
     session.xenapi.session.logout()
     return ret
 
+
 @router.delete("/{cluster_id}/vm/{vm_uuid}/cd/insert")
 @router.get("/{cluster_id}/vm/{vm_uuid}/cd/eject")
 async def get_cd_eject(cluster_id: str, vm_uuid: str):
@@ -85,6 +87,7 @@ async def get_cd_eject(cluster_id: str, vm_uuid: str):
 
     session.xenapi.session.logout()
     return ret
+
 
 @router.get("/{cluster_id}/vm/{vm_uuid}/cds")
 async def get_cds(cluster_id: str, vm_uuid: str):
@@ -111,8 +114,6 @@ async def get_cds(cluster_id: str, vm_uuid: str):
 
     session.xenapi.session.logout()
     return ret
-
-
 
 
 @router.delete("/{cluster_id}/vm/{VM_UUID}/cd")

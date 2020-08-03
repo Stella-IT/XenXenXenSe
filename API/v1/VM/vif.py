@@ -14,6 +14,7 @@ async def instance_vif(cluster_id: str, vm_uuid: str):
     """ Show Instnace VIFs """
 
     from XenXenXenSe.VIF import VIF
+
     session = create_session(cluster_id)
     vm: VM = VM.get_by_uuid(session, vm_uuid)
 
@@ -32,6 +33,7 @@ async def instance_vif(cluster_id: str, vm_uuid: str):
     session.xenapi.session.logout()
     return ret
 
+
 @router.get("/{cluster_id}/vm/{vm_uuid}/vif/qos")
 async def vif_get_qos_by_uuid(cluster_id: str, vm_uuid: str):
     """ Set VIF QoS by VM """
@@ -42,11 +44,11 @@ async def vif_get_qos_by_uuid(cluster_id: str, vm_uuid: str):
 
         vif = vm.get_VIF()
 
-        if vif is not None:        
-            ret = {"success": True, "data": {
-                "type": vif.get_qos_type(),
-                "info": vif.get_qos_info()
-            }}
+        if vif is not None:
+            ret = {
+                "success": True,
+                "data": {"type": vif.get_qos_type(), "info": vif.get_qos_info()},
+            }
         else:
             ret = {"success": False}
 
@@ -56,17 +58,19 @@ async def vif_get_qos_by_uuid(cluster_id: str, vm_uuid: str):
     session.xenapi.session.logout()
     return ret
 
+
 @router.get("/{cluster_id}/vm/{vm_uuid}/vif/qos/speed/{speed}")
 async def vif_set_qos_speed_by_vm(cluster_id: str, vm_uuid: str, speed: str):
     """ Set VIF QoS Speed by VM """
     from XenXenXenSe.VIF import VIF
+
     session = create_session(cluster_id)
     vm: VM = VM.get_by_uuid(session, vm_uuid)
 
     if vm is not None:
 
         vif = vm.get_VIF()
- 
+
         try:
             speedNum = int(speed)
         except ValueError:
@@ -77,15 +81,13 @@ async def vif_set_qos_speed_by_vm(cluster_id: str, vm_uuid: str, speed: str):
             b = vif.set_qos_info({})
 
             ret = {"success": a and b}
-            
+
         else:
-            if vif is not None:        
+            if vif is not None:
                 if vif.get_qos_type() != "ratelimit":
                     vif.set_qos_type("ratelimit")
 
-                ret = {"success": vif.set_qos_info({
-                    "kbps": speed
-                })}
+                ret = {"success": vif.set_qos_info({"kbps": speed})}
             else:
                 ret = {"success": False}
 
@@ -101,6 +103,7 @@ async def instance_vifs(cluster_id: str, vm_uuid: str):
     """ Show Instnace VIFs """
 
     from XenXenXenSe.VIF import VIF
+
     session = create_session(cluster_id)
     vm: VM = VM.get_by_uuid(session, vm_uuid)
 

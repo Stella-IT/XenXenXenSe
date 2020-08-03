@@ -2,6 +2,7 @@ from deprecated import deprecated
 
 from XenXenXenSe.VDI import VDI
 
+
 class SR:
     """ The Storage Repository Object """
 
@@ -72,7 +73,7 @@ class SR:
             "uuid": self.get_uuid(),
             "content_type": self.get_content_type(),
             "type": self.get_type(),
-            "vdis": vdi_list
+            "vdis": vdi_list,
         }
 
     def get_VDIs(self):

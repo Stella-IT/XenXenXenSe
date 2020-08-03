@@ -1,5 +1,6 @@
 from XenXenXenSe.VDI import VDI
 
+
 def serialize(vdi: VDI):
     return {
         "name": vdi.get_name(),

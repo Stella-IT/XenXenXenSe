@@ -18,10 +18,7 @@ async def vif_list(cluster_id: str):
     for vif in vifs:
         santilized_vifs.append(serialize(vif))
 
-    ret = {
-        "success": True,
-        "data": santilized_vifs
-    }
+    ret = {"success": True, "data": santilized_vifs}
 
     session.xenapi.session.logout()
     return ret

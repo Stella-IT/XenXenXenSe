@@ -1,5 +1,6 @@
 from deprecated import deprecated
 
+
 class Host:
     """ The Host Object """
 
@@ -38,7 +39,7 @@ class Host:
 
     @staticmethod
     def list_host(session):
-        """ gets Hosts available in specific XenServer
+        """gets Hosts available in specific XenServer
         session: the XenServer Connection Session
         Returns Available Templates (List of Host object)"""
         try:
@@ -64,7 +65,7 @@ class Host:
             "enabled": self.get_enabled(),
             "memory": {
                 "free": self.get_free_memory(),
-                "total": self.get_total_memory()
+                "total": self.get_total_memory(),
             },
             "cpu": self.get_cpu_info(),
             "bios": self.get_bios_strings(),

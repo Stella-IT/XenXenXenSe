@@ -15,6 +15,7 @@ async def instance_vbds(cluster_id: str, vm_uuid: str):
     """ Show Instance VBDs """
 
     from XenXenXenSe.VBD import VBD
+
     session = create_session(cluster_id)
     vm: VM = VM.get_by_uuid(session, vm_uuid)
 

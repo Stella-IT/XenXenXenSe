@@ -24,7 +24,9 @@ async def instance_get_platform(cluster_id: str, vm_uuid: str):
 
 @router.get("/{cluster_id}/vm/{vm_uuid}/platform/{name}")
 @router.get("/{cluster_id}/template/{vm_uuid}/platform/{name}")
-async def instance_set_platform_property_byname(cluster_id: str, vm_uuid: str, name: str):
+async def instance_set_platform_property_byname(
+    cluster_id: str, vm_uuid: str, name: str
+):
     """ Get Instance (VM/Template) Platform Property by Name """
     session = create_session(cluster_id)
     vm: VM = VM.get_by_uuid(session, vm_uuid)
@@ -39,15 +41,17 @@ async def instance_set_platform_property_byname(cluster_id: str, vm_uuid: str, n
 
 @router.get("/{cluster_id}/vm/{vm_uuid}/platform/{name}/{var}")
 @router.get("/{cluster_id}/template/{vm_uuid}/platform/{name}/{var}")
-async def instance_set_platform_property_byname_inurl(cluster_id: str, vm_uuid: str, name: str, var: str):
+async def instance_set_platform_property_byname_inurl(
+    cluster_id: str, vm_uuid: str, name: str, var: str
+):
     """ Set Instance (VM/Template) Platform Property by Name """
     session = create_session(cluster_id)
     vm: VM = VM.get_by_uuid(session, vm_uuid)
-    
+
     if vm is not None:
         data = {}
         data[name] = var
-        
+
         ret = {"success": vm.set_platform(data)}
     else:
         ret = {"success": False}

@@ -10,6 +10,7 @@ from config import get_xen_clusters, get_mysql_credentials
 
 # =========================================
 
+
 def sync_mysql_host_database():
     if status.get_enabled():
         print()
@@ -77,6 +78,7 @@ def sync_mysql_database():
 
 # =========================================
 
+
 def init_connection():
     if status.get_enabled():
         print("MySQL Sync: Terminating Multiple Initialization")
@@ -90,10 +92,12 @@ def init_connection():
 
     print()
     try:
-        connection = pymysql.connect(**mysql_credentials, cursorclass=pymysql.cursors.DictCursor)
+        connection = pymysql.connect(
+            **mysql_credentials, cursorclass=pymysql.cursors.DictCursor
+        )
 
         with connection.cursor() as cursor:
-            sql = '''CREATE TABLE 
+            sql = """CREATE TABLE 
                 IF NOT EXISTS `hosts` (
                   `cluster_id` VARCHAR(255) NOT NULL,
                   `host_uuid` VARCHAR(255) NOT NULL,
@@ -102,9 +106,9 @@ def init_connection():
                   `cpu_speed` FLOAT NOT NULL,
                   `free_memory` BIGINT NOT NULL,
                   `memory` BIGINT NOT NULL  
-                );'''
+                );"""
             cursor.execute(sql)
-            sql = '''CREATE TABLE
+            sql = """CREATE TABLE
                  IF NOT EXISTS `vms` (
                    `cluster_id` VARCHAR(255) NOT NULL,
                    `vm_uuid` VARCHAR(255) NOT NULL,
@@ -114,7 +118,7 @@ def init_connection():
                    `memory` BIGINT NOT NULL,
                    `vCPUs` INT NOT NULL,
                    `power` TEXT NOT NULL
-                 );'''
+                 );"""
             cursor.execute(sql)
 
         connection.commit()
@@ -129,5 +133,6 @@ def init_connection():
 
     except Exception as e:
         print("Database generation failed.", e)
+
 
 # =========================================

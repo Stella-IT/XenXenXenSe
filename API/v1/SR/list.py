@@ -18,10 +18,7 @@ async def sr_list(cluster_id: str):
     for sr in srs:
         sant_sr.append(serialize(sr))
 
-    ret = {
-        "success": True,
-        "data": sant_sr
-    }
+    ret = {"success": True, "data": sant_sr}
 
     session.xenapi.session.logout()
     return ret
