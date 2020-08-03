@@ -22,6 +22,7 @@ black = "*"
 [scripts]
 start = "python3 main.py"
 test = "python3 test.py"
+pre-commit-setup = "pre-commit install"
 
 [pipenv]
 allow_prereleases = true
