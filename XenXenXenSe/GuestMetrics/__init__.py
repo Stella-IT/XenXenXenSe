@@ -1,5 +1,6 @@
 from deprecated import deprecated
 
+
 class GuestMetrics:
     def __init__(self, session, guest):
         self.session = session
@@ -10,7 +11,7 @@ class GuestMetrics:
         return {
             "uuid": self.get_uuid(),
             "os": self.get_os_version(),
-            "networks": self.get_networks()
+            "networks": self.get_networks(),
         }
 
     def get_uuid(self):

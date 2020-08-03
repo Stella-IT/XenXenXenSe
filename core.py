@@ -14,6 +14,7 @@ from config import get_xen_clusters, get_mysql_credentials
 # Temp solution
 from MySQL import init_connection
 
+
 class XenXenXenSeCore:
     def __init__(self, app):
         self.terminating = False
@@ -28,20 +29,24 @@ class XenXenXenSeCore:
 
     @classmethod
     def get_docker_config(cls):
-        return ujson.loads(os.environ['DOCKER_XXXS_CONFIG'])
+        return ujson.loads(os.environ["DOCKER_XXXS_CONFIG"])
 
     @classmethod
     def show_banner(cls, add_padding=False):
         """ Show banner for XenXenXenSe Project """
         from pyfiglet import Figlet
+
         figlet = Figlet()
 
         print(figlet.renderText("XenXenXenSe"))
-        print("Project XenXenXenSe : a RESTful API implementation for Citrix Hypervisor® and XCP-ng")
+        print(
+            "Project XenXenXenSe : a RESTful API implementation for Citrix Hypervisor®"
+            " and XCP-ng"
+        )
         print()
         print("Copyright (c) Stella IT.")
         print("This software is distributed under Affero GNU Public License v3.")
-        
+
         if add_padding:
             print()
 
@@ -58,7 +63,10 @@ class XenXenXenSeCore:
         if development_mode:
             # development environment
 
-            raise OSError("ERROR: due to edits by @zeroday0619, development mode is deprecated. run reload stuff by YOURSELF.")
+            raise OSError(
+                "ERROR: due to edits by @zeroday0619, development mode is deprecated."
+                " run reload stuff by YOURSELF."
+            )
             # print("Running in development mode!")
 
             # uvicorn.run("", host="127.0.0.1", port=8000, reload=True)
@@ -93,7 +101,7 @@ class XenXenXenSeCore:
         print()
 
         # Detect if server is executed with development mode
-        development_mode = (("-d" in sys.argv) or ("--dev" in sys.argv))
+        development_mode = ("-d" in sys.argv) or ("--dev" in sys.argv)
 
         # Create new Thread
         schedule_thread = Thread(target=self.schedule_process)
