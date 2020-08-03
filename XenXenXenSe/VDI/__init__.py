@@ -1,5 +1,6 @@
 from deprecated import deprecated
 
+
 class VDI:
     """ The Virtual Disk Image Object """
 

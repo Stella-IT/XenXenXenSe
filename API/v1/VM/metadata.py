@@ -75,7 +75,9 @@ async def instance_set_name_inurl(cluster_id: str, vm_uuid: str, new_name: str):
 
 @router.put("/{cluster_id}/vm/{vm_uuid}/description")
 @router.put("/{cluster_id}/template/{vm_uuid}/description")
-async def instance_set_description(cluster_id: str, vm_uuid: str, args: DescriptionArgs):
+async def instance_set_description(
+    cluster_id: str, vm_uuid: str, args: DescriptionArgs
+):
     """ Set Instance (VM/Template) Description """
     session = create_session(cluster_id)
     _vm: VM = VM.get_by_uuid(session, vm_uuid)
@@ -90,7 +92,9 @@ async def instance_set_description(cluster_id: str, vm_uuid: str, args: Descript
 
 @router.get("/{cluster_id}/vm/{vm_uuid}/description/{new_description}")
 @router.get("/{cluster_id}/template/{vm_uuid}/description/{new_description}")
-async def instance_set_description_inurl(cluster_id: str, vm_uuid: str, new_description: str):
+async def instance_set_description_inurl(
+    cluster_id: str, vm_uuid: str, new_description: str
+):
     """ Set Instance (VM/Template) Description """
     session = create_session(cluster_id)
     _vm: VM = VM.get_by_uuid(session, vm_uuid)

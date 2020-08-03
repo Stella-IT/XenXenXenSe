@@ -2,6 +2,7 @@ from XenXenXenSe.VIF import VIF
 
 from ..VM.serialize import serialize as _vm_serialize
 
+
 def serialize(vif: VIF):
     vm = vif.get_vm()
     if vm is not None:
@@ -16,14 +17,8 @@ def serialize(vif: VIF):
         "qos": {
             "type": vif.get_qos_type(),
             "info": vif.get_qos_info(),
-            "supported": vif.supported_qos_types()
+            "supported": vif.supported_qos_types(),
         },
-        "ipv4": {
-            "address": vif.get_address_v4(),
-            "gateway": vif.get_gateway_v4()
-        },
-        "ipv6": {
-            "address": vif.get_address_v6(),
-            "gateway": vif.get_gateway_v6()
-        }
+        "ipv4": {"address": vif.get_address_v4(), "gateway": vif.get_gateway_v4()},
+        "ipv6": {"address": vif.get_address_v6(), "gateway": vif.get_gateway_v6()},
     }

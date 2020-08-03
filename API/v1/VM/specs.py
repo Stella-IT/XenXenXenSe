@@ -36,6 +36,7 @@ async def vm_get_vCPU_params(cluster_id: str, vm_uuid: str):
     session.xenapi.session.logout()
     return ret
 
+
 @router.put("/{cluster_id}/vm/{vm_uuid}/vCPU")
 async def vm_set_vCPU(cluster_id: str, vm_uuid: str, args: VCpuArgs):
     """ Set VM vCPU count """

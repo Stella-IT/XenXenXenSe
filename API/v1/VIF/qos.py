@@ -13,10 +13,10 @@ async def vif_get_qos_by_uuid(cluster_id: str, vif_uuid: str):
     vif: VIF = VIF.get_by_uuid(session, vif_uuid)
 
     if vif is not None:
-        ret = {"success": True, "data": {
-          "type": vif.get_qos_type(),
-          "info": vif.get_qos_info()
-        }}
+        ret = {
+            "success": True,
+            "data": {"type": vif.get_qos_type(), "info": vif.get_qos_info()},
+        }
     else:
         ret = {"success": False}
 
@@ -46,7 +46,7 @@ async def vif_get_qos_speed_by_uuid(cluster_id: str, vif_uuid: str):
     vif: VIF = VIF.get_by_uuid(session, vif_uuid)
 
     if vif is not None:
-        ret = {"success": True, "data": vif.get_qos_info()['kbps']}
+        ret = {"success": True, "data": vif.get_qos_info()["kbps"]}
     else:
         ret = {"success": False}
 
@@ -72,15 +72,13 @@ async def vif_set_qos_speed_by_uuid(cluster_id: str, vif_uuid: str, speed: str):
         b = vif.set_qos_info({})
 
         ret = {"success": a and b}
-        
+
     else:
-        if vif is not None:        
+        if vif is not None:
             if vif.get_qos_type() != "ratelimit":
                 vif.set_qos_type("ratelimit")
 
-            ret = {"success": vif.set_qos_info({
-                "kbps": speed
-            })}
+            ret = {"success": vif.set_qos_info({"kbps": speed})}
         else:
             ret = {"success": False}
 

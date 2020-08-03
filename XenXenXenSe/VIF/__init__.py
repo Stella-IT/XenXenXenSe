@@ -59,16 +59,16 @@ class VIF:
             "qos": {
                 "type": self.get_qos_type(),
                 "info": self.get_qos_info(),
-                "supported": self.supported_qos_types()
+                "supported": self.supported_qos_types(),
             },
             "ipv4": {
                 "address": self.get_address_v4(),
-                "gateway": self.get_gateway_v4()
+                "gateway": self.get_gateway_v4(),
             },
             "ipv6": {
                 "address": self.get_address_v6(),
-                "gateway": self.get_gateway_v6()
-            }
+                "gateway": self.get_gateway_v6(),
+            },
         }
 
     def get_uuid(self):
