@@ -6,6 +6,8 @@ verify_ssl = false
 [dev-packages]
 pylint = "*"
 pre-commit = "*"
+black = "*"
+commitizen = "*"
 
 [packages]
 xenapi = "*"
@@ -17,12 +19,11 @@ schedule = "*"
 deprecated = "*"
 ujson = "*"
 requests = "*"
-black = "*"
 
 [scripts]
 start = "python3 main.py"
 test = "python3 test.py"
-pre-commit-setup = "pre-commit install"
+pre-commit-setup = "pre-commit install; pre-commit install --hook-type commit-msg"
 
 [pipenv]
 allow_prereleases = true
