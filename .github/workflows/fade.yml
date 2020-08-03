@@ -1,0 +1,42 @@
+name: Build Debian Package
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.7, 3.8]
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pipenv
+          pipenv install
+      - name: Build Debian Package
+        run: |
+          COMMIT=$(git rev-parse HEAD | head -c 7)
+          cd /tmp; git clone https://github.com/fade-project/fade
+          cd fade; ./main.js --init --name xenxenxense --path $GITHUB_WORKSPACE --version 0.0.0-$COMMIT \
+          --description "A Modern RESTful API implemenation of XenAPI for Citrix Hypervisor(R) and XCP-ng." \
+          --url "https://github.com/Stella-IT/XenXenXenSe" --priority optional --architecture all \
+          --cmdline "python$PYTHON_VERSION -m pipenv run start" --dependancy python$PYTHON_VERSION \
+          --maintainer-name "Stella IT" --maintainer-email "admin@stella-it.com" --type systemd
+          ./main.js --create-deb --path $GITHUB_WORKSPACE
+        env:
+          PYTHON_VERSION: ${{ matrix.python-version }}
+      - name: Upload Debian Package
+        uses: actions/upload-artifact@v2
+        with:
+          # Artifact name
+          name: Debian Package
+          # A file, directory or wildcard pattern that describes what to upload
+          path: xenxenxense_0.0.0-*_all.deb
