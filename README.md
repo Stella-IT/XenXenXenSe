@@ -26,9 +26,16 @@ This is a "Core Component" of Stella IT's VM Management and control system.
 Working in progress.  
 Please refer to automatic documentation page of FastAPI (available at /docs) for this time.  
 
-## Developer
+## Contributors' Guidelines
 ### Commit Conventions
 We use [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) for commit message.
+
+### Black Formatter
+We use [Black Formatter](https://github.com/psf/black) to format the code
+
+### pre commit hooks
+We are using pre-commit for checking linters and commit conventions before the commits.  
+Please install it via `pipenv run pre-commit-setup` after you clone it.
 
 ## License
 Distributed under GNU AGPLv3 *(GNU Affero General Public License Version 3)*.  
