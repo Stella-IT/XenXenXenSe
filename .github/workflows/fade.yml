@@ -15,7 +15,7 @@ jobs:
       - name: Build Debian Package
         run: |
           COMMIT=$(git rev-parse HEAD | head -c 7)
-          cd /tmp; git clone https://github.com/fade-project/fade
+          cd /tmp; git clone -b develop https://github.com/fade-project/fade
           cd fade; npm install 
           ./main.js --init --name xenxenxense --path $GITHUB_WORKSPACE --version 0.0.0-$COMMIT-$PYTHON_VERSION \
           --description "A Modern RESTful API implemenation of XenAPI for Citrix Hypervisor(R) and XCP-ng." \
