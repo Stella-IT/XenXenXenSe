@@ -22,16 +22,16 @@ class DatabaseCore:
     def database_connection_url(self) -> str:
         if status.get_enabled():
             print("MySQL Sync: Terminating Multiple Initialization")
-            raise
+            return
 
         if self.mysql_credentials is None:
-            print("MySQL Sync: MySQL Caching is disabled!")
-            raise
+            return
 
         cred = credentials_interface(**self.mysql_credentials)
 
         url = f"mysql://{cred.user}:{cred.password}@{cred.host}:{str(cred.port)}/{cred.db}"
         return url
+
 
     @property
     def metadata(self):
@@ -41,6 +41,7 @@ class DatabaseCore:
     def database(self):
         DATABASE_URL = self.database_connection_url()
         return databases.Database(DATABASE_URL)
+
 
     @property
     def create_engine(self):

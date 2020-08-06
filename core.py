@@ -30,9 +30,12 @@ class XenXenXenSeCore(DatabaseCore):
         @self.app.on_event("startup")
         async def on_startup():
             """database connection"""
-            self.manager.metadata.create_all(self.manager.create_engine)
-            if not self.manager.database.is_connected:
-                await self.manager.database.connect()
+            try:
+                self.manager.metadata.create_all(self.manager.create_engine)
+                if not self.manager.database.is_connected:
+                    await self.manager.database.connect()
+            except AttributeError:
+                return 0
 
         @self.app.on_event("shutdown")
         async def on_shutdown():
