@@ -13,15 +13,32 @@ from config import get_xen_clusters, get_mysql_credentials
 
 # Temp solution
 from MySQL import init_connection
+from MySQL import DatabaseCore
 
 
-class XenXenXenSeCore:
+class XenXenXenSeCore(DatabaseCore):
     def __init__(self, app):
+        super().__init__()
+        self.manager = self
         self.terminating = False
         self.app = app
 
         # include API router
         self.app.include_router(_v1_router)
+
+    def database_controller(self):
+        @self.app.on_event("startup")
+        async def on_startup():
+            """database connection"""
+            self.manager.metadata.create_all(self.manager.create_engine)
+            if not self.manager.database.is_connected:
+                await self.manager.database.connect()
+
+        @self.app.on_event("shutdown")
+        async def on_shutdown():
+            """database disconnection"""
+            if self.manager.metadata.is_connected:
+                await self.manager.database.disconnect()
 
     @classmethod
     def is_docker(cls):
@@ -50,7 +67,8 @@ class XenXenXenSeCore:
         if add_padding:
             print()
 
-    def print_xen_hostnames(self, show_title=False):
+    @staticmethod
+    def print_xen_hostnames(show_title=False):
         """ Print Xen Hostnames to screen """
         if show_title:
             print("Detected Clusters")
@@ -75,9 +93,9 @@ class XenXenXenSeCore:
             # production environment
             uvicorn.run(self.app, host="127.0.0.1", port=8000)
 
-    @staticmethod
-    def connect_db():
+    def connect_db(self):
         # Temporary Solution, will refactor to OOP Python. - @zeroday0619 Plz help!
+        self.database_controller()
         init_connection()
 
     def schedule_process(self):

@@ -11,7 +11,7 @@ commitizen = "*"
 
 [packages]
 xenapi = "*"
-fastapi = "*"
+fastapi = {extras = ["all"], version = "*"}
 uvicorn = "*"
 pyfiglet = "*"
 pymysql = "*"
@@ -19,6 +19,9 @@ schedule = "*"
 deprecated = "*"
 ujson = "*"
 requests = "*"
+configparser = "*"
+setuptools = "*"
+mysqlclient = "*"
 
 [scripts]
 start = "python3 main.py"
