@@ -113,33 +113,8 @@ class DatabaseManager(DatabaseCore):
 
     def is_not_generated_table(self):
         metadata = self.database_core.metadata
-        sqlalchemy.Table(
-            self.hosts_table,
-            metadata,
-            sqlalchemy.Column("cluster_id", VARCHAR(255), nullable=False),
-            sqlalchemy.Column("host_uuid", VARCHAR(255), nullable=False),
-            sqlalchemy.Column(
-                "lastUpdate", DATETIME, nullable=False, default=datetime.datetime.utcnow
-            ),
-            sqlalchemy.Column("cpu", TEXT, nullable=False),
-            sqlalchemy.Column("cpu_speed", FLOAT, nullable=False),
-            sqlalchemy.Column("free_memory", BIGINT, nullable=False),
-            sqlalchemy.Column("memory", BIGINT, nullable=False),
-        )
-        sqlalchemy.Table(
-            self.vms_table,
-            metadata,
-            sqlalchemy.Column("cluster_id", VARCHAR(255), nullable=False),
-            sqlalchemy.Column("host_uuid", VARCHAR(255), nullable=False),
-            sqlalchemy.Column(
-                "lastUpdate", DATETIME, nullable=False, default=datetime.datetime.utcnow
-            ),
-            sqlalchemy.Column("cpu", TEXT, nullable=False),
-            sqlalchemy.Column("cpu_speed", FLOAT, nullable=False),
-            sqlalchemy.Column("free_memory", BIGINT, nullable=False),
-            sqlalchemy.Column("memory", BIGINT, nullable=False),
-        )
-        metadata.create_all()
+        metadata.create_all(tables=self.hosts_table())
+        metadata.create_all(tables=self.vms_table())
 
 
 # =========================================

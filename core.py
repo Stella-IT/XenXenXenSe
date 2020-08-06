@@ -98,8 +98,8 @@ class XenXenXenSeCore(DatabaseCore):
 
     def connect_db(self):
         # Temporary Solution, will refactor to OOP Python. - @zeroday0619 Plz help!
-        self.database_controller()
         init_connection()
+        self.database_controller()
 
     def schedule_process(self):
         """ The Thread content to run on scheduler """
