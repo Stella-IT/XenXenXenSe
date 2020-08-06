@@ -17,9 +17,7 @@ class XenVm(DatabaseCore):
         if status.get_enabled():
             try:
                 uuid = _vm.get_uuid()
-                self.sql = (
-                    "SELECT * FROM `vms` WHERE `cluster_id`=%s AND `vm_uuid`=%s"
-                )
+                self.sql = "SELECT * FROM `vms` WHERE `cluster_id`=%s AND `vm_uuid`=%s"
                 low_count = await self.database.execute(self.sql, (cluster_id, uuid))
 
                 vCPUs = int(_vm.get_vCPUs())
@@ -83,7 +81,9 @@ class XenVm(DatabaseCore):
                     _vm = VM.get_by_uuid(session, vm_uuid)
 
                     if _vm is None:
-                        self.sql = "DELETE FROM `vms` WHERE `cluster_id`=%s AND `vm_uuid`=%s"
+                        self.sql = (
+                            "DELETE FROM `vms` WHERE `cluster_id`=%s AND `vm_uuid`=%s"
+                        )
                         await self.database.execute(cls.sql, (cluster_id, vm_uuid))
 
             except Exception as e:
