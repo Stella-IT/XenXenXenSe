@@ -5,7 +5,7 @@ import time
 import signal
 import uvicorn
 import schedule
-
+import asyncio
 from API.v1 import router as _v1_router
 from threading import Thread
 
@@ -34,6 +34,7 @@ class XenXenXenSeCore(DatabaseCore):
                 self.manager.metadata.create_all(self.manager.create_engine)
                 if not self.manager.database.is_connected:
                     await self.manager.database.connect()
+
             except AttributeError:
                 return 0
 
@@ -98,7 +99,6 @@ class XenXenXenSeCore(DatabaseCore):
 
     def connect_db(self):
         # Temporary Solution, will refactor to OOP Python. - @zeroday0619 Plz help!
-        init_connection()
         self.database_controller()
 
     def schedule_process(self):
@@ -109,12 +109,16 @@ class XenXenXenSeCore(DatabaseCore):
             while not self.terminating:
                 schedule.run_pending()
                 time.sleep(1)
-        except:
-            print("Exception was detected")
+                self.schedule_()
+        except Exception as e:
+            print("Exception was detected: ", e)
             self.terminating = True
 
         print()
         print("Schedule handling is terminating!")
+
+    def schedule_(self):
+        asyncio.run(init_connection())
 
     def start(self):
         self.show_banner(True)
@@ -127,7 +131,6 @@ class XenXenXenSeCore(DatabaseCore):
         # Create new Thread
         schedule_thread = Thread(target=self.schedule_process)
         schedule_thread.start()
-
         # Run DB Cache Service
         self.connect_db()
 

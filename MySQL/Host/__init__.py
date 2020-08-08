@@ -9,8 +9,7 @@ class XenHost(DatabaseCore):
         super().__init__()
         self.sql = ""
 
-    def update(self, cluster_id, _host: Host):
-
+    async def update(self, cluster_id, _host: Host):
         if _host is None:
             print("nope")
             return
@@ -69,7 +68,7 @@ class XenHost(DatabaseCore):
             except Exception as e:
                 print("MySQL Sync: update failed.", e, self.sql)
 
-    def remove_orphaned(self, cluster_id):
+    async def remove_orphaned(self, cluster_id):
         if status.get_enabled():
             try:
                 from XenXenXenSe.session import create_session

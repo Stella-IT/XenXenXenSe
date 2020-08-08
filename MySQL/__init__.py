@@ -1,18 +1,19 @@
-import pymysql
-import schedule
+import time
 import databases
 import sqlalchemy
 import datetime
+import asyncio
 
-
-from .interface import credentials_interface
+from MySQL.interface import credentials_interface
+from MySQL.Status import status
 from sqlalchemy.dialects.mysql import MEDIUMTEXT, VARCHAR, DATETIME, TEXT, FLOAT, BIGINT
 from sqlalchemy import INT
-from config import mysql_host_update_rate
-from config import mysql_update_rate
-from MySQL.Status import status
-
-from config import get_xen_clusters, get_mysql_credentials
+from config import (
+    mysql_host_update_rate,
+    mysql_update_rate,
+    get_xen_clusters,
+    get_mysql_credentials,
+)
 
 
 class DatabaseCore:
@@ -32,7 +33,6 @@ class DatabaseCore:
         url = f"mysql://{cred.user}:{cred.password}@{cred.host}:{str(cred.port)}/{cred.db}"
         return url
 
-
     @property
     def metadata(self):
         return sqlalchemy.MetaData()
@@ -41,7 +41,6 @@ class DatabaseCore:
     def database(self):
         DATABASE_URL = self.database_connection_url()
         return databases.Database(DATABASE_URL)
-
 
     @property
     def create_engine(self):
@@ -111,75 +110,100 @@ class DatabaseManager(DatabaseCore):
         )
         return vms
 
-    def is_not_generated_table(self):
-        metadata = self.database_core.metadata
-        metadata.create_all(tables=self.hosts_table())
-        metadata.create_all(tables=self.vms_table())
+    async def is_not_generated_table(self):
+        hosts_table = """CREATE TABLE IF NOT EXISTS `hosts` (
+                  `cluster_id` VARCHAR(255) NOT NULL,
+                  `host_uuid` VARCHAR(255) NOT NULL,
+                  `lastUpdate` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                  `cpu` TEXT NOT NULL,
+                  `cpu_speed` FLOAT NOT NULL,
+                  `free_memory` BIGINT NOT NULL,
+                  `memory` BIGINT NOT NULL  
+        );"""
+        vms_table = """CREATE TABLE IF NOT EXISTS `vms` (
+                   `cluster_id` VARCHAR(255) NOT NULL,
+                   `vm_uuid` VARCHAR(255) NOT NULL,
+                   `lastUpdate` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                   `name` TEXT NOT NULL,
+                   `description` MEDIUMTEXT NOT NULL,
+                   `memory` BIGINT NOT NULL,
+                   `vCPUs` INT NOT NULL,
+                   `power` TEXT NOT NULL
+        );"""
+        if not self.create_engine.has_table("hosts") or self.create_engine.has_table(
+            "vms"
+        ):
+            self.create_engine.execute(hosts_table)
+            self.create_engine.execute(vms_table)
 
 
 # =========================================
 
 
-def sync_mysql_host_database():
-    if status.get_enabled():
-        print()
-        print("MySQL Sync: MySQL Host Sync Triggered!")
-
-        from XenXenXenSe.session import create_session
-        from XenXenXenSe.Host import Host
-        from XenXenXenSe.VM import VM
-        from .Host import XenHost
-        from .VM import XenVm
-
-        for cluster_id in get_xen_clusters():
-            session = create_session(cluster_id)
-
-            # ==================================
-
-            hosts = Host.list_host(session)
-            for host in hosts:
-                XenHost.update(cluster_id, host)
-
-            XenHost.remove_orphaned(cluster_id)
-
-        print("MySQL Sync: MySQL Host Sync Completed!")
-        print()
-
-
-# =========================================
-
-
-def sync_mysql_database():
-    if status.get_enabled():
-        print()
-        print("MySQL Sync: MySQL Sync Triggered!")
-
-        from .VM import XenVm
-        from .Host import XenHost
-        from XenXenXenSe.VM import VM
-        from XenXenXenSe.Host import Host
-        from XenXenXenSe.session import create_session
-
-        for cluster_id in get_xen_clusters():
-            session = create_session(cluster_id)
-
-            # ==================================
-
+async def sync_mysql_host_database():
+    while 1:
+        if status.get_enabled():
+            print()
             print("MySQL Sync: MySQL Host Sync Triggered!")
-            hosts = Host.list_host(session)
-            for host in hosts:
-                host.update(cluster_id, host)
 
-            XenHost.remove_orphaned(cluster_id)
+            from .Host import XenHost
+            from .VM import XenVm
+            from XenXenXenSe.session import create_session
+            from XenXenXenSe.VM import VM
+            from XenXenXenSe.Host import Host
 
-            # ===================================
+            for cluster_id in get_xen_clusters():
+                session = create_session(cluster_id)
 
-            print("MySQL Sync: MySQL VM Sync Triggered!")
-            vms = VM.list_vm(session)
-            for _vm in vms:
-                XenVm.update(cluster_id, _vm)
+                # ==================================
 
-            XenVm.remove_orphaned(cluster_id)
+                hosts = Host.list_host(session)
+                for host in hosts:
+                    await XenHost().update(cluster_id, host)
+
+                await XenHost().remove_orphaned(cluster_id)
+
+            print("MySQL Sync: MySQL Host Sync Completed!")
+            print()
+        time.sleep(mysql_host_update_rate)
+
+
+# =========================================
+
+
+async def sync_mysql_database():
+    while 1:
+        if status.get_enabled():
+            print()
+            print("MySQL Sync: MySQL Sync Triggered!")
+
+            from .VM import XenVm
+            from .Host import XenHost
+            from XenXenXenSe.VM import VM
+            from XenXenXenSe.Host import Host
+            from XenXenXenSe.session import create_session
+
+            for cluster_id in get_xen_clusters():
+                session = create_session(cluster_id)
+
+                # ==================================
+
+                print("MySQL Sync: MySQL Host Sync Triggered!")
+                hosts = Host.list_host(session)
+                for host in hosts:
+                    host.update(cluster_id, host)
+
+                await XenHost().remove_orphaned(cluster_id)
+
+                # ===================================
+
+                print("MySQL Sync: MySQL VM Sync Triggered!")
+                vms = VM.list_vm(session)
+                for _vm in vms:
+                    await XenVm().update(cluster_id, _vm)
+
+                await XenVm().remove_orphaned(cluster_id)
+            time.sleep(mysql_update_rate)
 
         print("MySQL Sync: MySQL Sync Completed!")
         print()
@@ -187,8 +211,7 @@ def sync_mysql_database():
 
 # =========================================
 
-
-def init_connection():
+async def init_connection():
     if status.get_enabled():
         print("MySQL Sync: Terminating Multiple Initialization")
         return
@@ -202,12 +225,10 @@ def init_connection():
     print()
     try:
         _mysql = DatabaseManager()
-        _mysql.is_not_generated_table()
+        await _mysql.is_not_generated_table()
 
-        status.set_enabled(True)
-
-        schedule.every(mysql_host_update_rate).seconds.do(sync_mysql_host_database)
-        schedule.every(mysql_update_rate).seconds.do(sync_mysql_database)
+        await sync_mysql_host_database()
+        await sync_mysql_database()
 
         print("MySQL Sync: MySQL Caching is enabled!")
 
