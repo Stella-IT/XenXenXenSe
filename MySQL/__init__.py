@@ -211,6 +211,7 @@ async def sync_mysql_database():
 
 # =========================================
 
+
 async def init_connection():
     if status.get_enabled():
         print("MySQL Sync: Terminating Multiple Initialization")
