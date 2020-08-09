@@ -12,6 +12,7 @@ commitizen = "*"
 [packages]
 xenapi = "*"
 fastapi = {extras = ["all"], version = "*"}
+databases = {extras = ["mysql"], version = "*"}
 uvicorn = "*"
 uvloop = "*"
 aiojobs = "*"
