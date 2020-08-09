@@ -89,3 +89,5 @@ fabric.properties
 
 # Pipfile.lock for different version
 Pipfile.lock
+
+config.json

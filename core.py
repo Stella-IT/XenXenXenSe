@@ -5,7 +5,7 @@ import time
 import signal
 import uvicorn
 import schedule
-
+import asyncio
 from API.v1 import router as _v1_router
 from threading import Thread
 
@@ -13,15 +13,36 @@ from config import get_xen_clusters, get_mysql_credentials
 
 # Temp solution
 from MySQL import init_connection
+from MySQL import DatabaseCore
 
 
-class XenXenXenSeCore:
+class XenXenXenSeCore(DatabaseCore):
     def __init__(self, app):
+        super().__init__()
+        self.manager = self
         self.terminating = False
         self.app = app
 
         # include API router
         self.app.include_router(_v1_router)
+
+    def database_controller(self):
+        @self.app.on_event("startup")
+        async def on_startup():
+            """database connection"""
+            try:
+                self.manager.metadata.create_all(self.manager.create_engine)
+                if not self.manager.database.is_connected:
+                    await self.manager.database.connect()
+
+            except AttributeError:
+                return 0
+
+        @self.app.on_event("shutdown")
+        async def on_shutdown():
+            """database disconnection"""
+            if self.manager.metadata.is_connected:
+                await self.manager.database.disconnect()
 
     @classmethod
     def is_docker(cls):
@@ -50,7 +71,8 @@ class XenXenXenSeCore:
         if add_padding:
             print()
 
-    def print_xen_hostnames(self, show_title=False):
+    @staticmethod
+    def print_xen_hostnames(show_title=False):
         """ Print Xen Hostnames to screen """
         if show_title:
             print("Detected Clusters")
@@ -75,10 +97,9 @@ class XenXenXenSeCore:
             # production environment
             uvicorn.run(self.app, host="127.0.0.1", port=8000)
 
-    @staticmethod
-    def connect_db():
+    def connect_db(self):
         # Temporary Solution, will refactor to OOP Python. - @zeroday0619 Plz help!
-        init_connection()
+        self.database_controller()
 
     def schedule_process(self):
         """ The Thread content to run on scheduler """
@@ -88,12 +109,16 @@ class XenXenXenSeCore:
             while not self.terminating:
                 schedule.run_pending()
                 time.sleep(1)
-        except:
-            print("Exception was detected")
+                self.schedule_()
+        except Exception as e:
+            print("Exception was detected: ", e)
             self.terminating = True
 
         print()
         print("Schedule handling is terminating!")
+
+    def schedule_(self):
+        asyncio.run(init_connection())
 
     def start(self):
         self.show_banner(True)
@@ -106,7 +131,6 @@ class XenXenXenSeCore:
         # Create new Thread
         schedule_thread = Thread(target=self.schedule_process)
         schedule_thread.start()
-
         # Run DB Cache Service
         self.connect_db()
 
