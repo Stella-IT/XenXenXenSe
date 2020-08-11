@@ -88,4 +88,5 @@ fabric.properties
 # Pipfile.lock for different version
 Pipfile.lock
 
+# Prevent default config to be committed.
 config.json
