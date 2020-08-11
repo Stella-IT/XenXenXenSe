@@ -11,7 +11,7 @@ commitizen = "*"
 
 [packages]
 xenapi = "*"
-fastapi = {extras = ["all"], version = "*"}
+fastapi = {version = "*"}
 databases = {extras = ["mysql"], version = "*"}
 uvicorn = "*"
 uvloop = "*"
