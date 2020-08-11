@@ -45,7 +45,7 @@ async def instance_clone_inurl(cluster_id: str, vm_uuid: str, clone_name: str):
     else:
         ret = {"success": False}
 
-    XenVm.update(cluster_id, newVM)
+    XenVm.update(cluster_id, new_vm)
 
     session.xenapi.session.logout()
     return ret
