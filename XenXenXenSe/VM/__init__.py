@@ -261,9 +261,9 @@ class VM:
             return VM(self.session, vm)
         except Exception as e:
             print("VM.clone Exception", e)
-            return False
+            return None
 
-        return True
+        return None
 
     def set_name(self, name):
         try:
