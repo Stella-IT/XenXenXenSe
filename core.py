@@ -20,7 +20,6 @@ class XenXenXenSeCore(DatabaseCore):
     def __init__(self, app):
         super().__init__()
         self.manager = self
-        self.terminating = False
         self.app = app
 
         # include API router
@@ -101,25 +100,6 @@ class XenXenXenSeCore(DatabaseCore):
         # Temporary Solution, will refactor to OOP Python. - @zeroday0619 Plz help!
         self.database_controller()
 
-    def schedule_process(self):
-        """ The Thread content to run on scheduler """
-        print("Data Caching Schedule handling has been started!")
-        print()
-        try:
-            while not self.terminating:
-                schedule.run_pending()
-                time.sleep(1)
-                self.schedule_()
-        except Exception as e:
-            print("Exception was detected: ", e)
-            self.terminating = True
-
-        print()
-        print("Schedule handling is terminating!")
-
-    def schedule_(self):
-        asyncio.run(init_connection())
-
     def start(self):
         self.show_banner(True)
         self.print_xen_hostnames(True)
@@ -128,17 +108,11 @@ class XenXenXenSeCore(DatabaseCore):
         # Detect if server is executed with development mode
         development_mode = ("-d" in sys.argv) or ("--dev" in sys.argv)
 
-        # Create new Thread
-        schedule_thread = Thread(target=self.schedule_process)
-        schedule_thread.start()
         # Run DB Cache Service
         self.connect_db()
 
+        # Create new Thread
+        Thread(target=init_connection).start()
+
         # Run API Server
         self.run_api_server(development_mode)
-
-        # Termination
-        self.terminating = True
-
-        # merge with schedule thread
-        schedule_thread.join()
