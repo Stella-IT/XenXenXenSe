@@ -169,7 +169,6 @@ async def sync_mysql_host_database():
         time.sleep(mysql_host_update_rate)
 
 
-
 # =========================================
 
 
@@ -238,8 +237,8 @@ async def __init_connection(loop):
     print("MySQL Sync: MySQL Caching is enabled!")
 
 
-
 # =========================================
+
 
 def init_connection():
     loop = asyncio.new_event_loop()
