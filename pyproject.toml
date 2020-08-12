@@ -4,8 +4,7 @@ version = "0.0.1"
 description = "Create a pyproject.toml file for an existing project."
 authors = [
     "zeroday0619 <zeroday0619@kakao.com>",
-    "Alex4386 <alex4386@stella-it.com>",
-    ""
+    "Alex4386 <alex4386@stella-it.com>"
 ]
 license = "AGPL-3.0-or-later"
 readme = "README.md"
