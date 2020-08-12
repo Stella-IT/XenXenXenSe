@@ -84,7 +84,7 @@ class XenVm(DatabaseCore):
                         self.sql = (
                             "DELETE FROM `vms` WHERE `cluster_id`=%s AND `vm_uuid`=%s"
                         )
-                        await self.database.execute(cls.sql, (cluster_id, vm_uuid))
+                        await self.database.execute(self.sql, (cluster_id, vm_uuid))
 
             except Exception as e:
                 print("MySQL Sync: remove_orphaned failed.", e)

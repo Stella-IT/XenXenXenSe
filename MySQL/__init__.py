@@ -165,7 +165,9 @@ async def sync_mysql_host_database():
 
             print("MySQL Sync: MySQL Host Sync Completed!")
             print()
+            time.sleep(mysql_host_update_rate)
         time.sleep(mysql_host_update_rate)
+
 
 
 # =========================================
@@ -203,16 +205,16 @@ async def sync_mysql_database():
                     await XenVm().update(cluster_id, _vm)
 
                 await XenVm().remove_orphaned(cluster_id)
+            print("MySQL Sync: MySQL Sync Completed!")
+            print()
             time.sleep(mysql_update_rate)
-
-        print("MySQL Sync: MySQL Sync Completed!")
-        print()
+        time.sleep(mysql_update_rate)
 
 
 # =========================================
 
 
-async def init_connection():
+async def __init_connection(loop):
     if status.get_enabled():
         print("MySQL Sync: Terminating Multiple Initialization")
         return
@@ -227,14 +229,19 @@ async def init_connection():
     try:
         _mysql = DatabaseManager()
         await _mysql.is_not_generated_table()
-
-        await sync_mysql_host_database()
-        await sync_mysql_database()
-
-        print("MySQL Sync: MySQL Caching is enabled!")
-
     except Exception as e:
         print("Database generation failed.", e)
 
+    loop.create_task(sync_mysql_host_database())
+    loop.create_task(sync_mysql_database())
+
+    print("MySQL Sync: MySQL Caching is enabled!")
+
+
 
 # =========================================
+
+def init_connection():
+    loop = asyncio.new_event_loop()
+    asyncio.set_event_loop(loop)
+    loop.run_until_complete(__init_connection(loop))
