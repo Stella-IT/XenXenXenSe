@@ -1,0 +1,54 @@
+[project]
+name = "XenXenXenSe"
+version = "0.0.1"
+description = "Create a pyproject.toml file for an existing project."
+authors = [
+    "zeroday0619 <zeroday0619@kakao.com>",
+    "Alex4386 <alex4386@stella-it.com>",
+    ""
+]
+license = "AGPL-3.0-or-later"
+readme = "README.md"
+python = "^3.7"
+homepage = "https://github.com/Stella-IT/XenXenXenSe"
+repository = "https://github.com/Stella-IT/XenXenXenSe"
+documentation = "https://github.com/Stella-IT/XenXenXenSe"
+
+keywords = ["xenapi", "restful", "api"]
+
+[tool.black]
+line-length = 79     # PEP8 specs requires you to use 79,
+                     # but black maintainers recommends 88.
+                     # since maintainer (zeroday0619) made
+                     # choice of using PEP8, this will be 79.
+
+                     # Plus, single quote can not be enforced
+                     # in black. therefore, full PEP8 enforcing
+                     # is impossible. Use third-party project
+                     # (ex. prettify) for that
+
+target-version = ['py37','py38']
+include = '\.pyi?$'
+exclude = '''
+
+(
+  /(
+      \.eggs         # exclude a few common directories in the
+    | \.git          # root of the project
+    | \.hg
+    | \.mypy_cache
+    | \.tox
+    | \.venv         # Python virtual envs
+    | \.idea         # Jetbrains IDEA-based IDEs
+    | \.github       # GitHub CI
+    | _build
+    | buck-out
+    | build
+    | dist
+    | demonstration  # Repository specific: code demo resources
+    | __pycache__    # Python JIT Compile caches
+  )/
+# | foo.py           # also separately exclude a file named foo.py in
+                     # the root of the project
+)
+'''
