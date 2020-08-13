@@ -6,8 +6,9 @@ from typing import Dict
 # set xen credentials
 def get_xen_clusters() -> Dict:
     from core import XenXenXenSeCore
+
     xen_clusters = {}
-    if os.path.isfile('config.json'):
+    if os.path.isfile("config.json"):
         with open("config.json", "r") as config_file:
             xen_clusters = ujson.load(config_file)["xen_clusters"]
         config_file.close()
@@ -22,13 +23,13 @@ def get_xen_clusters() -> Dict:
 
 def get_mysql_credentials() -> Dict:
     from core import XenXenXenSeCore
+
     mysql_credentials = {}
 
-    if os.path.isfile('config.json'):
+    if os.path.isfile("config.json"):
         with open("config.json", "r") as config_file:
             mysql_credentials = ujson.load(config_file)["mysql_credentials"]
         config_file.close()
-
 
     # Docker check
     if XenXenXenSeCore.is_docker():
