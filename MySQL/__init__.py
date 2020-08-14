@@ -51,7 +51,7 @@ class DatabaseCore:
 
 class DatabaseManager(DatabaseCore):
     def __init__(self):
-        super().__init__()
+        super(DatabaseManager, self).__init__()
         self.database_core = self
 
     def hosts_table(self):
@@ -131,7 +131,7 @@ class DatabaseManager(DatabaseCore):
                    `power` TEXT NOT NULL
         );"""
         if not self.create_engine.has_table("hosts") or self.create_engine.has_table(
-            "vms"
+                "vms"
         ):
             self.create_engine.execute(hosts_table)
             self.create_engine.execute(vms_table)
@@ -167,7 +167,6 @@ async def sync_mysql_host_database():
             print()
             time.sleep(mysql_host_update_rate)
         time.sleep(mysql_host_update_rate)
-
 
 
 # =========================================
@@ -213,35 +212,37 @@ async def sync_mysql_database():
 
 # =========================================
 
+class CoreInitialization(DatabaseManager):
+    def __init__(self):
+        super(CoreInitialization, self).__init__()
 
-async def __init_connection(loop):
-    if status.get_enabled():
-        print("MySQL Sync: Terminating Multiple Initialization")
-        return
+    async def init_connection(self, loop):
+        if status.get_enabled():
+            print("MySQL Sync: Terminating Multiple Initialization")
+            return
 
-    mysql_credentials = get_mysql_credentials()
+        mysql_credentials = get_mysql_credentials()
 
-    if mysql_credentials is None:
-        print("MySQL Sync: MySQL Caching is disabled!")
-        return
+        if mysql_credentials is None:
+            print("MySQL Sync: MySQL Caching is disabled!")
+            return
 
-    print()
-    try:
-        _mysql = DatabaseManager()
-        await _mysql.is_not_generated_table()
-    except Exception as e:
-        print("Database generation failed.", e)
+        print()
+        if not self.create_engine.has_table("hosts") or self.create_engine.has_table("vms"):
+            try:
+                await self.is_not_generated_table()
+            except Exception as e:
+                print("Database generation failed.", e)
+                return
 
-    loop.create_task(sync_mysql_host_database())
-    loop.create_task(sync_mysql_database())
+        loop.create_task(sync_mysql_host_database())
+        loop.create_task(sync_mysql_database())
+        print("MySQL Sync: MySQL Caching is enabled!")
 
-    print("MySQL Sync: MySQL Caching is enabled!")
-
-
-
-# =========================================
 
 def init_connection():
     loop = asyncio.new_event_loop()
     asyncio.set_event_loop(loop)
-    loop.run_until_complete(__init_connection(loop))
+
+    c = CoreInitialization()
+    loop.run_until_complete(c.init_connection(loop=loop))
