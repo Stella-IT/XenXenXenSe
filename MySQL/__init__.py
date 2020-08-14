@@ -239,6 +239,7 @@ class CoreInitialization(DatabaseManager):
         loop.create_task(sync_mysql_database())
         print("MySQL Sync: MySQL Caching is enabled!")
 
+# =========================================
 
 def init_connection():
     loop = asyncio.new_event_loop()
