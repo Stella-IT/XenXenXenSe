@@ -19,6 +19,12 @@ def serialize(vif: VIF):
             "info": vif.get_qos_info(),
             "supported": vif.supported_qos_types(),
         },
-        "ipv4": {"address": vif.get_address_v4(), "gateway": vif.get_gateway_v4()},
-        "ipv6": {"address": vif.get_address_v6(), "gateway": vif.get_gateway_v6()},
+        "ipv4": {
+            "address": vif.get_address_v4(),
+            "gateway": vif.get_gateway_v4(),
+        },
+        "ipv6": {
+            "address": vif.get_address_v6(),
+            "gateway": vif.get_gateway_v6(),
+        },
     }

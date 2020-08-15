@@ -65,7 +65,9 @@ class XenXenXenSeCore(DatabaseCore):
         )
         print()
         print("Copyright (c) Stella IT.")
-        print("This software is distributed under Affero GNU Public License v3.")
+        print(
+            "This software is distributed under Affero GNU Public License v3."
+        )
 
         if add_padding:
             print()

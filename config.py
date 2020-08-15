@@ -34,7 +34,9 @@ def get_mysql_credentials() -> Dict:
     # Docker check
     if XenXenXenSeCore.is_docker():
         if "mysql_credentials" in XenXenXenSeCore.get_docker_config():
-            mysql_credentials = XenXenXenSeCore.get_docker_config()["mysql_credentials"]
+            mysql_credentials = XenXenXenSeCore.get_docker_config()[
+                "mysql_credentials"
+            ]
 
     return mysql_credentials
 

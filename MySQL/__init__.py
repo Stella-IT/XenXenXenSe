@@ -6,7 +6,14 @@ import asyncio
 
 from MySQL.interface import credentials_interface
 from MySQL.Status import status
-from sqlalchemy.dialects.mysql import MEDIUMTEXT, VARCHAR, DATETIME, TEXT, FLOAT, BIGINT
+from sqlalchemy.dialects.mysql import (
+    MEDIUMTEXT,
+    VARCHAR,
+    DATETIME,
+    TEXT,
+    FLOAT,
+    BIGINT,
+)
 from sqlalchemy import INT
 from config import (
     mysql_host_update_rate,
@@ -51,7 +58,7 @@ class DatabaseCore:
 
 class DatabaseManager(DatabaseCore):
     def __init__(self):
-        super().__init__()
+        super(DatabaseManager, self).__init__()
         self.database_core = self
 
     def hosts_table(self):
@@ -72,7 +79,10 @@ class DatabaseManager(DatabaseCore):
             sqlalchemy.Column("cluster_id", VARCHAR(255), nullable=False),
             sqlalchemy.Column("host_uuid", VARCHAR(255), nullable=False),
             sqlalchemy.Column(
-                "lastUpdate", DATETIME, nullable=False, default=datetime.datetime.utcnow
+                "lastUpdate",
+                DATETIME,
+                nullable=False,
+                default=datetime.datetime.utcnow,
             ),
             sqlalchemy.Column("cpu", TEXT, nullable=False),
             sqlalchemy.Column("cpu_speed", FLOAT, nullable=False),
@@ -100,7 +110,10 @@ class DatabaseManager(DatabaseCore):
             sqlalchemy.Column("cluster_id", VARCHAR(255), nullable=False),
             sqlalchemy.Column("vm_uuid", VARCHAR(255), nullable=False),
             sqlalchemy.Column(
-                "lastUpdate", DATETIME, nullable=False, default=datetime.datetime.utcnow
+                "lastUpdate",
+                DATETIME,
+                nullable=False,
+                default=datetime.datetime.utcnow,
             ),
             sqlalchemy.Column("name", TEXT, nullable=False),
             sqlalchemy.Column("description", MEDIUMTEXT, nullable=False),
@@ -130,9 +143,9 @@ class DatabaseManager(DatabaseCore):
                    `vCPUs` INT NOT NULL,
                    `power` TEXT NOT NULL
         );"""
-        if not self.create_engine.has_table("hosts") or self.create_engine.has_table(
-            "vms"
-        ):
+        if not self.create_engine.has_table(
+            "hosts"
+        ) or self.create_engine.has_table("vms"):
             self.create_engine.execute(hosts_table)
             self.create_engine.execute(vms_table)
 
@@ -213,28 +226,34 @@ async def sync_mysql_database():
 # =========================================
 
 
-async def __init_connection(loop):
-    if status.get_enabled():
-        print("MySQL Sync: Terminating Multiple Initialization")
-        return
+class CoreInitialization(DatabaseManager):
+    def __init__(self):
+        super(CoreInitialization, self).__init__()
 
-    mysql_credentials = get_mysql_credentials()
+    async def init_connection(self, loop):
+        if status.get_enabled():
+            print("MySQL Sync: Terminating Multiple Initialization")
+            return
 
-    if mysql_credentials is None:
-        print("MySQL Sync: MySQL Caching is disabled!")
-        return
+        mysql_credentials = get_mysql_credentials()
 
-    print()
-    try:
-        _mysql = DatabaseManager()
-        await _mysql.is_not_generated_table()
-    except Exception as e:
-        print("Database generation failed.", e)
+        if mysql_credentials is None:
+            print("MySQL Sync: MySQL Caching is disabled!")
+            return
 
-    loop.create_task(sync_mysql_host_database())
-    loop.create_task(sync_mysql_database())
+        print()
+        if not self.create_engine.has_table(
+            "hosts"
+        ) or self.create_engine.has_table("vms"):
+            try:
+                await self.is_not_generated_table()
+            except Exception as e:
+                print("Database generation failed.", e)
+                return
 
-    print("MySQL Sync: MySQL Caching is enabled!")
+        loop.create_task(sync_mysql_host_database())
+        loop.create_task(sync_mysql_database())
+        print("MySQL Sync: MySQL Caching is enabled!")
 
 
 # =========================================
@@ -243,4 +262,6 @@ async def __init_connection(loop):
 def init_connection():
     loop = asyncio.new_event_loop()
     asyncio.set_event_loop(loop)
-    loop.run_until_complete(__init_connection(loop))
+
+    c = CoreInitialization()
+    loop.run_until_complete(c.init_connection(loop=loop))

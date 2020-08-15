@@ -14,7 +14,10 @@ async def vm_guest(cluster_id: str, vm_uuid: str):
     session = create_session(cluster_id)
     vm: VM = VM.get_by_uuid(session, vm_uuid)
     if vm is not None:
-        ret = {"success": True, "data": _guest_serialize(vm.get_guest_metrics())}
+        ret = {
+            "success": True,
+            "data": _guest_serialize(vm.get_guest_metrics()),
+        }
     else:
         session.xenapi.session.logout()
         ret = {"success": False}

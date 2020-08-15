@@ -18,7 +18,9 @@ class XenVm(DatabaseCore):
             try:
                 uuid = _vm.get_uuid()
                 self.sql = "SELECT * FROM `vms` WHERE `cluster_id`=%s AND `vm_uuid`=%s"
-                low_count = await self.database.execute(self.sql, (cluster_id, uuid))
+                low_count = await self.database.execute(
+                    self.sql, (cluster_id, uuid)
+                )
 
                 vCPUs = int(_vm.get_vCPUs())
                 memory = int(_vm.get_memory())
@@ -30,7 +32,15 @@ class XenVm(DatabaseCore):
                     self.sql = "INSERT INTO `vms` (`cluster_id`, `vm_uuid`, `vCPUs`, `memory`, `name`, `description`, `power`) VALUES (%s, %s, %s, %s, %s, %s, %s)"
                     await self.database.execute(
                         self.sql,
-                        (cluster_id, uuid, vCPUs, memory, name, description, power),
+                        (
+                            cluster_id,
+                            uuid,
+                            vCPUs,
+                            memory,
+                            name,
+                            description,
+                            power,
+                        ),
                     )
                 else:
                     vm_data = await self.database.fetch_one()
@@ -58,7 +68,9 @@ class XenVm(DatabaseCore):
 
                     else:
                         self.sql = "UPDATE `vms` SET `lastUpdate`=NOW() WHERE `cluster_id`=%s AND `vm_uuid`=%s"
-                        await self.database.execute(self.sql, (cluster_id, uuid))
+                        await self.database.execute(
+                            self.sql, (cluster_id, uuid)
+                        )
             except Exception as e:
                 print("MySQL Sync: update failed.", e, "\n", self.sql)
 
@@ -81,10 +93,10 @@ class XenVm(DatabaseCore):
                     _vm = VM.get_by_uuid(session, vm_uuid)
 
                     if _vm is None:
-                        self.sql = (
-                            "DELETE FROM `vms` WHERE `cluster_id`=%s AND `vm_uuid`=%s"
+                        self.sql = "DELETE FROM `vms` WHERE `cluster_id`=%s AND `vm_uuid`=%s"
+                        await self.database.execute(
+                            self.sql, (cluster_id, vm_uuid)
                         )
-                        await self.database.execute(self.sql, (cluster_id, vm_uuid))
 
             except Exception as e:
                 print("MySQL Sync: remove_orphaned failed.", e)

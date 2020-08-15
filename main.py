@@ -15,7 +15,9 @@ xmlrpc.client.MAXINT = 2 ** 63 - 1
 xmlrpc.client.MININT = -(2 ** 63)
 
 app = FastAPI(
-    title="Xen API v2", description="XenServer Management API to REST API", debug=True
+    title="Xen API v2",
+    description="XenServer Management API to REST API",
+    debug=True,
 )
 
 if __name__ == "__main__":

@@ -55,7 +55,9 @@ async def vif_get_qos_speed_by_uuid(cluster_id: str, vif_uuid: str):
 
 
 @router.get("/{cluster_id}/vif/{vif_uuid}/qos/speed/{speed}")
-async def vif_set_qos_speed_by_uuid(cluster_id: str, vif_uuid: str, speed: str):
+async def vif_set_qos_speed_by_uuid(
+    cluster_id: str, vif_uuid: str, speed: str
+):
     """ Set VIF QoS Speed by UUID """
     session = create_session(cluster_id)
     vif: VIF = VIF.get_by_uuid(session, vif_uuid)

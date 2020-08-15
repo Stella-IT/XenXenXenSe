@@ -8,7 +8,9 @@ router = APIRouter()
 
 
 @router.get("/{cluster_id}/vbd/{vbd_uuid}/insert/{vdi_uuid}")
-async def vbd_insert_vdi_by_uuid(cluster_id: str, vbd_uuid: str, vdi_uuid: str):
+async def vbd_insert_vdi_by_uuid(
+    cluster_id: str, vbd_uuid: str, vdi_uuid: str
+):
     """ Insert VDI into VBD by UUID """
     session = create_session(cluster_id)
     vdi: VDI = VDI.get_by_uuid(session, vdi_uuid)
