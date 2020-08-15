@@ -1,4 +1,4 @@
-name: Python package
+name: Python Script Linting
 
 on:
   push:
