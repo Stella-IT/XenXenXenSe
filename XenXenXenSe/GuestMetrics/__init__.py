@@ -25,7 +25,9 @@ class GuestMetrics:
     def get_networks(self):
         """ Gets UUID of Guest Networks """
         try:
-            return self.session.xenapi.VM_guest_metrics.get_networks(self.guest)
+            return self.session.xenapi.VM_guest_metrics.get_networks(
+                self.guest
+            )
         except Exception as e:
             print("Exception: GuestMetrics.get_networks:", e)
             return None
@@ -33,7 +35,9 @@ class GuestMetrics:
     def get_os_version(self):
         """ Gets OS Version of Guest """
         try:
-            return self.session.xenapi.VM_guest_metrics.get_os_version(self.guest)
+            return self.session.xenapi.VM_guest_metrics.get_os_version(
+                self.guest
+            )
         except Exception as e:
             print("Exception: GuestMetrics.get_os_version:", e)
             return None

@@ -6,7 +6,14 @@ import asyncio
 
 from MySQL.interface import credentials_interface
 from MySQL.Status import status
-from sqlalchemy.dialects.mysql import MEDIUMTEXT, VARCHAR, DATETIME, TEXT, FLOAT, BIGINT
+from sqlalchemy.dialects.mysql import (
+    MEDIUMTEXT,
+    VARCHAR,
+    DATETIME,
+    TEXT,
+    FLOAT,
+    BIGINT,
+)
 from sqlalchemy import INT
 from config import (
     mysql_host_update_rate,
@@ -72,7 +79,10 @@ class DatabaseManager(DatabaseCore):
             sqlalchemy.Column("cluster_id", VARCHAR(255), nullable=False),
             sqlalchemy.Column("host_uuid", VARCHAR(255), nullable=False),
             sqlalchemy.Column(
-                "lastUpdate", DATETIME, nullable=False, default=datetime.datetime.utcnow
+                "lastUpdate",
+                DATETIME,
+                nullable=False,
+                default=datetime.datetime.utcnow,
             ),
             sqlalchemy.Column("cpu", TEXT, nullable=False),
             sqlalchemy.Column("cpu_speed", FLOAT, nullable=False),
@@ -100,7 +110,10 @@ class DatabaseManager(DatabaseCore):
             sqlalchemy.Column("cluster_id", VARCHAR(255), nullable=False),
             sqlalchemy.Column("vm_uuid", VARCHAR(255), nullable=False),
             sqlalchemy.Column(
-                "lastUpdate", DATETIME, nullable=False, default=datetime.datetime.utcnow
+                "lastUpdate",
+                DATETIME,
+                nullable=False,
+                default=datetime.datetime.utcnow,
             ),
             sqlalchemy.Column("name", TEXT, nullable=False),
             sqlalchemy.Column("description", MEDIUMTEXT, nullable=False),
@@ -130,9 +143,9 @@ class DatabaseManager(DatabaseCore):
                    `vCPUs` INT NOT NULL,
                    `power` TEXT NOT NULL
         );"""
-        if not self.create_engine.has_table("hosts") or self.create_engine.has_table(
-                "vms"
-        ):
+        if not self.create_engine.has_table(
+            "hosts"
+        ) or self.create_engine.has_table("vms"):
             self.create_engine.execute(hosts_table)
             self.create_engine.execute(vms_table)
 
@@ -212,6 +225,7 @@ async def sync_mysql_database():
 
 # =========================================
 
+
 class CoreInitialization(DatabaseManager):
     def __init__(self):
         super(CoreInitialization, self).__init__()
@@ -228,7 +242,9 @@ class CoreInitialization(DatabaseManager):
             return
 
         print()
-        if not self.create_engine.has_table("hosts") or self.create_engine.has_table("vms"):
+        if not self.create_engine.has_table(
+            "hosts"
+        ) or self.create_engine.has_table("vms"):
             try:
                 await self.is_not_generated_table()
             except Exception as e:
@@ -239,7 +255,9 @@ class CoreInitialization(DatabaseManager):
         loop.create_task(sync_mysql_database())
         print("MySQL Sync: MySQL Caching is enabled!")
 
+
 # =========================================
+
 
 def init_connection():
     loop = asyncio.new_event_loop()

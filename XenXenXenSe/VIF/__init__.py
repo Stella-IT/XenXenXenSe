@@ -124,7 +124,9 @@ class VIF:
 
     def set_qos_type(self, qos_type):
         try:
-            return self.session.xenapi.VIF.get_qos_algorithm_type(self.vif, qos_type)
+            return self.session.xenapi.VIF.get_qos_algorithm_type(
+                self.vif, qos_type
+            )
         except Exception as e:
             print("VIF.set_qos_type Exception", e)
             return False
@@ -138,7 +140,9 @@ class VIF:
 
     def set_qos_info(self, qos_params):
         try:
-            self.session.xenapi.VIF.set_qos_algorithm_params(self.vif, qos_params)
+            self.session.xenapi.VIF.set_qos_algorithm_params(
+                self.vif, qos_params
+            )
             return True
         except Exception as e:
             print("VIF.set_qos_info Exception", e)

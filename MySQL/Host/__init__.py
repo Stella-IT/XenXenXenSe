@@ -17,10 +17,10 @@ class XenHost(DatabaseCore):
         if status.get_enabled():
             try:
                 uuid = _host.get_uuid()
-                self.sql = (
-                    "SELECT * FROM `hosts` WHERE `cluster_id`=%s AND `host_uuid`=%s"
+                self.sql = "SELECT * FROM `hosts` WHERE `cluster_id`=%s AND `host_uuid`=%s"
+                low_count = await self.database.execute(
+                    self.sql, (cluster_id, uuid)
                 )
-                low_count = await self.database.execute(self.sql, (cluster_id, uuid))
 
                 cpu_info = _host.get_cpu_info()
 
@@ -36,7 +36,8 @@ class XenHost(DatabaseCore):
                         " %s, %s, %s)"
                     )
                     await self.database.execute(
-                        self.sql, (cluster_id, uuid, cpu, speed, free_memory, memory)
+                        self.sql,
+                        (cluster_id, uuid, cpu, speed, free_memory, memory),
                     )
 
                 else:
@@ -56,14 +57,23 @@ class XenHost(DatabaseCore):
                         )
                         await self.database.execute(
                             self.sql,
-                            (cpu, speed, free_memory, memory, cluster_id, uuid),
+                            (
+                                cpu,
+                                speed,
+                                free_memory,
+                                memory,
+                                cluster_id,
+                                uuid,
+                            ),
                         )
                     else:
                         self.sql = (
                             "UPDATE `hosts` SET `lastUpdate`=NOW() WHERE"
                             " `cluster_id`=%s AND `host_uuid`=%s"
                         )
-                        await self.database.execute(self.sql, (cluster_id, uuid))
+                        await self.database.execute(
+                            self.sql, (cluster_id, uuid)
+                        )
 
             except Exception as e:
                 print("MySQL Sync: update failed.", e, self.sql)
@@ -90,6 +100,8 @@ class XenHost(DatabaseCore):
                             "DELETE FROM `hosts` WHERE `cluster_id`=%s AND"
                             " `host_uuid`=%s"
                         )
-                        await self.database.execute(self.sql, (cluster_id, host_uuid))
+                        await self.database.execute(
+                            self.sql, (cluster_id, host_uuid)
+                        )
             except Exception as e:
                 print("MySQL Sync: remove_orphaned failed.", e)

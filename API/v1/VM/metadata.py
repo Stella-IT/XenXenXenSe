@@ -58,7 +58,9 @@ async def instance_set_name(cluster_id: str, vm_uuid: str, args: NameArgs):
 
 @router.get("/{cluster_id}/vm/{vm_uuid}/name/{new_name}")
 @router.get("/{cluster_id}/template/{vm_uuid}/name/{new_name}")
-async def instance_set_name_inurl(cluster_id: str, vm_uuid: str, new_name: str):
+async def instance_set_name_inurl(
+    cluster_id: str, vm_uuid: str, new_name: str
+):
     """ Set Instance (VM/Template) Name """
     session = create_session(cluster_id)
     _vm: VM = VM.get_by_uuid(session, vm_uuid)
