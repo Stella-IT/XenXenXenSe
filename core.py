@@ -113,7 +113,7 @@ class XenXenXenSeCore(DatabaseCore):
             try:
                 source = init_connection()
             except asyncio.CancelledError:
-                print('cancelled error')
+                print("cancelled error")
             while not self.terminating:
                 time.sleep(1)
                 for task in asyncio.Task.all_tasks():
