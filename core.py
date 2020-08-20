@@ -19,6 +19,7 @@ from MySQL import DatabaseCore
 class XenXenXenSeCore(DatabaseCore):
     def __init__(self, app):
         super().__init__()
+        self.terminating = False
         self.manager = self
         self.app = app
 
@@ -102,6 +103,33 @@ class XenXenXenSeCore(DatabaseCore):
         # Temporary Solution, will refactor to OOP Python. - @zeroday0619 Plz help!
         self.database_controller()
 
+    @staticmethod
+    def ask_exit():
+        for task in asyncio.Task.all_tasks():
+            task.cancel()
+
+    def schedule_process(self):
+        try:
+            try:
+                source = init_connection()
+            except asyncio.CancelledError:
+                print('cancelled error')
+            while not self.terminating:
+                time.sleep(1)
+                for task in asyncio.Task.all_tasks():
+                    task.cancel()
+                asyncio.get_event_loop().stop()
+
+                for sig in (signal.SIGINT, signal.SIGTERM):
+                    source[2].add_signal_handler(sig, self.ask_exit)
+                source[2].run_forever()
+
+                for sig in (signal.SIGINT, signal.SIGTERM):
+                    source[2].remove_signal_handler(sig)
+                break
+        except Exception:
+            self.terminating = True
+
     def start(self):
         self.show_banner(True)
         self.print_xen_hostnames(True)
@@ -114,7 +142,13 @@ class XenXenXenSeCore(DatabaseCore):
         self.connect_db()
 
         # Create new Thread
-        Thread(target=init_connection).start()
+        try:
+            schedule_thread = Thread(target=self.schedule_process)
+            schedule_thread.start()
+        except RuntimeWarning:
+            print("Process terminated!")
 
         # Run API Server
         self.run_api_server(development_mode)
+
+        self.terminating = True

@@ -230,7 +230,7 @@ class CoreInitialization(DatabaseManager):
     def __init__(self):
         super(CoreInitialization, self).__init__()
 
-    async def init_connection(self, loop):
+    async def init_connection(self):
         if status.get_enabled():
             print("MySQL Sync: Terminating Multiple Initialization")
             return
@@ -251,17 +251,16 @@ class CoreInitialization(DatabaseManager):
                 print("Database generation failed.", e)
                 return
 
-        loop.create_task(sync_mysql_host_database())
-        loop.create_task(sync_mysql_database())
-        print("MySQL Sync: MySQL Caching is enabled!")
-
-
 # =========================================
 
 
 def init_connection():
     loop = asyncio.new_event_loop()
+    c = CoreInitialization()
+
     asyncio.set_event_loop(loop)
 
-    c = CoreInitialization()
-    loop.run_until_complete(c.init_connection(loop=loop))
+    loop.run_until_complete(c.init_connection())
+    a, b = loop.create_task(sync_mysql_host_database()), loop.create_task(sync_mysql_database())
+    print("MySQL Sync: MySQL Caching is enabled!")
+    return [a, b, loop]
