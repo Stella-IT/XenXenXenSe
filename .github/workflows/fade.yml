@@ -21,7 +21,7 @@ jobs:
           ./main.js --init --name xenxenxense --path $GITHUB_WORKSPACE --version 0.0.0-$COMMIT-$PYTHON_VERSION \
           --description "A Modern RESTful API implemenation of XenAPI for Citrix Hypervisor(R) and XCP-ng." \
           --url "https://github.com/Stella-IT/XenXenXenSe" --priority optional --architecture all \
-          --cmdline "python3 -m pipenv run start" --dependency python$PYTHON_VERSION \
+          --cmdline "python3 -m pipenv run start" --dependency python$PYTHON_VERSION --dependency python3-pip \
           --maintainer-name "Stella IT" --maintainer-email "admin@stella-it.com" --type systemd
           ./main.js --edit --path $GITHUB_WORKSPACE --postinst-payload -i /dev/stdin << EOF
           sudo -H -u xenxenxense python3 -m pip install pipenv
