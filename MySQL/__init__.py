@@ -1,4 +1,5 @@
 import time
+import schedule
 import databases
 import sqlalchemy
 import datetime
@@ -154,73 +155,67 @@ class DatabaseManager(DatabaseCore):
 
 
 async def sync_mysql_host_database():
-    while 1:
-        if status.get_enabled():
-            print()
-            print("MySQL Sync: MySQL Host Sync Triggered!")
+    if status.get_enabled():
+        print()
+        print("MySQL Sync: MySQL Host Sync Triggered!")
 
-            from .Host import XenHost
-            from .VM import XenVm
-            from XenXenXenSe.session import create_session
-            from XenXenXenSe.VM import VM
-            from XenXenXenSe.Host import Host
+        from .Host import XenHost
+        from .VM import XenVm
+        from XenXenXenSe.session import create_session
+        from XenXenXenSe.VM import VM
+        from XenXenXenSe.Host import Host
 
-            for cluster_id in get_xen_clusters():
-                session = create_session(cluster_id)
+        for cluster_id in get_xen_clusters():
+            session = create_session(cluster_id)
 
-                # ==================================
+            # ==================================
 
-                hosts = Host.list_host(session)
-                for host in hosts:
-                    await XenHost().update(cluster_id, host)
+            hosts = Host.list_host(session)
+            for host in hosts:
+                await XenHost().update(cluster_id, host)
 
-                await XenHost().remove_orphaned(cluster_id)
+            await XenHost().remove_orphaned(cluster_id)
 
-            print("MySQL Sync: MySQL Host Sync Completed!")
-            print()
-            time.sleep(mysql_host_update_rate)
-        time.sleep(mysql_host_update_rate)
+        print("MySQL Sync: MySQL Host Sync Completed!")
+        print()
 
 
 # =========================================
 
 
 async def sync_mysql_database():
-    while 1:
-        if status.get_enabled():
-            print()
-            print("MySQL Sync: MySQL Sync Triggered!")
+    if status.get_enabled():
+        print()
+        print("MySQL Sync: MySQL Sync Triggered!")
 
-            from .VM import XenVm
-            from .Host import XenHost
-            from XenXenXenSe.VM import VM
-            from XenXenXenSe.Host import Host
-            from XenXenXenSe.session import create_session
+        from .VM import XenVm
+        from .Host import XenHost
+        from XenXenXenSe.VM import VM
+        from XenXenXenSe.Host import Host
+        from XenXenXenSe.session import create_session
 
-            for cluster_id in get_xen_clusters():
-                session = create_session(cluster_id)
+        for cluster_id in get_xen_clusters():
+            session = create_session(cluster_id)
 
-                # ==================================
+            # ==================================
 
-                print("MySQL Sync: MySQL Host Sync Triggered!")
-                hosts = Host.list_host(session)
-                for host in hosts:
-                    host.update(cluster_id, host)
+            print("MySQL Sync: MySQL Host Sync Triggered!")
+            hosts = Host.list_host(session)
+            for host in hosts:
+                host.update(cluster_id, host)
 
-                await XenHost().remove_orphaned(cluster_id)
+            await XenHost().remove_orphaned(cluster_id)
 
-                # ===================================
+            # ===================================
 
-                print("MySQL Sync: MySQL VM Sync Triggered!")
-                vms = VM.list_vm(session)
-                for _vm in vms:
-                    await XenVm().update(cluster_id, _vm)
+            print("MySQL Sync: MySQL VM Sync Triggered!")
+            vms = VM.list_vm(session)
+            for _vm in vms:
+                await XenVm().update(cluster_id, _vm)
 
-                await XenVm().remove_orphaned(cluster_id)
-            print("MySQL Sync: MySQL Sync Completed!")
-            print()
-            time.sleep(mysql_update_rate)
-        time.sleep(mysql_update_rate)
+            await XenVm().remove_orphaned(cluster_id)
+        print("MySQL Sync: MySQL Sync Completed!")
+        print()
 
 
 # =========================================
@@ -257,14 +252,17 @@ class CoreInitialization(DatabaseManager):
 
 def init_connection():
     loop = asyncio.new_event_loop()
-    c = CoreInitialization()
-
     asyncio.set_event_loop(loop)
-
-    loop.run_until_complete(c.init_connection())
-    a, b = (
-        loop.create_task(sync_mysql_host_database()),
-        loop.create_task(sync_mysql_database()),
-    )
-    print("MySQL Sync: MySQL Caching is enabled!")
-    return [a, b, loop]
+    try:
+        # generate MySQL database table
+        c = CoreInitialization()
+        loop.run_until_complete(c.init_connection())
+        schedule.every(mysql_host_update_rate).seconds.do(
+            loop.call_soon_threadsafe, sync_mysql_host_database
+        )
+        schedule.every(mysql_update_rate).seconds.do(
+            loop.call_soon_threadsafe, sync_mysql_database
+        )
+        print("MySQL Sync: MySQL Caching is enabled!")
+    except Exception as e:
+        print("Database generation failed.", e)

@@ -34,7 +34,6 @@ class XenXenXenSeCore(DatabaseCore):
                 self.manager.metadata.create_all(self.manager.create_engine)
                 if not self.manager.database.is_connected:
                     await self.manager.database.connect()
-
             except AttributeError:
                 return 0
 
@@ -102,6 +101,7 @@ class XenXenXenSeCore(DatabaseCore):
     def connect_db(self):
         # Temporary Solution, will refactor to OOP Python. - @zeroday0619 Plz help!
         self.database_controller()
+        init_connection()
 
     @staticmethod
     def ask_exit():
@@ -109,26 +109,19 @@ class XenXenXenSeCore(DatabaseCore):
             task.cancel()
 
     def schedule_process(self):
+        """ The Thread content to run on scheduler """
+        print("Data Caching Schedule handling has been started!")
+        print()
         try:
-            try:
-                source = init_connection()
-            except asyncio.CancelledError:
-                print("cancelled error")
             while not self.terminating:
+                schedule.run_pending()
                 time.sleep(1)
-                for task in asyncio.Task.all_tasks():
-                    task.cancel()
-                asyncio.get_event_loop().stop()
-
-                for sig in (signal.SIGINT, signal.SIGTERM):
-                    source[2].add_signal_handler(sig, self.ask_exit)
-                source[2].run_forever()
-
-                for sig in (signal.SIGINT, signal.SIGTERM):
-                    source[2].remove_signal_handler(sig)
-                break
-        except Exception:
+        except Exception as e:
+            print("Exception was detected", e)
             self.terminating = True
+
+        print()
+        print("Schedule handling is terminating!")
 
     def start(self):
         self.show_banner(True)
@@ -142,13 +135,13 @@ class XenXenXenSeCore(DatabaseCore):
         self.connect_db()
 
         # Create new Thread
-        try:
-            schedule_thread = Thread(target=self.schedule_process)
-            schedule_thread.start()
-        except RuntimeWarning:
-            print("Process terminated!")
+        schedule_thread = Thread(target=self.schedule_process)
+        schedule_thread.start()
 
         # Run API Server
         self.run_api_server(development_mode)
 
         self.terminating = True
+
+        # merge with schedule thread
+        schedule_thread.join()
