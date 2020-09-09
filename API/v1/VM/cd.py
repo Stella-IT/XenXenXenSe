@@ -1,8 +1,8 @@
 from fastapi import APIRouter
 
-from XenXenXenSe.VM import VM
-from XenXenXenSe.SR import SR
-from XenXenXenSe.session import create_session
+from XenGarden.VM import VM
+from XenGarden.SR import SR
+from XenGarden.session import create_session
 
 from ..VBD.serialize import serialize as _vbd_serialize
 
@@ -20,7 +20,7 @@ async def get_cd(cluster_id: str, vm_uuid: str):
         new_vbd = vm.get_CD()
 
         if new_vbd is not None:
-            ret = {"success": True, "data": _vbd_serialize(vbd)}
+            ret = {"success": True, "data": _vbd_serialize(new_vbd)}
         else:
             ret = {"success": False}
     else:
@@ -42,7 +42,7 @@ async def get_cd_insert_inurl(cluster_id: str, vm_uuid: str, vdi_uuid: str):
 
         if new_vbd is not None:
 
-            from XenXenXenSe.VDI import VDI
+            from XenGarden.VDI import VDI
             from ..VDI.serialize import serialize as _vdi_serialize
 
             vdi: VDI = VDI.get_by_uuid(session, vdi_uuid)

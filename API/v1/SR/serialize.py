@@ -1,4 +1,4 @@
-from XenXenXenSe.SR import SR
+from XenGarden.SR import SR
 
 from ..VDI.serialize import serialize as _vdi_serialize
 

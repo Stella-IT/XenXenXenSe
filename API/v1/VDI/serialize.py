@@ -1,4 +1,4 @@
-from XenXenXenSe.VDI import VDI
+from XenGarden.VDI import VDI
 
 
 def serialize(vdi: VDI):

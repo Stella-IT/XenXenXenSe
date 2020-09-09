@@ -1,4 +1,4 @@
-from XenXenXenSe.VBD import VBD
+from XenGarden.VBD import VBD
 
 from ..VM.serialize import serialize as _vm_serialize
 from ..VDI.serialize import serialize as _vdi_serialize

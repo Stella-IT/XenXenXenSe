@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 
-from XenXenXenSe.VM import VM
-from XenXenXenSe.session import create_session
+from XenGarden.VM import VM
+from XenGarden.session import create_session
 
 from MySQL.VM import XenVm
 
@@ -34,7 +34,7 @@ async def vm_start(cluster_id: str, vm_uuid: str):
     else:
         ret = {"success": False}
 
-    XenVm.update(cluster_id, _vm)
+    await XenVm.update(cluster_id, _vm)
 
     session.xenapi.session.logout()
     return ret
@@ -52,7 +52,7 @@ async def vm_shutdown(cluster_id: str, vm_uuid: str):
     else:
         ret = {"success": False}
 
-    XenVm.update(cluster_id, _vm)
+    await XenVm.update(cluster_id, _vm)
 
     session.xenapi.session.logout()
     return ret
@@ -69,7 +69,7 @@ async def vm_power_force_shutdown(cluster_id: str, vm_uuid: str):
     else:
         ret = {"success": False}
 
-    XenVm.update(cluster_id, _vm)
+    await XenVm.update(cluster_id, _vm)
 
     session.xenapi.session.logout()
     return ret
@@ -86,7 +86,7 @@ async def vm_power_restart(cluster_id: str, vm_uuid: str):
     else:
         ret = {"success": False}
 
-    XenVm.update(cluster_id, _vm)
+    await XenVm.update(cluster_id, _vm)
 
     session.xenapi.session.logout()
     return ret
@@ -102,7 +102,7 @@ async def vm_power_suspend(cluster_id: str, vm_uuid: str):
     else:
         ret = {"success": False}
 
-    XenVm.update(cluster_id, _vm)
+    await XenVm.update(cluster_id, _vm)
 
     session.xenapi.session.logout()
     return ret
@@ -118,7 +118,7 @@ async def vm_power_resume(cluster_id: str, vm_uuid: str):
     else:
         ret = {"success": False}
 
-    XenVm.update(cluster_id, _vm)
+    await XenVm.update(cluster_id, _vm)
 
     session.xenapi.session.logout()
     return ret
@@ -134,7 +134,7 @@ async def vm_power_pause(cluster_id: str, vm_uuid: str):
     else:
         ret = {"success": False}
 
-    XenVm.update(cluster_id, _vm)
+    await XenVm.update(cluster_id, _vm)
 
     session.xenapi.session.logout()
     return ret
@@ -150,7 +150,7 @@ async def vm_power_unpause(cluster_id: str, vm_uuid: str):
     else:
         ret = {"success": False}
 
-    XenVm.update(cluster_id, _vm)
+    await XenVm.update(cluster_id, _vm)
 
     session.xenapi.session.logout()
     return ret

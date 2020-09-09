@@ -1,8 +1,8 @@
 from fastapi import APIRouter
 
 from API.v1.Interface import NameArgs
-from XenXenXenSe.VM import VM
-from XenXenXenSe.session import create_session
+from XenGarden.VM import VM
+from XenGarden.session import create_session
 
 from ..VIF.serialize import serialize as _vif_serialize
 
@@ -13,7 +13,7 @@ router = APIRouter()
 async def instance_vif(cluster_id: str, vm_uuid: str):
     """ Show Instnace VIFs """
 
-    from XenXenXenSe.VIF import VIF
+    from XenGarden.VIF import VIF
 
     session = create_session(cluster_id)
     vm: VM = VM.get_by_uuid(session, vm_uuid)
@@ -65,7 +65,7 @@ async def vif_get_qos_by_uuid(cluster_id: str, vm_uuid: str):
 @router.get("/{cluster_id}/vm/{vm_uuid}/vif/qos/speed/{speed}")
 async def vif_set_qos_speed_by_vm(cluster_id: str, vm_uuid: str, speed: str):
     """ Set VIF QoS Speed by VM """
-    from XenXenXenSe.VIF import VIF
+    from XenGarden.VIF import VIF
 
     session = create_session(cluster_id)
     vm: VM = VM.get_by_uuid(session, vm_uuid)
@@ -105,7 +105,7 @@ async def vif_set_qos_speed_by_vm(cluster_id: str, vm_uuid: str, speed: str):
 async def instance_vifs(cluster_id: str, vm_uuid: str):
     """ Show Instnace VIFs """
 
-    from XenXenXenSe.VIF import VIF
+    from XenGarden.VIF import VIF
 
     session = create_session(cluster_id)
     vm: VM = VM.get_by_uuid(session, vm_uuid)

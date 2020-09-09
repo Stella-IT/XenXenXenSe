@@ -1,4 +1,4 @@
-from XenXenXenSe.VIF import VIF
+from XenGarden.VIF import VIF
 
 from ..VM.serialize import serialize as _vm_serialize
 

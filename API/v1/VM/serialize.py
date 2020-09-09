@@ -1,4 +1,4 @@
-from XenXenXenSe.VM import VM
+from XenGarden.VM import VM
 
 
 def serialize(vm: VM):

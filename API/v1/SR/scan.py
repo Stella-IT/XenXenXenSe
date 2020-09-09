@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 
-from XenXenXenSe.SR import SR
-from XenXenXenSe.session import create_session
+from XenGarden.SR import SR
+from XenGarden.session import create_session
 
 router = APIRouter()
 

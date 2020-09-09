@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 
-from XenXenXenSe.Console import Console
-from XenXenXenSe.session import create_session
+from XenGarden.Console import Console
+from XenGarden.session import create_session
 
 from .serialize import serialize
 
@@ -14,7 +14,7 @@ async def console_get_by_uuid(cluster_id: str, console_uuid: str):
     session = create_session(cluster_id)
     console: Console = Console.get_by_uuid(session, console_uuid)
 
-    if host is not None:
+    if console is not None:
         ret = {"success": True, "data": serialize(console)}
     else:
         ret = {"success": False}

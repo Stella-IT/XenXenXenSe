@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 
-from XenXenXenSe.VIF import VIF
-from XenXenXenSe.session import create_session
+from XenGarden.VIF import VIF
+from XenGarden.session import create_session
 
 router = APIRouter()
 

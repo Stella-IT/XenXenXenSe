@@ -2,8 +2,8 @@ from fastapi import APIRouter
 
 from API.v1.Interface import NameArgs
 
-from XenXenXenSe.SR import SR
-from XenXenXenSe.session import create_session
+from XenGarden.SR import SR
+from XenGarden.session import create_session
 
 from .serialize import serialize
 

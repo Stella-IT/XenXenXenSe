@@ -1,8 +1,8 @@
 from fastapi import APIRouter
 
 from API.v1.Interface import NameArgs
-from XenXenXenSe.VM import VM
-from XenXenXenSe.session import create_session
+from XenGarden.VM import VM
+from XenGarden.session import create_session
 
 from MySQL.VM import XenVm
 from .serialize import serialize
@@ -45,7 +45,7 @@ async def instance_clone_inurl(cluster_id: str, vm_uuid: str, clone_name: str):
     else:
         ret = {"success": False}
 
-    XenVm.update(cluster_id, new_vm)
+    await XenVm.update(cluster_id, new_vm)
 
     session.xenapi.session.logout()
     return ret

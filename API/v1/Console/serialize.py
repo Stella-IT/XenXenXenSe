@@ -1,4 +1,4 @@
-from XenXenXenSe.Console import Console
+from XenGarden.Console import Console
 
 
 def serialize(console: Console):

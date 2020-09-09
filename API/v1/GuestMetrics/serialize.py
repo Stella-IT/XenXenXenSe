@@ -1,4 +1,4 @@
-from XenXenXenSe.GuestMetrics import GuestMetrics
+from XenGarden.GuestMetrics import GuestMetrics
 
 
 def serialize(guest: GuestMetrics):

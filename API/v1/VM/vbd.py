@@ -1,8 +1,8 @@
 from fastapi import APIRouter
 
 from API.v1.Interface import NameArgs
-from XenXenXenSe.VM import VM
-from XenXenXenSe.session import create_session
+from XenGarden.VM import VM
+from XenGarden.session import create_session
 
 from ..VBD.serialize import serialize as _vbd_serialize
 
@@ -14,7 +14,7 @@ router = APIRouter()
 async def instance_vbds(cluster_id: str, vm_uuid: str):
     """ Show Instance VBDs """
 
-    from XenXenXenSe.VBD import VBD
+    from XenGarden.VBD import VBD
 
     session = create_session(cluster_id)
     vm: VM = VM.get_by_uuid(session, vm_uuid)

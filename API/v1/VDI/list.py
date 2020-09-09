@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 
-from XenXenXenSe.VDI import VDI
-from XenXenXenSe.session import create_session
+from XenGarden.VDI import VDI
+from XenGarden.session import create_session
 
 from .serialize import serialize
 

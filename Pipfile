@@ -6,7 +6,6 @@ verify_ssl = false
 [dev-packages]
 pylint = "*"
 pre-commit = "*"
-black = "*"
 commitizen = "*"
 
 [packages]
@@ -14,16 +13,14 @@ xenapi = "*"
 fastapi = {version = "*"}
 databases = {extras = ["mysql"], version = "*"}
 uvicorn = "*"
-uvloop = "*"
-aiojobs = "*"
 pyfiglet = "*"
 schedule = "*"
-deprecated = "*"
 ujson = "*"
 requests = "*"
 configparser = "*"
 setuptools = "*"
 mysqlclient = "*"
+xengarden = {git = "https://github.com/Stella-IT/XenGarden.git"}
 
 [scripts]
 start = "python3 main.py"

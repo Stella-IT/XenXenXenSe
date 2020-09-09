@@ -1,4 +1,4 @@
-from XenXenXenSe.Host import Host
+from XenGarden.Host import Host
 
 from MySQL.Status import status
 from MySQL import DatabaseCore

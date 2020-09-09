@@ -1,9 +1,9 @@
 from fastapi import APIRouter
 
 from API.v1.Interface import UUIDArgs
-from XenXenXenSe.VBD import VBD
-from XenXenXenSe.VDI import VDI
-from XenXenXenSe.session import create_session
+from XenGarden.VBD import VBD
+from XenGarden.VDI import VDI
+from XenGarden.session import create_session
 
 router = APIRouter()
 

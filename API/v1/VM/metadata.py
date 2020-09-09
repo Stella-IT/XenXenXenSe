@@ -1,8 +1,8 @@
 from fastapi import APIRouter
 
 from API.v1.Interface import NameArgs, DescriptionArgs
-from XenXenXenSe.VM import VM
-from XenXenXenSe.session import create_session
+from XenGarden.VM import VM
+from XenGarden.session import create_session
 
 from MySQL.VM import XenVm
 
@@ -50,7 +50,7 @@ async def instance_set_name(cluster_id: str, vm_uuid: str, args: NameArgs):
     else:
         ret = {"success": False}
 
-    XenVm.update(cluster_id, _vm)
+    await XenVm.update(cluster_id, _vm)
 
     session.xenapi.session.logout()
     return ret
@@ -69,7 +69,7 @@ async def instance_set_name_inurl(
     else:
         ret = {"success": False}
 
-    XenVm.update(cluster_id, _vm)
+    await XenVm.update(cluster_id, _vm)
 
     session.xenapi.session.logout()
     return ret
@@ -105,7 +105,7 @@ async def instance_set_description_inurl(
     else:
         ret = {"success": False}
 
-    XenVm.update(cluster_id, _vm)
+    await XenVm.update(cluster_id, _vm)
 
     session.xenapi.session.logout()
     return ret

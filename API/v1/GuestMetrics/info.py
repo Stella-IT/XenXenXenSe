@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 
-from XenXenXenSe.GuestMetrics import GuestMetrics
-from XenXenXenSe.session import create_session
+from XenGarden.GuestMetrics import GuestMetrics
+from XenGarden.session import create_session
 
 from .serialize import serialize
 

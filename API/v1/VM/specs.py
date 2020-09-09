@@ -1,8 +1,8 @@
 from fastapi import APIRouter
 
 from API.v1.Interface import VCpuArgs, MemoryArgs
-from XenXenXenSe.VM import VM
-from XenXenXenSe.session import create_session
+from XenGarden.VM import VM
+from XenGarden.session import create_session
 
 from MySQL.VM import XenVm
 
@@ -47,7 +47,7 @@ async def vm_set_vCPU(cluster_id: str, vm_uuid: str, args: VCpuArgs):
     else:
         ret = {"success": False}
 
-    XenVm.update(cluster_id, _vm)
+    await XenVm.update(cluster_id, _vm)
 
     session.xenapi.session.logout()
     return ret
@@ -63,7 +63,7 @@ async def vm_set_vCPU_inurl(cluster_id: str, vm_uuid: str, vCPU_count: int):
     else:
         ret = {"success": False}
 
-    XenVm.update(cluster_id, _vm)
+    await XenVm.update(cluster_id, _vm)
 
     session.xenapi.session.logout()
     return ret
@@ -94,7 +94,7 @@ async def vm_set_memory(cluster_id: str, vm_uuid: str, args: MemoryArgs):
     else:
         ret = {"success": False}
 
-    XenVm.update(cluster_id, _vm)
+    await XenVm.update(cluster_id, _vm)
 
     session.xenapi.session.logout()
     return ret
@@ -110,7 +110,7 @@ async def vm_set_memory_inurl(cluster_id: str, vm_uuid: str, memory_size: int):
     else:
         ret = {"success": False}
 
-    XenVm.update(cluster_id, _vm)
+    await XenVm.update(cluster_id, _vm)
 
     session.xenapi.session.logout()
     return ret
