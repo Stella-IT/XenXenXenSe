@@ -1,8 +1,8 @@
 from fastapi import APIRouter
-from pydantic import BaseModel
 
 from XenGarden.VM import VM
 from XenGarden.session import create_session
+from config import get_xen_clusters
 
 router = APIRouter()
 
@@ -11,12 +11,12 @@ router = APIRouter()
 @router.get("/{cluster_id}/template/{vm_uuid}/bios")
 async def instance_get_bios(cluster_id: str, vm_uuid: str):
     """ Get Instance (VM/Template) BIOS """
-    session = create_session(cluster_id)
-    vm: VM = VM.get_by_uuid(session, vm_uuid)
+    session = create_session(_id=cluster_id, get_xen_clusters=get_xen_clusters())
+    vm: VM = VM.get_by_uuid(session=session, uuid=vm_uuid)
     if vm is not None:
-        ret = {"success": True, "data": vm.get_bios_strings()}
+        ret = dict(success=True, data=vm.get_bios_strings())
     else:
-        ret = {"success": False}
+        ret = dict(success=False)
 
     session.xenapi.session.logout()
     return ret
@@ -25,15 +25,15 @@ async def instance_get_bios(cluster_id: str, vm_uuid: str):
 @router.get("/{cluster_id}/vm/{vm_uuid}/bios/{name}")
 @router.get("/{cluster_id}/template/{vm_uuid}/bios/{name}")
 async def instance_set_bios_property_byname(
-    cluster_id: str, vm_uuid: str, name: str
+        cluster_id: str, vm_uuid: str, name: str
 ):
     """ Get Instance (VM/Template) BIOS Property by Name """
-    session = create_session(cluster_id)
-    vm: VM = VM.get_by_uuid(session, vm_uuid)
+    session = create_session(_id=cluster_id, get_xen_clusters=get_xen_clusters())
+    vm: VM = VM.get_by_uuid(session=session, uuid=vm_uuid)
     if vm is not None:
-        ret = {"success": True, "data": vm.get_bios_strings()[name]}
+        ret = dict(success=True, data=vm.get_bios_strings()[name])
     else:
-        ret = {"success": False}
+        ret = dict(success=False)
 
     session.xenapi.session.logout()
     return ret
@@ -42,18 +42,17 @@ async def instance_set_bios_property_byname(
 @router.get("/{cluster_id}/vm/{vm_uuid}/bios/{name}/{var}")
 @router.get("/{cluster_id}/template/{vm_uuid}/bios/{name}/{var}")
 async def instance_set_bios_property_byname_inurl(
-    cluster_id: str, vm_uuid: str, name: str, var: str
+        cluster_id: str, vm_uuid: str, name: str, var: str
 ):
     """ Set Instance (VM/Template) BIOS Property by Name """
-    session = create_session(cluster_id)
-    vm: VM = VM.get_by_uuid(session, vm_uuid)
+    session = create_session(_id=cluster_id, get_xen_clusters=get_xen_clusters())
+    vm: VM = VM.get_by_uuid(session=session, uuid=vm_uuid)
     if vm is not None:
-        data = {}
-        data[name] = var
+        data = {name: var}
 
-        ret = {"success": vm.set_bios_strings(data)}
+        ret = dict(success=vm.set_bios_strings(data))
     else:
-        ret = {"success": False}
+        ret = dict(success=False)
 
     session.xenapi.session.logout()
     return ret

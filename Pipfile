@@ -20,7 +20,7 @@ requests = "*"
 configparser = "*"
 setuptools = "*"
 mysqlclient = "*"
-xengarden = {git = "https://github.com/Stella-IT/XenGarden.git"}
+xengarden = {editable = true, git = "https://github.com/Stella-IT/XenGarden.git"}
 
 [scripts]
 start = "python3 main.py"
