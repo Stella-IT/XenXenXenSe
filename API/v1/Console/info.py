@@ -1,9 +1,10 @@
 from fastapi import APIRouter
 
-from XenXenXenSe.Console import Console
-from XenXenXenSe.session import create_session
+from XenGarden.Console import Console
+from XenGarden.session import create_session
 
-from .serialize import serialize
+from API.v1.Console.serialize import serialize
+from config import get_xen_clusters
 
 router = APIRouter()
 
@@ -11,13 +12,13 @@ router = APIRouter()
 @router.get("/{cluster_id}/console/{console_uuid}")
 async def console_get_by_uuid(cluster_id: str, console_uuid: str):
     """ Get Console by UUID """
-    session = create_session(cluster_id)
+    session = create_session(cluster_id, get_xen_clusters=get_xen_clusters())
     console: Console = Console.get_by_uuid(session, console_uuid)
 
-    if host is not None:
-        ret = {"success": True, "data": serialize(console)}
+    if console is not None:
+        ret = dict(success=True, data=serialize(console))
     else:
-        ret = {"success": False}
+        ret = dict(success=False)
 
     session.xenapi.session.logout()
     return ret

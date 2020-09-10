@@ -1,7 +1,8 @@
 from fastapi import APIRouter
 
-from XenXenXenSe.VDI import VDI
-from XenXenXenSe.session import create_session
+from XenGarden.VDI import VDI
+from XenGarden.session import create_session
+from config import get_xen_clusters
 
 router = APIRouter()
 
@@ -10,13 +11,15 @@ router = APIRouter()
 @router.delete("/{cluster_id}/vdi/{vdi_uuid}")
 async def vdi_get_by_uuid(cluster_id: str, vdi_uuid: str):
     """ Delete SR by UUID """
-    session = create_session(cluster_id)
-    vdi: VDI = VDI.get_by_uuid(session, vdi_uuid)
+    session = create_session(
+        _id=cluster_id, get_xen_clusters=get_xen_clusters()
+    )
+    vdi: VDI = VDI.get_by_uuid(session=session, uuid=vdi_uuid)
 
     if vdi is not None:
-        ret = {"success": vdi.destroy()}
+        ret = dict(success=vdi.destroy())
     else:
-        ret = {"success": False}
+        ret = dict(success=False)
 
     session.xenapi.session.logout()
     return ret

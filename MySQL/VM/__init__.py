@@ -1,7 +1,8 @@
-from XenXenXenSe.VM import VM
+from XenGarden.VM import VM
 
 from MySQL.Status import status
 from MySQL import DatabaseCore
+from config import get_xen_clusters
 
 
 class XenVm(DatabaseCore):
@@ -77,7 +78,7 @@ class XenVm(DatabaseCore):
     async def remove_orphaned(self, cluster_id):
         if status.get_enabled():
             try:
-                from XenXenXenSe.session import create_session
+                from XenGarden.session import create_session
 
                 self.sql = "SELECT * FROM `vms`"
                 await self.database.execute(self.sql)
@@ -89,7 +90,7 @@ class XenVm(DatabaseCore):
                     vm_uuid = vm_v["vm_uuid"]
                     print(cluster_id, vm_uuid)
 
-                    session = create_session(cluster_id)
+                    session = create_session(cluster_id, get_xen_clusters())
                     _vm = VM.get_by_uuid(session, vm_uuid)
 
                     if _vm is None:

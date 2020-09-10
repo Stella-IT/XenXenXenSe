@@ -1,9 +1,10 @@
 from fastapi import APIRouter
 
-from XenXenXenSe.Host import Host
-from XenXenXenSe.session import create_session
+from XenGarden.Host import Host
+from XenGarden.session import create_session
 
-from .serialize import serialize
+from API.v1.Host.serialize import serialize
+from config import get_xen_clusters
 
 router = APIRouter()
 
@@ -11,14 +12,18 @@ router = APIRouter()
 @router.get("/{cluster_id}/host/list")
 async def host_list(cluster_id: str):
     """ Get All from Existance Host """
-    session = create_session(cluster_id)
-    hosts = Host.list_host(session)
+    session = create_session(
+        _id=cluster_id, get_xen_clusters=get_xen_clusters()
+    )
+    hosts = Host.list_host(session=session)
 
-    hosts_list = []
+    __hosts_list = []
+    hosts_list = __hosts_list.append
+
     for host in hosts:
-        hosts_list.append(serialize(host))
+        hosts_list(serialize(host))
 
-    ret = {"success": True, "data": hosts_list}
+    ret = dict(success=True, data=__hosts_list)
 
     session.xenapi.session.logout()
     return ret

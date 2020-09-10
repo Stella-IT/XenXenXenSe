@@ -1,9 +1,10 @@
 from fastapi import APIRouter
 
-from XenXenXenSe.SR import SR
-from XenXenXenSe.session import create_session
+from XenGarden.SR import SR
+from XenGarden.session import create_session
 
-from .serialize import serialize
+from API.v1.SR.serialize import serialize
+from config import get_xen_clusters
 
 router = APIRouter()
 
@@ -11,13 +12,15 @@ router = APIRouter()
 @router.get("/{cluster_id}/sr/{sr_uuid}")
 async def sr_get_by_uuid(cluster_id: str, sr_uuid: str):
     """ Get SR by UUID """
-    session = create_session(cluster_id)
-    sr: SR = SR.get_by_uuid(session, sr_uuid)
+    session = create_session(
+        _id=cluster_id, get_xen_clusters=get_xen_clusters()
+    )
+    sr: SR = SR.get_by_uuid(session=session, uuid=sr_uuid)
 
     if sr is not None:
-        ret = {"success": True, "data": serialize(sr)}
+        ret = dict(success=True, data=serialize(sr))
     else:
-        ret = {"success": False}
+        ret = dict(success=False)
 
     session.xenapi.session.logout()
     return ret

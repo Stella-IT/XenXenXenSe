@@ -161,9 +161,9 @@ async def sync_mysql_host_database():
 
         from .Host import XenHost
         from .VM import XenVm
-        from XenXenXenSe.session import create_session
-        from XenXenXenSe.VM import VM
-        from XenXenXenSe.Host import Host
+        from XenGarden.session import create_session
+        from XenGarden.VM import VM
+        from XenGarden.Host import Host
 
         for cluster_id in get_xen_clusters():
             session = create_session(cluster_id)
@@ -190,9 +190,9 @@ async def sync_mysql_database():
 
         from .VM import XenVm
         from .Host import XenHost
-        from XenXenXenSe.VM import VM
-        from XenXenXenSe.Host import Host
-        from XenXenXenSe.session import create_session
+        from XenGarden.VM import VM
+        from XenGarden.Host import Host
+        from XenGarden.session import create_session
 
         for cluster_id in get_xen_clusters():
             session = create_session(cluster_id)

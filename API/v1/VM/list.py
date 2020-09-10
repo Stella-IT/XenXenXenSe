@@ -1,9 +1,10 @@
 from fastapi import APIRouter
 
-from XenXenXenSe.VM import VM
-from XenXenXenSe.session import create_session
+from XenGarden.VM import VM
+from XenGarden.session import create_session
 
-from .serialize import serialize
+from API.v1.VM.serialize import serialize
+from config import get_xen_clusters
 
 router = APIRouter()
 
@@ -12,14 +13,17 @@ router = APIRouter()
 async def vm_list(cluster_id: str):
     """ Gets VMs available on Xen Server """
 
-    session = create_session(cluster_id)
-    vms = VM.list_vm(session)
+    session = create_session(
+        _id=cluster_id, get_xen_clusters=get_xen_clusters()
+    )
+    vms = VM.list_vm(session=session)
 
-    sat = []
+    __sat = []
+    sat = __sat.append
     for vm in vms:
-        sat.append(serialize(vm))
+        sat(serialize(vm))
 
-    ret = {"success": True, "data": sat}
+    ret = dict(success=True, data=__sat)
     session.xenapi.session.logout()
     return ret
 
@@ -27,13 +31,16 @@ async def vm_list(cluster_id: str):
 @router.get("/{cluster_id}/template/list")
 async def template_list(cluster_id: str):
     """ Gets Templates available on Xen Server """
-    session = create_session(cluster_id)
-    vms = VM.list_templates(session)
+    session = create_session(
+        _id=cluster_id, get_xen_clusters=get_xen_clusters()
+    )
+    vms = VM.list_templates(session=session)
 
-    sat = []
+    __sat = []
+    sat = __sat.append
     for vm in vms:
-        sat.append(serialize(vm))
+        sat(serialize(vm))
 
-    ret = {"success": True, "data": sat}
+    ret = dict(success=True, data=__sat)
     session.xenapi.session.logout()
     return ret
