@@ -4,6 +4,7 @@ from MySQL.Status import status
 from MySQL import DatabaseCore
 from config import get_xen_clusters
 
+
 class XenVm(DatabaseCore):
     def __init__(self):
         super().__init__()

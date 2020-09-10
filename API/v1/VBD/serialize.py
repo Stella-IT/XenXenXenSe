@@ -23,5 +23,5 @@ def serialize(vbd: VBD):
         device=vbd.get_device(),
         type=vbd.get_type(),
         uuid=vbd.get_uuid(),
-        mode=vbd.get_mode()
+        mode=vbd.get_mode(),
     )

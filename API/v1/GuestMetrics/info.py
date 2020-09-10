@@ -13,14 +13,13 @@ router = APIRouter()
 @router.get("/{cluster_id}/guest/{guest_uuid}")
 async def guest_get_by_uuid(cluster_id: str, guest_uuid: str):
     """ Get GuestMetrics by UUID """
-    session = create_session(_id=cluster_id, get_xen_clusters=get_xen_clusters())
+    session = create_session(
+        _id=cluster_id, get_xen_clusters=get_xen_clusters()
+    )
     guest: GuestMetrics = Host.get_by_uuid(session=session, uuid=guest_uuid)
 
     if guest is not None:
-        ret = dict(
-            success=True,
-            data=serialize(guest)
-        )
+        ret = dict(success=True, data=serialize(guest))
     else:
         ret = dict(success=False)
 

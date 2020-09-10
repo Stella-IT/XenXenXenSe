@@ -7,5 +7,5 @@ def serialize(vdi: VDI):
         description=vdi.get_description(),
         uuid=vdi.get_uuid(),
         location=vdi.get_location(),
-        type=vdi.get_type()
+        type=vdi.get_type(),
     )

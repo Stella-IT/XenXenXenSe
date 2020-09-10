@@ -9,5 +9,5 @@ def serialize(vm: VM):
         description=vm.get_description(),
         uuid=vm.get_uuid(),
         vCPUs=vm.get_vCPUs(),
-        memory=vm.get_memory()
+        memory=vm.get_memory(),
     )

@@ -12,7 +12,9 @@ router = APIRouter()
 @router.get("/{cluster_id}/sr/{sr_uuid}")
 async def sr_get_by_uuid(cluster_id: str, sr_uuid: str):
     """ Get SR by UUID """
-    session = create_session(_id=cluster_id, get_xen_clusters=get_xen_clusters())
+    session = create_session(
+        _id=cluster_id, get_xen_clusters=get_xen_clusters()
+    )
     sr: SR = SR.get_by_uuid(session=session, uuid=sr_uuid)
 
     if sr is not None:

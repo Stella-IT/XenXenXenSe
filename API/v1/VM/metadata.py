@@ -14,7 +14,9 @@ router = APIRouter()
 @router.get("/{cluster_id}/template/{vm_uuid}/name")
 async def instance_get_name(cluster_id: str, vm_uuid: str):
     """ Get Instance (VM/Template) Name """
-    session = create_session(_id=cluster_id, get_xen_clusters=get_xen_clusters())
+    session = create_session(
+        _id=cluster_id, get_xen_clusters=get_xen_clusters()
+    )
     _vm: VM = VM.get_by_uuid(session=session, uuid=vm_uuid)
     if _vm is not None:
         ret = dict(success=True, data=_vm.get_name())
@@ -29,7 +31,9 @@ async def instance_get_name(cluster_id: str, vm_uuid: str):
 @router.get("/{cluster_id}/template/{vm_uuid}/description")
 async def instance_get_description(cluster_id: str, vm_uuid: str):
     """ Get Instance (VM/Template) Description (needs troubleshooting) """
-    session = create_session(_id=cluster_id, get_xen_clusters=get_xen_clusters())
+    session = create_session(
+        _id=cluster_id, get_xen_clusters=get_xen_clusters()
+    )
     _vm: VM = VM.get_by_uuid(session=session, uuid=vm_uuid)
     if _vm is not None:
         ret = dict(success=True, data=_vm.get_description())
@@ -44,7 +48,9 @@ async def instance_get_description(cluster_id: str, vm_uuid: str):
 @router.put("/{cluster_id}/template/{vm_uuid}/name")
 async def instance_set_name(cluster_id: str, vm_uuid: str, args: NameArgs):
     """ Set Instance (VM/Template) Name """
-    session = create_session(_id=cluster_id, get_xen_clusters=get_xen_clusters())
+    session = create_session(
+        _id=cluster_id, get_xen_clusters=get_xen_clusters()
+    )
     _vm: VM = VM.get_by_uuid(session=session, uuid=vm_uuid)
     if _vm is not None:
         ret = dict(success=_vm.set_name(args.name))
@@ -60,10 +66,12 @@ async def instance_set_name(cluster_id: str, vm_uuid: str, args: NameArgs):
 @router.get("/{cluster_id}/vm/{vm_uuid}/name/{new_name}")
 @router.get("/{cluster_id}/template/{vm_uuid}/name/{new_name}")
 async def instance_set_name_inurl(
-        cluster_id: str, vm_uuid: str, new_name: str
+    cluster_id: str, vm_uuid: str, new_name: str
 ):
     """ Set Instance (VM/Template) Name """
-    session = create_session(_id=cluster_id, get_xen_clusters=get_xen_clusters())
+    session = create_session(
+        _id=cluster_id, get_xen_clusters=get_xen_clusters()
+    )
     _vm: VM = VM.get_by_uuid(session=session, uuid=vm_uuid)
     if _vm is not None:
         ret = dict(success=_vm.set_name(new_name))
@@ -79,10 +87,12 @@ async def instance_set_name_inurl(
 @router.put("/{cluster_id}/vm/{vm_uuid}/description")
 @router.put("/{cluster_id}/template/{vm_uuid}/description")
 async def instance_set_description(
-        cluster_id: str, vm_uuid: str, args: DescriptionArgs
+    cluster_id: str, vm_uuid: str, args: DescriptionArgs
 ):
     """ Set Instance (VM/Template) Description """
-    session = create_session(_id=cluster_id, get_xen_clusters=get_xen_clusters())
+    session = create_session(
+        _id=cluster_id, get_xen_clusters=get_xen_clusters()
+    )
     _vm: VM = VM.get_by_uuid(session=session, uuid=vm_uuid)
     if _vm is not None:
         ret = dict(success=_vm.set_description(args.description))
@@ -96,10 +106,12 @@ async def instance_set_description(
 @router.get("/{cluster_id}/vm/{vm_uuid}/description/{new_description}")
 @router.get("/{cluster_id}/template/{vm_uuid}/description/{new_description}")
 async def instance_set_description_inurl(
-        cluster_id: str, vm_uuid: str, new_description: str
+    cluster_id: str, vm_uuid: str, new_description: str
 ):
     """ Set Instance (VM/Template) Description """
-    session = create_session(_id=cluster_id, get_xen_clusters=get_xen_clusters())
+    session = create_session(
+        _id=cluster_id, get_xen_clusters=get_xen_clusters()
+    )
     _vm: VM = VM.get_by_uuid(session=session, uuid=vm_uuid)
     if _vm is not None:
         ret = dict(success=_vm.set_description(new_description))

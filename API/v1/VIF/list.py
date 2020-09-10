@@ -12,7 +12,9 @@ router = APIRouter()
 @router.get("/{cluster_id}/vif/list")
 async def vif_list(cluster_id: str):
     """ Get All from Storage Repos """
-    session = create_session(_id=cluster_id, get_xen_clusters=get_xen_clusters())
+    session = create_session(
+        _id=cluster_id, get_xen_clusters=get_xen_clusters()
+    )
     vifs = VIF.get_all(session=session)
 
     __santilized_vifs = []
@@ -20,10 +22,7 @@ async def vif_list(cluster_id: str):
     for vif in vifs:
         santilized_vifs(serialize(vif))
 
-    ret = dict(
-        success=True,
-        data=__santilized_vifs
-    )
+    ret = dict(success=True, data=__santilized_vifs)
 
     session.xenapi.session.logout()
     return ret

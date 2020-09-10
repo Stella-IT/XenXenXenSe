@@ -12,14 +12,13 @@ router = APIRouter()
 @router.get("/{cluster_id}/vif/{vif_uuid}")
 async def vif_get_by_uuid(cluster_id: str, vif_uuid: str):
     """ Get VIF by UUID """
-    session = create_session(_id=cluster_id, get_xen_clusters=get_xen_clusters())
+    session = create_session(
+        _id=cluster_id, get_xen_clusters=get_xen_clusters()
+    )
     vif: VIF = VIF.get_by_uuid(session=session, uuid=vif_uuid)
 
     if vif is not None:
-        ret = dict(
-            success=True,
-            data=serialize(vif)
-        )
+        ret = dict(success=True, data=serialize(vif))
     else:
         ret = dict(success=False)
 

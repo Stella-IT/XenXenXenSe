@@ -12,7 +12,9 @@ router = APIRouter()
 @router.get("/{cluster_id}/vdi/list")
 async def vdi_list(cluster_id: str):
     """ Get VDI by UUID """
-    session = create_session(_id=cluster_id, get_xen_clusters=get_xen_clusters())
+    session = create_session(
+        _id=cluster_id, get_xen_clusters=get_xen_clusters()
+    )
     vdis = VDI.get_all(session=session)
 
     __vdi_list = []
@@ -21,10 +23,7 @@ async def vdi_list(cluster_id: str):
         _vdi_list(serialize(vdi))
 
     if vdis is not None:
-        ret = dict(
-            success=True,
-            data=__vdi_list
-        )
+        ret = dict(success=True, data=__vdi_list)
     else:
         ret = dict(success=False)
 

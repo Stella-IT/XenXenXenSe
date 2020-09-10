@@ -12,7 +12,9 @@ router = APIRouter()
 @router.get("/{cluster_id}/vm/{vm_uuid}/vif")
 async def instance_vif(cluster_id: str, vm_uuid: str):
     """ Show Instnace VIFs """
-    session = create_session(_id=cluster_id, get_xen_clusters=get_xen_clusters())
+    session = create_session(
+        _id=cluster_id, get_xen_clusters=get_xen_clusters()
+    )
     vm: VM = VM.get_by_uuid(session=session, uuid=vm_uuid)
 
     if vm is not None:
@@ -34,7 +36,9 @@ async def instance_vif(cluster_id: str, vm_uuid: str):
 @router.get("/{cluster_id}/vm/{vm_uuid}/vif/qos")
 async def vif_get_qos_by_uuid(cluster_id: str, vm_uuid: str):
     """ Set VIF QoS by VM """
-    session = create_session(_id=cluster_id, get_xen_clusters=get_xen_clusters())
+    session = create_session(
+        _id=cluster_id, get_xen_clusters=get_xen_clusters()
+    )
     vm: VM = VM.get_by_uuid(session=session, uuid=vm_uuid)
 
     if vm is not None:
@@ -44,10 +48,7 @@ async def vif_get_qos_by_uuid(cluster_id: str, vm_uuid: str):
         if vif is not None:
             ret = dict(
                 success=True,
-                data=dict(
-                    type=vif.get_qos_type(),
-                    info=vif.get_qos_info()
-                )
+                data=dict(type=vif.get_qos_type(), info=vif.get_qos_info()),
             )
         else:
             ret = dict(success=False)
@@ -62,7 +63,9 @@ async def vif_get_qos_by_uuid(cluster_id: str, vm_uuid: str):
 @router.get("/{cluster_id}/vm/{vm_uuid}/vif/qos/speed/{speed}")
 async def vif_set_qos_speed_by_vm(cluster_id: str, vm_uuid: str, speed: str):
     """ Set VIF QoS Speed by VM """
-    session = create_session(_id=cluster_id, get_xen_clusters=get_xen_clusters())
+    session = create_session(
+        _id=cluster_id, get_xen_clusters=get_xen_clusters()
+    )
     vm: VM = VM.get_by_uuid(session=session, uuid=vm_uuid)
 
     if vm is not None:
@@ -99,7 +102,9 @@ async def vif_set_qos_speed_by_vm(cluster_id: str, vm_uuid: str, speed: str):
 @router.get("/{cluster_id}/vm/{vm_uuid}/vifs")
 async def instance_vifs(cluster_id: str, vm_uuid: str):
     """ Show Instnace VIFs """
-    session = create_session(_id=cluster_id, get_xen_clusters=get_xen_clusters())
+    session = create_session(
+        _id=cluster_id, get_xen_clusters=get_xen_clusters()
+    )
     vm: VM = VM.get_by_uuid(session=session, uuid=vm_uuid)
 
     if vm is not None:

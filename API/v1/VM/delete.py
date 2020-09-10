@@ -13,7 +13,9 @@ router = APIRouter()
 @router.delete("/{cluster_id}/vm/{vm_uuid}")
 async def vm_delete(cluster_id: str, vm_uuid: str):
     """ Delete VM """
-    session = create_session(_id=cluster_id, get_xen_clusters=get_xen_clusters())
+    session = create_session(
+        _id=cluster_id, get_xen_clusters=get_xen_clusters()
+    )
     _vm: VM = VM.get_by_uuid(session=session, uuid=vm_uuid)
     if _vm is not None:
         ret = dict(success=_vm.delete())

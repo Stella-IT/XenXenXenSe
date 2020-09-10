@@ -12,7 +12,9 @@ router = APIRouter()
 @router.get("/{cluster_id}/vm/{vm_uuid}/console")
 async def vm_console(cluster_id: str, vm_uuid: str):
     """ Get the first console of the VM """
-    session = create_session(_id=cluster_id, get_xen_clusters=get_xen_clusters())
+    session = create_session(
+        _id=cluster_id, get_xen_clusters=get_xen_clusters()
+    )
     vm: VM = VM.get_by_uuid(session=session, uuid=vm_uuid)
     if vm is not None:
         consoles = vm.get_consoles()
@@ -28,7 +30,9 @@ async def vm_console(cluster_id: str, vm_uuid: str):
 async def vm_consoles(cluster_id: str, vm_uuid: str):
     """ Get all consoles are available to the VM """
 
-    session = create_session(_id=cluster_id, get_xen_clusters=get_xen_clusters())
+    session = create_session(
+        _id=cluster_id, get_xen_clusters=get_xen_clusters()
+    )
     vm: VM = VM.get_by_uuid(session=session, uuid=vm_uuid)
     if vm is not None:
         consoles = vm.get_consoles()

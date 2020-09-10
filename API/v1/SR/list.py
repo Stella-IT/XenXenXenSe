@@ -12,7 +12,9 @@ router = APIRouter()
 @router.get("/{cluster_id}/sr/list")
 async def sr_list(cluster_id: str):
     """ Get All from Storage Repos """
-    session = create_session(_id=cluster_id, get_xen_clusters=get_xen_clusters())
+    session = create_session(
+        _id=cluster_id, get_xen_clusters=get_xen_clusters()
+    )
     srs = SR.get_all(session=session)
 
     __sant_sr = []

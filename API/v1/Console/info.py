@@ -16,10 +16,7 @@ async def console_get_by_uuid(cluster_id: str, console_uuid: str):
     console: Console = Console.get_by_uuid(session, console_uuid)
 
     if console is not None:
-        ret = dict(
-            success=True,
-            data=serialize(console)
-        )
+        ret = dict(success=True, data=serialize(console))
     else:
         ret = dict(success=False)
 

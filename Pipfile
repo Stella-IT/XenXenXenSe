@@ -21,6 +21,7 @@ configparser = "*"
 setuptools = "*"
 mysqlclient = "*"
 xengarden = {editable = true, git = "https://github.com/Stella-IT/XenGarden.git"}
+black = {editable = true, git = "git://github.com/psf/black"}
 
 [scripts]
 start = "python3 main.py"

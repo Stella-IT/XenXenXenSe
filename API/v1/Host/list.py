@@ -12,7 +12,9 @@ router = APIRouter()
 @router.get("/{cluster_id}/host/list")
 async def host_list(cluster_id: str):
     """ Get All from Existance Host """
-    session = create_session(_id=cluster_id, get_xen_clusters=get_xen_clusters())
+    session = create_session(
+        _id=cluster_id, get_xen_clusters=get_xen_clusters()
+    )
     hosts = Host.list_host(session=session)
 
     __hosts_list = []
@@ -21,10 +23,7 @@ async def host_list(cluster_id: str):
     for host in hosts:
         hosts_list(serialize(host))
 
-    ret = dict(
-        success=True,
-        data=__hosts_list
-    )
+    ret = dict(success=True, data=__hosts_list)
 
     session.xenapi.session.logout()
     return ret

@@ -20,5 +20,5 @@ def serialize(sr: SR):
         uuid=sr.get_uuid(),
         content_type=sr.get_content_type(),
         type=sr.get_type(),
-        vdis=__vdi_list
+        vdis=__vdi_list,
     )

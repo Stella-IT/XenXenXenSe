@@ -10,16 +10,15 @@ router = APIRouter()
 @router.get("/{cluster_id}/vif/{vif_uuid}/qos")
 async def vif_get_qos_by_uuid(cluster_id: str, vif_uuid: str):
     """ Set VIF QoS by UUID """
-    session = create_session(_id=cluster_id, get_xen_clusters=get_xen_clusters())
+    session = create_session(
+        _id=cluster_id, get_xen_clusters=get_xen_clusters()
+    )
     vif: VIF = VIF.get_by_uuid(session=session, uuid=vif_uuid)
 
     if vif is not None:
         ret = dict(
             success=True,
-            data=dict(
-                type=vif.get_qos_type(),
-                info=vif.get_qos_info()
-            )
+            data=dict(type=vif.get_qos_type(), info=vif.get_qos_info()),
         )
     else:
         ret = dict(success=False)
@@ -31,14 +30,13 @@ async def vif_get_qos_by_uuid(cluster_id: str, vif_uuid: str):
 @router.get("/{cluster_id}/vif/{vif_uuid}/qos/type")
 async def vif_get_qos_type_by_uuid(cluster_id: str, vif_uuid: str):
     """ Set VIF QoS Type by UUID """
-    session = create_session(_id=cluster_id, get_xen_clusters=get_xen_clusters())
+    session = create_session(
+        _id=cluster_id, get_xen_clusters=get_xen_clusters()
+    )
     vif: VIF = VIF.get_by_uuid(session=session, uuid=vif_uuid)
 
     if vif is not None:
-        ret = dict(
-            success=True,
-            data=vif.get_qos_type()
-        )
+        ret = dict(success=True, data=vif.get_qos_type())
     else:
         ret = dict(success=False)
 
@@ -49,14 +47,13 @@ async def vif_get_qos_type_by_uuid(cluster_id: str, vif_uuid: str):
 @router.get("/{cluster_id}/vif/{vif_uuid}/qos/speed")
 async def vif_get_qos_speed_by_uuid(cluster_id: str, vif_uuid: str):
     """ Set VIF QoS Type by UUID """
-    session = create_session(_id=cluster_id, get_xen_clusters=get_xen_clusters())
+    session = create_session(
+        _id=cluster_id, get_xen_clusters=get_xen_clusters()
+    )
     vif: VIF = VIF.get_by_uuid(session=session, uuid=vif_uuid)
 
     if vif is not None:
-        ret = dict(
-            success=True,
-            data=vif.get_qos_info()["kbps"]
-        )
+        ret = dict(success=True, data=vif.get_qos_info()["kbps"])
     else:
         ret = dict(success=False)
 
@@ -69,7 +66,9 @@ async def vif_set_qos_speed_by_uuid(
     cluster_id: str, vif_uuid: str, speed: str
 ):
     """ Set VIF QoS Speed by UUID """
-    session = create_session(_id=cluster_id, get_xen_clusters=get_xen_clusters())
+    session = create_session(
+        _id=cluster_id, get_xen_clusters=get_xen_clusters()
+    )
     vif: VIF = VIF.get_by_uuid(session=session, uuid=vif_uuid)
 
     speedNum = speed
@@ -90,11 +89,7 @@ async def vif_set_qos_speed_by_uuid(
             if vif.get_qos_type() != "ratelimit":
                 vif.set_qos_type("ratelimit")
 
-            ret = dict(
-                success=vif.set_qos_info(
-                    dict(kbps=speed)
-                )
-            )
+            ret = dict(success=vif.set_qos_info(dict(kbps=speed)))
         else:
             ret = dict(success=False)
 

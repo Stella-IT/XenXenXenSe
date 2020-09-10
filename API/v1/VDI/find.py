@@ -14,7 +14,9 @@ router = APIRouter()
 @router.post("/{cluster_id}/vdi/find")
 async def find_VDI_by_name(cluster_id: str, args: NameArgs):
     """ Find VDI by Name """
-    session = create_session(_id=cluster_id, get_xen_clusters=get_xen_clusters())
+    session = create_session(
+        _id=cluster_id, get_xen_clusters=get_xen_clusters()
+    )
     name = args.name
     vdis = VDI.get_by_name(session=session, name=name)
 
@@ -24,10 +26,7 @@ async def find_VDI_by_name(cluster_id: str, args: NameArgs):
         for vdi in vdis:
             vdis_list(serialize(vdi))
 
-        ret = dict(
-            success=True,
-            data=__vdis_list
-        )
+        ret = dict(success=True, data=__vdis_list)
     else:
         ret = dict(success=False)
 
@@ -38,7 +37,9 @@ async def find_VDI_by_name(cluster_id: str, args: NameArgs):
 @router.get("/{cluster_id}/vdi/find/{iso_name}")
 async def insert_cd_inurl_name(cluster_id: str, iso_name: str):
     """ Find VDI by Name """
-    session = create_session(_id=cluster_id, get_xen_clusters=get_xen_clusters())
+    session = create_session(
+        _id=cluster_id, get_xen_clusters=get_xen_clusters()
+    )
     vdis = VDI.get_by_name(session=session, name=iso_name)
     print(vdis)
 
@@ -48,10 +49,7 @@ async def insert_cd_inurl_name(cluster_id: str, iso_name: str):
         for vdi in vdis:
             vdis_list(serialize(vdi))
 
-        ret = dict(
-            success=True,
-            data=__vdis_list
-        )
+        ret = dict(success=True, data=__vdis_list)
     else:
         ret = dict(success=False)
 

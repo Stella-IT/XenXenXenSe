@@ -13,7 +13,9 @@ router = APIRouter()
 @router.get("/{cluster_id}/vm/{vm_uuid}/vCPU")
 async def vm_get_vCPU(cluster_id: str, vm_uuid: str):
     """ Get VM vCPU count """
-    session = create_session(_id=cluster_id, get_xen_clusters=get_xen_clusters())
+    session = create_session(
+        _id=cluster_id, get_xen_clusters=get_xen_clusters()
+    )
     _vm: VM = VM.get_by_uuid(session=session, uuid=vm_uuid)
     if _vm is not None:
         ret = dict(success=True, data=_vm.get_vCPUs())
@@ -27,7 +29,9 @@ async def vm_get_vCPU(cluster_id: str, vm_uuid: str):
 @router.get("/{cluster_id}/vm/{vm_uuid}/vCPU/params")
 async def vm_get_vCPU_params(cluster_id: str, vm_uuid: str):
     """ Get vCPU Parameters """
-    session = create_session(_id=cluster_id, get_xen_clusters=get_xen_clusters())
+    session = create_session(
+        _id=cluster_id, get_xen_clusters=get_xen_clusters()
+    )
     _vm: VM = VM.get_by_uuid(session=session, uuid=vm_uuid)
     if _vm is not None:
         ret = dict(success=True, data=_vm.get_vCPU_params())
@@ -41,7 +45,9 @@ async def vm_get_vCPU_params(cluster_id: str, vm_uuid: str):
 @router.put("/{cluster_id}/vm/{vm_uuid}/vCPU")
 async def vm_set_vCPU(cluster_id: str, vm_uuid: str, args: VCpuArgs):
     """ Set VM vCPU count """
-    session = create_session(_id=cluster_id, get_xen_clusters=get_xen_clusters())
+    session = create_session(
+        _id=cluster_id, get_xen_clusters=get_xen_clusters()
+    )
     _vm: VM = VM.get_by_uuid(session=session, uuid=vm_uuid)
     if _vm is not None:
         ret = dict(success=_vm.set_vCPUs(args.vCPU_count))
@@ -57,7 +63,9 @@ async def vm_set_vCPU(cluster_id: str, vm_uuid: str, args: VCpuArgs):
 @router.get("/{cluster_id}/vm/{vm_uuid}/vCPU/{vCPU_count}")
 async def vm_set_vCPU_inurl(cluster_id: str, vm_uuid: str, vCPU_count: int):
     """ Set VM vCPU count """
-    session = create_session(_id=cluster_id, get_xen_clusters=get_xen_clusters())
+    session = create_session(
+        _id=cluster_id, get_xen_clusters=get_xen_clusters()
+    )
     _vm: VM = VM.get_by_uuid(session=session, uuid=vm_uuid)
     if _vm is not None:
         ret = dict(success=_vm.set_vCPUs(vCPU_count))
@@ -74,7 +82,9 @@ async def vm_set_vCPU_inurl(cluster_id: str, vm_uuid: str, vCPU_count: int):
 @router.get("/{cluster_id}/vm/{vm_uuid}/memory")
 async def vm_get_memory(cluster_id: str, vm_uuid: str):
     """ Get VM Memory (needs troubleshooting) """
-    session = create_session(_id=cluster_id, get_xen_clusters=get_xen_clusters())
+    session = create_session(
+        _id=cluster_id, get_xen_clusters=get_xen_clusters()
+    )
     _vm: VM = VM.get_by_uuid(session=session, uuid=vm_uuid)
     if _vm is not None:
         ret = dict(success=True, data=_vm.get_memory())
@@ -88,7 +98,9 @@ async def vm_get_memory(cluster_id: str, vm_uuid: str):
 @router.put("/{cluster_id}/vm/{vm_uuid}/memory")
 async def vm_set_memory(cluster_id: str, vm_uuid: str, args: MemoryArgs):
     """ Set VM Memory (needs troubleshooting) """
-    session = create_session(_id=cluster_id, get_xen_clusters=get_xen_clusters())
+    session = create_session(
+        _id=cluster_id, get_xen_clusters=get_xen_clusters()
+    )
     _vm: VM = VM.get_by_uuid(session=session, uuid=vm_uuid)
     if _vm is not None:
         ret = dict(success=_vm.set_memory(args.memory))
@@ -104,7 +116,9 @@ async def vm_set_memory(cluster_id: str, vm_uuid: str, args: MemoryArgs):
 @router.get("/{cluster_id}/vm/{vm_uuid}/memory/{memory_size}")
 async def vm_set_memory_inurl(cluster_id: str, vm_uuid: str, memory_size: int):
     """ Set VM Memory (needs troubleshooting) """
-    session = create_session(_id=cluster_id, get_xen_clusters=get_xen_clusters())
+    session = create_session(
+        _id=cluster_id, get_xen_clusters=get_xen_clusters()
+    )
     _vm: VM = VM.get_by_uuid(session=session, uuid=vm_uuid)
     if _vm is not None:
         ret = dict(success=_vm.set_memory(memory_size))

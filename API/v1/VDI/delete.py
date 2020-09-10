@@ -11,7 +11,9 @@ router = APIRouter()
 @router.delete("/{cluster_id}/vdi/{vdi_uuid}")
 async def vdi_get_by_uuid(cluster_id: str, vdi_uuid: str):
     """ Delete SR by UUID """
-    session = create_session(_id=cluster_id, get_xen_clusters=get_xen_clusters())
+    session = create_session(
+        _id=cluster_id, get_xen_clusters=get_xen_clusters()
+    )
     vdi: VDI = VDI.get_by_uuid(session=session, uuid=vdi_uuid)
 
     if vdi is not None:

@@ -15,7 +15,9 @@ router = APIRouter()
 async def find_cd_by_name(cluster_id: str, args: NameArgs):
     """ Find SR by Name """
     sr = None
-    session = create_session(_id=cluster_id, get_xen_clusters=get_xen_clusters())
+    session = create_session(
+        _id=cluster_id, get_xen_clusters=get_xen_clusters()
+    )
     name = args.name
     srs = SR.get_by_name(session=session, name=name)
 
@@ -36,7 +38,9 @@ async def find_cd_by_name(cluster_id: str, args: NameArgs):
 @router.get("/{cluster_id}/sr/find/{iso_name}")
 async def insert_cd_inurl_name(cluster_id: str, iso_name: str):
     """ Find SR by Name """
-    session = create_session(_id=cluster_id, get_xen_clusters=get_xen_clusters())
+    session = create_session(
+        _id=cluster_id, get_xen_clusters=get_xen_clusters()
+    )
     srs = SR.get_by_name(session=session, name=iso_name)
 
     if srs is not None:

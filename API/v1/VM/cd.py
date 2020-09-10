@@ -11,7 +11,9 @@ router = APIRouter()
 
 @router.get("/{cluster_id}/vm/{vm_uuid}/cd")
 async def get_cd(cluster_id: str, vm_uuid: str):
-    session = create_session(_id=cluster_id, get_xen_clusters=get_xen_clusters())
+    session = create_session(
+        _id=cluster_id, get_xen_clusters=get_xen_clusters()
+    )
 
     vm: VM = VM.get_by_uuid(session=session, uuid=vm_uuid)
 
@@ -32,7 +34,9 @@ async def get_cd(cluster_id: str, vm_uuid: str):
 
 @router.get("/{cluster_id}/vm/{vm_uuid}/cd/insert/{vdi_uuid}")
 async def get_cd_insert_inurl(cluster_id: str, vm_uuid: str, vdi_uuid: str):
-    session = create_session(_id=cluster_id, get_xen_clusters=get_xen_clusters())
+    session = create_session(
+        _id=cluster_id, get_xen_clusters=get_xen_clusters()
+    )
 
     vm: VM = VM.get_by_uuid(session=session, uuid=vm_uuid)
 
@@ -68,7 +72,9 @@ async def get_cd_insert_inurl(cluster_id: str, vm_uuid: str, vdi_uuid: str):
 @router.delete("/{cluster_id}/vm/{vm_uuid}/cd/insert")
 @router.get("/{cluster_id}/vm/{vm_uuid}/cd/eject")
 async def get_cd_eject(cluster_id: str, vm_uuid: str):
-    session = create_session(_id=cluster_id, get_xen_clusters=get_xen_clusters())
+    session = create_session(
+        _id=cluster_id, get_xen_clusters=get_xen_clusters()
+    )
 
     vm: VM = VM.get_by_uuid(session=session, uuid=vm_uuid)
 
@@ -91,7 +97,9 @@ async def get_cd_eject(cluster_id: str, vm_uuid: str):
 
 @router.get("/{cluster_id}/vm/{vm_uuid}/cds")
 async def get_cds(cluster_id: str, vm_uuid: str):
-    session = create_session(_id=cluster_id, get_xen_clusters=get_xen_clusters())
+    session = create_session(
+        _id=cluster_id, get_xen_clusters=get_xen_clusters()
+    )
 
     vm: VM = VM.get_by_uuid(session=session, uuid=vm_uuid)
 

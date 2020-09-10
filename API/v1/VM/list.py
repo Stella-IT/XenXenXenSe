@@ -13,7 +13,9 @@ router = APIRouter()
 async def vm_list(cluster_id: str):
     """ Gets VMs available on Xen Server """
 
-    session = create_session(_id=cluster_id, get_xen_clusters=get_xen_clusters())
+    session = create_session(
+        _id=cluster_id, get_xen_clusters=get_xen_clusters()
+    )
     vms = VM.list_vm(session=session)
 
     __sat = []
@@ -29,7 +31,9 @@ async def vm_list(cluster_id: str):
 @router.get("/{cluster_id}/template/list")
 async def template_list(cluster_id: str):
     """ Gets Templates available on Xen Server """
-    session = create_session(_id=cluster_id, get_xen_clusters=get_xen_clusters())
+    session = create_session(
+        _id=cluster_id, get_xen_clusters=get_xen_clusters()
+    )
     vms = VM.list_templates(session=session)
 
     __sat = []
