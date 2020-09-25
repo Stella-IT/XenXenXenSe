@@ -39,7 +39,7 @@ We are using pre-commit for checking linters and commit conventions before the c
 Please install it via `pipenv run pre-commit-setup` after you clone it.
 
 ## License
-Distributed under GNU AGPLv3 *(GNU Affero General Public License Version 3)*.  
+Distributed under MIT License.
 If you need commercial license, feel free to contact us at [contact@stella-it.com](mailto:contact@stella-it.com)  
 
 ### License FAQ
