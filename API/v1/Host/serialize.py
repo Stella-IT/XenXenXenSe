@@ -1,6 +1,10 @@
 from XenGarden.Host import Host
 
 
+def replace_under_bar(t):
+    return dict((key.replace("-", "_"), value) for (key, value) in t.items())
+
+
 def serialize(host: Host):
     return dict(
         uuid=host.get_uuid(),
@@ -11,6 +15,6 @@ def serialize(host: Host):
             free=host.get_free_memory(), total=host.get_total_memory()
         ),
         cpu=host.get_cpu_info(),
-        bios=host.get_bios_strings(),
+        bios=replace_under_bar(host.get_bios_strings()),
         version=host.get_software_version(),
     )
