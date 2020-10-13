@@ -4,6 +4,7 @@ __pycache__/
 
 ## Covers Visual Studio Code
 # Visual Studio Code
+.vscode/
 .vscode/*
 !.vscode/settings.json
 !.vscode/tasks.json
@@ -27,6 +28,8 @@ __pycache__/
 # Reference: https://intellij-support.jetbrains.com/hc/en-us/articles/206544839
 
 # User-specific stuff
+.idea/
+.idea/*
 .idea/**/workspace.xml
 .idea/**/tasks.xml
 .idea/**/usage.statistics.xml
