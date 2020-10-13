@@ -1,8 +1,14 @@
 ![XenXenXenSe Project banner](demonstration/banner.png)
 
 # Project XenXenXenSe
+
 A Modern RESTful API implemenation of XenAPI for Citrix Hypervisor® and XCP-ng.  
 Try not to confuse with [ZenZenZenSe (前前前世)](https://en.wikipedia.org/wiki/Zenzenzense). 
+
+## Notice
+XenXenXenSe is currently in rewrite session to create a modular structure and in process of seperating between [XenGarden which is a Python wrapper for XenAPI](https://github.com/Stella-IT/XenGarden).  
+Due to this, XenXenXenSe Project is currently on going maintenance work, therefore, having a slow update speed.  
+Thank you for your understanding.  
 
 ## Build Status
 ![Unit Test](https://github.com/Stella-IT/XenXenXenSe/workflows/Unit%20Test/badge.svg)
@@ -39,7 +45,7 @@ We are using pre-commit for checking linters and commit conventions before the c
 Please install it via `pipenv run pre-commit-setup` after you clone it.
 
 ## License
-Distributed under GNU AGPLv3 *(GNU Affero General Public License Version 3)*.  
+Distributed under MIT License.
 If you need commercial license, feel free to contact us at [contact@stella-it.com](mailto:contact@stella-it.com)  
 
 ### License FAQ
