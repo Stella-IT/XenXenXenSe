@@ -103,3 +103,6 @@ Pipfile.lock
 
 # Prevent default config to be committed.
 config.json
+
+.venv
+.venv/*
