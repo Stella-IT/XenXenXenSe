@@ -1,3 +1,3 @@
 from .host import HostListResponseModel
 
-__all__ = ['host']
+__all__ = ["host"]
