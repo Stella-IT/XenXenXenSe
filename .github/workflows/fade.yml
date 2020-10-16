@@ -27,7 +27,7 @@ jobs:
           --cmdline "python3 main.py" --dependency python$PYTHON_VERSION --dependency python3-pip \
           --maintainer-name "Stella IT" --maintainer-email "admin@stella-it.com" --type service
           node dist/ --edit --path $GITHUB_WORKSPACE --input-postinst-payload /dev/stdin << EOF
-          sudo -H -u xenxenxense python3 -m pip install -r requirements.txt"
+          sudo -H -u xenxenxense python3 -m pip install -r requirements.txt
           echo "WARNING: config.py is currently default; please edit before use."
           EOF
           node dist/ --create-deb --path $GITHUB_WORKSPACE --output $GITHUB_WORKSPACE/xenxenxense_0.0.0-$COMMIT-$PYTHON_VERSION\_all.deb
