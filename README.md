@@ -1,15 +1,19 @@
 ![XenXenXenSe Project banner](demonstration/banner.png)
 
 # Project XenXenXenSe
-
 A Modern RESTful API implemenation of XenAPI for Citrix Hypervisor® and XCP-ng.  
 Try not to confuse with [ZenZenZenSe (前前前世)](https://en.wikipedia.org/wiki/Zenzenzense). 
 
 ## Notice
+**BREAKING CHANGES:**  
+Since, [*"master"* term in technological industries](https://en.wikipedia.org/wiki/Master/slave_(technology)) triggers and offends some , maintainer (@MisakaMikoto0502) has been decided this breaking changes to this repository.  
+Since this change can affect all of the forked repositories, Please make sure you have your default branch is using name *"main"* if else, please change it to *"main"*. Thank you.  
+  
+**SLOW UPDATE NOTICE:**  
 XenXenXenSe is currently in rewrite session to create a modular structure and in process of seperating between [XenGarden which is a Python wrapper for XenAPI](https://github.com/Stella-IT/XenGarden).  
 Due to this, XenXenXenSe Project is currently on going maintenance work, therefore, having a slow update speed.  
 Thank you for your understanding.  
-
+  
 ## Build Status
 ![Unit Test](https://github.com/Stella-IT/XenXenXenSe/workflows/Unit%20Test/badge.svg)
 ![Build Debian Package](https://github.com/Stella-IT/XenXenXenSe/workflows/Build%20Debian%20Package/badge.svg)
