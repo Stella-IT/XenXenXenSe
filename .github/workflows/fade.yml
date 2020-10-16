@@ -22,7 +22,7 @@ jobs:
           cd /tmp; git clone https://github.com/fade-project/fade
           cd fade; yarn install
           yarn start --init --name xenxenxense --path $GITHUB_WORKSPACE --version 0.0.0-$COMMIT-$PYTHON_VERSION \
-          --description "A Modern RESTful API implemenation of XenAPI for Citrix Hypervisor(R) and XCP-ng." \
+          --description "A Modern RESTful API implemenation of XenAPI for Citrix Hypervisor_R_ and XCP-ng." \
           --url "https://github.com/Stella-IT/XenXenXenSe" --priority optional --architecture all \
           --cmdline "python3 main.py" --dependency python$PYTHON_VERSION --dependency python3-pip \
           --maintainer-name "Stella IT" --maintainer-email "admin@stella-it.com" --type service
