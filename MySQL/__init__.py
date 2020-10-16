@@ -5,6 +5,7 @@ import sqlalchemy
 import datetime
 import asyncio
 
+from typing import Optional
 from MySQL.interface import credentials_interface
 from MySQL.Status import status
 from sqlalchemy.dialects.mysql import (
@@ -25,16 +26,16 @@ from config import (
 
 
 class DatabaseCore:
-    def __init__(self):
+    def __init__(self) -> None:
         self.mysql_credentials: dict = get_mysql_credentials()
 
-    def database_connection_url(self) -> str:
+    def database_connection_url(self) -> Optional[str]:
         if status.get_enabled():
             print("MySQL Sync: Terminating Multiple Initialization")
-            return
+            return None
 
         if self.mysql_credentials is None:
-            return
+            return None
 
         cred = credentials_interface(**self.mysql_credentials)
 
@@ -58,11 +59,11 @@ class DatabaseCore:
 
 
 class DatabaseManager(DatabaseCore):
-    def __init__(self):
+    def __init__(self) -> None:
         super(DatabaseManager, self).__init__()
         self.database_core = self
 
-    def hosts_table(self):
+    def hosts_table(self) -> sqlalchemy.Table:
         """
         CREATE TABLE IF NOT EXISTS `hosts` (
            `cluster_id` VARCHAR(255) NOT NULL,
@@ -92,7 +93,7 @@ class DatabaseManager(DatabaseCore):
         )
         return hosts
 
-    def vms_table(self):
+    def vms_table(self) -> sqlalchemy.Table:
         """
         CREATE TABLE IF NOT EXISTS `vms` (
            `cluster_id` VARCHAR(255) NOT NULL,
@@ -144,6 +145,7 @@ class DatabaseManager(DatabaseCore):
                    `vCPUs` INT NOT NULL,
                    `power` TEXT NOT NULL
         );"""
+
         if not self.create_engine.has_table(
             "hosts"
         ) or self.create_engine.has_table("vms"):
@@ -245,9 +247,6 @@ class CoreInitialization(DatabaseManager):
             except Exception as e:
                 print("Database generation failed.", e)
                 return
-
-
-# =========================================
 
 
 def init_connection():
