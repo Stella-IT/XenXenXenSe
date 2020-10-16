@@ -25,7 +25,7 @@ jobs:
           --description "A Modern RESTful API implemenation of XenAPI for Citrix Hypervisor(R) and XCP-ng." \
           --url "https://github.com/Stella-IT/XenXenXenSe" --priority optional --architecture all \
           --cmdline "python3 main.py" --dependency python$PYTHON_VERSION --dependency python3-pip \
-          --maintainer-name "Stella IT" --maintainer-email "admin@stella-it.com" --type systemd
+          --maintainer-name "Stella IT" --maintainer-email "admin@stella-it.com" --type service
           node dist/ --edit --path $GITHUB_WORKSPACE --input-postinst-payload /dev/stdin << EOF
           sudo -H -u xenxenxense python3 -m pip install -r requirements.txt"
           echo "WARNING: config.py is currently default; please edit before use."
