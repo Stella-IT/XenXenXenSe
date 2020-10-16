@@ -4,12 +4,13 @@ from XenGarden.Host import Host
 from XenGarden.session import create_session
 
 from API.v1.Host.serialize import serialize
+from API.v1.model.host import HostListResponseModel
 from config import get_xen_clusters
 
 router = APIRouter()
 
 
-@router.get("/{cluster_id}/host/list")
+@router.get("/{cluster_id}/host/list", response_model=HostListResponseModel)
 async def host_list(cluster_id: str):
     """ Get All from Existance Host """
     session = create_session(

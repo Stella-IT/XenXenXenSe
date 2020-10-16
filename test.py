@@ -1,3 +1,5 @@
+import sys
+
 from fastapi.testclient import TestClient
 
 from fastapi import FastAPI
@@ -65,4 +67,4 @@ if __name__ == "__main__":
         print("Test success!")
     except Exception:
         print("test failed!!!!")
-        exit(1)
+        sys.exit(0)

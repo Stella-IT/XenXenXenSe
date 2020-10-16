@@ -1,0 +1,10 @@
+# Xen RESTful API
+databases[mysql]==0.3.2
+mysqlclient==2.0.1
+requests==2.24.0
+schedule==0.6.0
+XenGarden==1.0.0
+pyfiglet==0.8.post1
+fastapi==0.61.1
+uvicorn==0.12.1
+ujson==3.2.0

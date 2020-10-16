@@ -6,9 +6,11 @@ import signal
 import uvicorn
 import schedule
 import asyncio
-from API.v1 import router as _v1_router
-from threading import Thread
 
+from threading import Thread
+from MySQLdb._exceptions import OperationalError
+
+from API.v1 import router as _v1_router
 from config import get_xen_clusters, get_mysql_credentials
 
 # Temp solution
@@ -34,8 +36,8 @@ class XenXenXenSeCore(DatabaseCore):
                 self.manager.metadata.create_all(self.manager.create_engine)
                 if not self.manager.database.is_connected:
                     await self.manager.database.connect()
-            except AttributeError:
-                return 0
+            except AttributeError or OperationalError:
+                pass
 
         @self.app.on_event("shutdown")
         async def on_shutdown():
