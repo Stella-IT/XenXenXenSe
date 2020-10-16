@@ -6,7 +6,7 @@ Try not to confuse with [ZenZenZenSe (前前前世)](https://en.wikipedia.org/wi
 
 ## Notice
 **BREAKING CHANGES:**  
-Since, [*"master"* term in technological industries](https://en.wikipedia.org/wiki/Master/slave_(technology)) triggers and offends some , maintainer (@MisakaMikoto0502) has been decided this breaking changes to this repository.  
+Since, [*"master"* term in technological industries](https://en.wikipedia.org/wiki/Master/slave_(technology)) triggers and offends some people, maintainer (@MisakaMikoto0502) has been decided this breaking changes to this repository.  
 Since this change can affect all of the forked repositories, Please make sure you have your default branch is using name *"main"* if else, please change it to *"main"*. Thank you.  
   
 **SLOW UPDATE NOTICE:**  
