@@ -30,7 +30,7 @@ jobs:
           sudo -H -u xenxenxense python3 -m pip install -r requirements.txt"
           echo "WARNING: config.py is currently default; please edit before use."
           EOF
-          node dist/ --create-deb --path $GITHUB_WORKSPACE
+          node dist/ --create-deb --path $GITHUB_WORKSPACE --output $GITHUB_WORKSPACE/xenxenxense_0.0.0-$COMMIT-$PYTHON_VERSION\_all.deb
         env:
           PYTHON_VERSION: ${{ matrix.python-version }}
       - name: Upload Debian Package
