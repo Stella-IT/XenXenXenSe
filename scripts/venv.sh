@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/bin/sh -e
 
-virutalenv env
+python3 -m virutalenv env
 . venv/bin/activate

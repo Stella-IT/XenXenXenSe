@@ -1,8 +1,8 @@
 from XenGarden.VM import VM
 
-from MySQL.Status import status
-from MySQL import DatabaseCore
 from config import get_xen_clusters
+from MySQL import DatabaseCore
+from MySQL.Status import status
 
 
 class XenVm(DatabaseCore):

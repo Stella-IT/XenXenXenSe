@@ -1,28 +1,19 @@
-import time
-import schedule
-import databases
-import sqlalchemy
-import datetime
 import asyncio
-
+import datetime
+import time
 from typing import Optional
+
+import databases
+import schedule
+import sqlalchemy
+from sqlalchemy import INT
+from sqlalchemy.dialects.mysql import (BIGINT, DATETIME, FLOAT, MEDIUMTEXT,
+                                       TEXT, VARCHAR)
+
+from config import (get_mysql_credentials, get_xen_clusters,
+                    mysql_host_update_rate, mysql_update_rate)
 from MySQL.interface import credentials_interface
 from MySQL.Status import status
-from sqlalchemy.dialects.mysql import (
-    MEDIUMTEXT,
-    VARCHAR,
-    DATETIME,
-    TEXT,
-    FLOAT,
-    BIGINT,
-)
-from sqlalchemy import INT
-from config import (
-    mysql_host_update_rate,
-    mysql_update_rate,
-    get_xen_clusters,
-    get_mysql_credentials,
-)
 
 
 class DatabaseCore:
@@ -161,11 +152,12 @@ async def sync_mysql_host_database():
         print()
         print("MySQL Sync: MySQL Host Sync Triggered!")
 
-        from .Host import XenHost
-        from .VM import XenVm
+        from XenGarden.Host import Host
         from XenGarden.session import create_session
         from XenGarden.VM import VM
-        from XenGarden.Host import Host
+
+        from .Host import XenHost
+        from .VM import XenVm
 
         for cluster_id in get_xen_clusters():
             session = create_session(cluster_id)
@@ -190,11 +182,12 @@ async def sync_mysql_database():
         print()
         print("MySQL Sync: MySQL Sync Triggered!")
 
-        from .VM import XenVm
-        from .Host import XenHost
-        from XenGarden.VM import VM
         from XenGarden.Host import Host
         from XenGarden.session import create_session
+        from XenGarden.VM import VM
+
+        from .Host import XenHost
+        from .VM import XenVm
 
         for cluster_id in get_xen_clusters():
             session = create_session(cluster_id)

@@ -1,10 +1,8 @@
 from fastapi import APIRouter
+from XenGarden.session import create_session
+from XenGarden.VDI import VDI
 
 from API.v1.Interface import NameArgs
-
-from XenGarden.VDI import VDI
-from XenGarden.session import create_session
-
 from API.v1.VDI.serialize import serialize
 from config import get_xen_clusters
 

@@ -1,10 +1,9 @@
 from fastapi import APIRouter
-
-from XenGarden.VM import VM
 from XenGarden.session import create_session
+from XenGarden.VM import VM
 
-from MySQL.VM import XenVm
 from config import get_xen_clusters
+from MySQL.VM import XenVm
 
 router = APIRouter()
 

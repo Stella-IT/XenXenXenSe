@@ -1,5 +1,4 @@
 from fastapi import APIRouter
-
 from XenGarden.Console import Console
 from XenGarden.session import create_session
 

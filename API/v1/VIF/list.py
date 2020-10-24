@@ -1,7 +1,6 @@
 from fastapi import APIRouter
-
-from XenGarden.VIF import VIF
 from XenGarden.session import create_session
+from XenGarden.VIF import VIF
 
 from API.v1.VIF.serialize import serialize
 from config import get_xen_clusters
