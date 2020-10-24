@@ -1,7 +1,6 @@
 from fastapi import APIRouter
-
-from XenGarden.VM import VM
 from XenGarden.session import create_session
+from XenGarden.VM import VM
 
 from API.v1.VBD.serialize import serialize as _vbd_serialize
 from config import get_xen_clusters
@@ -47,6 +46,7 @@ async def get_cd_insert_inurl(cluster_id: str, vm_uuid: str, vdi_uuid: str):
         if new_vbd is not None:
 
             from XenGarden.VDI import VDI
+
             from API.v1.VDI.serialize import serialize as _vdi_serialize
 
             vdi: VDI = VDI.get_by_uuid(session=session, uuid=vdi_uuid)

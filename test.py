@@ -1,11 +1,9 @@
 import sys
 
+from fastapi import FastAPI
 from fastapi.testclient import TestClient
 
-from fastapi import FastAPI
 from core import XenXenXenSeCore
-
-from sys import argv
 
 app = FastAPI(
     title="Xen API v2",

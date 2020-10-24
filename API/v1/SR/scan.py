@@ -1,7 +1,7 @@
 from fastapi import APIRouter
-
-from XenGarden.SR import SR
 from XenGarden.session import create_session
+from XenGarden.SR import SR
+
 from config import get_xen_clusters
 
 router = APIRouter()

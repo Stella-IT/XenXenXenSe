@@ -1,21 +1,18 @@
+import asyncio
 import os
-import ujson
 import sys
 import time
-import signal
-import uvicorn
-import schedule
-import asyncio
-
 from threading import Thread
+
+import schedule
+import ujson
+import uvicorn
 from MySQLdb._exceptions import OperationalError
 
 from API.v1 import router as _v1_router
-from config import get_xen_clusters, get_mysql_credentials
-
+from config import get_xen_clusters
 # Temp solution
-from MySQL import init_connection
-from MySQL import DatabaseCore
+from MySQL import DatabaseCore, init_connection
 
 
 class XenXenXenSeCore(DatabaseCore):

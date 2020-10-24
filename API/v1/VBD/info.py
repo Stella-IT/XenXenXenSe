@@ -1,7 +1,6 @@
 from fastapi import APIRouter
-
-from XenGarden.VBD import VBD
 from XenGarden.session import create_session
+from XenGarden.VBD import VBD
 
 from API.v1.VBD.serialize import serialize
 from config import get_xen_clusters
