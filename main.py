@@ -20,6 +20,7 @@ app = FastAPI(
     debug=True,
 )
 
+
 if __name__ == "__main__":
     core = XenXenXenSeCore(app)
     core.start()

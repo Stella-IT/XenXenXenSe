@@ -1,5 +1,4 @@
 from XenGarden.VM import VM
-
 from config import get_xen_clusters
 from MySQL import DatabaseCore
 from MySQL.Status import status

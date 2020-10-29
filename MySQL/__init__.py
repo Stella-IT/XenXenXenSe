@@ -138,7 +138,7 @@ class DatabaseManager(DatabaseCore):
         );"""
 
         if not self.create_engine.has_table(
-            "hosts"
+                "hosts"
         ) or self.create_engine.has_table("vms"):
             self.create_engine.execute(hosts_table)
             self.create_engine.execute(vms_table)
@@ -152,15 +152,15 @@ async def sync_mysql_host_database():
         print()
         print("MySQL Sync: MySQL Host Sync Triggered!")
 
+        from .Host import XenHost
+        from .VM import XenVm
+
         from XenGarden.Host import Host
         from XenGarden.session import create_session
         from XenGarden.VM import VM
 
-        from .Host import XenHost
-        from .VM import XenVm
-
         for cluster_id in get_xen_clusters():
-            session = create_session(cluster_id)
+            session = create_session(cluster_id, get_xen_clusters())
 
             # ==================================
 
@@ -182,15 +182,14 @@ async def sync_mysql_database():
         print()
         print("MySQL Sync: MySQL Sync Triggered!")
 
-        from XenGarden.Host import Host
-        from XenGarden.session import create_session
-        from XenGarden.VM import VM
-
         from .Host import XenHost
         from .VM import XenVm
+        from XenGarden.Host import Host
+        from XenGarden.VM import VM
+        from XenGarden.session import create_session
 
         for cluster_id in get_xen_clusters():
-            session = create_session(cluster_id)
+            session = create_session(cluster_id, get_xen_clusters())
 
             # ==================================
 
@@ -233,7 +232,7 @@ class CoreInitialization(DatabaseManager):
 
         print()
         if not self.create_engine.has_table(
-            "hosts"
+                "hosts"
         ) or self.create_engine.has_table("vms"):
             try:
                 await self.is_not_generated_table()
