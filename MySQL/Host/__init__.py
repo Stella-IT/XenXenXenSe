@@ -1,8 +1,9 @@
+from XenGarden.session import create_session
 from XenGarden.Host import Host
 
-from config import get_xen_clusters
 from MySQL import DatabaseCore
 from MySQL.Status import status
+from config import get_xen_clusters
 
 
 class XenHost(DatabaseCore):
@@ -82,8 +83,6 @@ class XenHost(DatabaseCore):
     async def remove_orphaned(self, cluster_id):
         if status.get_enabled():
             try:
-                from XenGarden.session import create_session
-
                 self.sql = "SELECT * FROM `hosts`"
                 await self.database.execute(self.sql)
 

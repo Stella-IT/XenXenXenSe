@@ -1,4 +1,7 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, HTTPException, Path
+from xmlrpc.client import Fault
+from http.client import RemoteDisconnected
+
 from XenGarden.Host import Host
 from XenGarden.session import create_session
 
@@ -10,20 +13,30 @@ router = APIRouter()
 
 
 @router.get("/{cluster_id}/host/list", response_model=HostListResponseModel)
-async def host_list(cluster_id: str):
+async def host_list(cluster_id: str = Path(default=None, title="cluster_id", description="Cluster ID")):
     """ Get All from Existance Host """
-    session = create_session(
-        _id=cluster_id, get_xen_clusters=get_xen_clusters()
-    )
-    hosts = Host.list_host(session=session)
+    try:
+        # KeyError Handling
+        try:
+            session = create_session(
+                _id=cluster_id, get_xen_clusters=get_xen_clusters()
+            )
+        except KeyError as key_error:
+            raise HTTPException(status_code=400, detail=f"{key_error} is not a valid path")
 
-    __hosts_list = []
-    hosts_list = __hosts_list.append
+        hosts = Host.list_host(session=session)
 
-    for host in hosts:
-        hosts_list(serialize(host))
+        __hosts_list = []
+        hosts_list = __hosts_list.append
 
-    ret = dict(success=True, data=__hosts_list)
+        for host in hosts:
+            hosts_list(serialize(host))
 
-    session.xenapi.session.logout()
-    return ret
+        ret = dict(success=True, data=__hosts_list)
+
+        session.xenapi.session.logout()
+        return ret
+    except Fault as xml_rpc_error:
+        raise HTTPException(status_code=int(xml_rpc_error.faultCode), detail=xml_rpc_error.faultString)
+    except RemoteDisconnected as rd_error:
+        raise HTTPException(status_code=500, detail=rd_error.strerror)
