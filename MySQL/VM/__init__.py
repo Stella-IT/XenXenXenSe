@@ -6,11 +6,11 @@ from MySQL.Status import status
 
 
 class XenVm(DatabaseCore):
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__()
         self.sql = ""
 
-    async def update(self, cluster_id, _vm: VM):
+    async def update(self, cluster_id: str, _vm: VM) -> None:
         if _vm is None:
             print("nope")
             return
@@ -75,7 +75,7 @@ class XenVm(DatabaseCore):
             except Exception as e:
                 print("MySQL Sync: update failed.", e, "\n", self.sql)
 
-    async def remove_orphaned(self, cluster_id):
+    async def remove_orphaned(self, cluster_id: str) -> None:
         if status.get_enabled():
             try:
                 from XenGarden.session import create_session

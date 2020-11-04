@@ -3,6 +3,7 @@ import os
 import sys
 import time
 from threading import Thread
+from typing import Any
 
 import schedule
 import ujson
@@ -17,7 +18,7 @@ from MySQL import DatabaseCore, init_connection
 
 
 class XenXenXenSeCore(DatabaseCore):
-    def __init__(self, app):
+    def __init__(self, app: Any) -> None:
         super().__init__()
         self.terminating = False
         self.manager = self
@@ -26,9 +27,9 @@ class XenXenXenSeCore(DatabaseCore):
         # include API router
         self.app.include_router(_v1_router)
 
-    def database_controller(self):
+    def database_controller(self) -> None:
         @self.app.on_event("startup")
-        async def on_startup():
+        async def on_startup() -> None:
             """database connection"""
             try:
                 self.manager.metadata.create_all(self.manager.create_engine)
@@ -38,21 +39,22 @@ class XenXenXenSeCore(DatabaseCore):
                 pass
 
         @self.app.on_event("shutdown")
-        async def on_shutdown():
+        async def on_shutdown() -> None:
             """database disconnection"""
             if self.manager.metadata.is_connected:
                 await self.manager.database.disconnect()
 
     @classmethod
-    def is_docker(cls):
+    def is_docker(cls) -> bool:
         return "DOCKER_XXXS_CONFIG" in os.environ
 
     @classmethod
-    def get_docker_config(cls):
-        return ujson.loads(os.environ["DOCKER_XXXS_CONFIG"])
+    def get_docker_config(cls) -> dict:
+        load_config = ujson.loads(os.environ["DOCKER_XXXS_CONFIG"])
+        return load_config
 
     @classmethod
-    def show_banner(cls, add_padding=False):
+    def show_banner(cls, add_padding: bool = False) -> None:
         """ Show banner for XenXenXenSe Project """
         from pyfiglet import Figlet
 
@@ -73,7 +75,7 @@ class XenXenXenSeCore(DatabaseCore):
             print()
 
     @staticmethod
-    def print_xen_hostnames(show_title=False):
+    def print_xen_hostnames(show_title: bool = False) -> None:
         """ Print Xen Hostnames to screen """
         if show_title:
             print("Detected Clusters")
@@ -81,7 +83,7 @@ class XenXenXenSeCore(DatabaseCore):
         for clusters in get_xen_clusters():
             print("*", clusters)
 
-    def run_api_server(self, development_mode=False):
+    def run_api_server(self, development_mode: bool = False) -> None:
         """ Run API Server """
         if development_mode:
             # development environment
@@ -98,17 +100,17 @@ class XenXenXenSeCore(DatabaseCore):
             # production environment
             uvicorn.run(self.app, host="127.0.0.1", port=8000)
 
-    def connect_db(self):
+    def connect_db(self) -> None:
         # Temporary Solution, will refactor to OOP Python. - @zeroday0619 Plz help!
         self.database_controller()
         init_connection()
 
     @staticmethod
-    def ask_exit():
+    def ask_exit() -> None:
         for task in asyncio.Task.all_tasks():
             task.cancel()
 
-    def schedule_process(self):
+    def schedule_process(self) -> None:
         """ The Thread content to run on scheduler """
         print("Data Caching Schedule handling has been started!")
         print()
@@ -123,7 +125,7 @@ class XenXenXenSeCore(DatabaseCore):
         print()
         print("Schedule handling is terminating!")
 
-    def start(self):
+    def start(self) -> None:
         self.show_banner(True)
         self.print_xen_hostnames(True)
         print()
