@@ -1,9 +1,9 @@
-from XenGarden.session import create_session
 from XenGarden.Host import Host
+from XenGarden.session import create_session
 
+from config import get_xen_clusters
 from MySQL import DatabaseCore
 from MySQL.Status import status
-from config import get_xen_clusters
 
 
 class XenHost(DatabaseCore):

@@ -11,10 +11,10 @@ from MySQLdb._exceptions import OperationalError
 
 from API.v1 import router as _v1_router
 from config import get_xen_clusters
+from MySQL import DatabaseCore, init_connection
+
 # Temp solution
 
-from MySQL import DatabaseCore
-from MySQL import init_connection
 
 
 class XenXenXenSeCore(DatabaseCore):

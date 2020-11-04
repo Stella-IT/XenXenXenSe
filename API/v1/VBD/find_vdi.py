@@ -1,4 +1,7 @@
-from fastapi import APIRouter
+from http.client import RemoteDisconnected
+from xmlrpc.client import Fault
+
+from fastapi import APIRouter, HTTPException
 from XenGarden.session import create_session
 from XenGarden.VBD import VBD
 
@@ -11,21 +14,35 @@ router = APIRouter()
 @router.get("/{cluster_id}/vbd/find-by-vdi/{vdi_uuid}")
 async def vbd_list(cluster_id: str, vdi_uuid: str):
     """ Get VBD by UUID """
-    session = create_session(
-        _id=cluster_id, get_xen_clusters=get_xen_clusters()
-    )
-    vbds = VBD.get_all(session=session)
+    try:
+        try:
+            session = create_session(
+                _id=cluster_id, get_xen_clusters=get_xen_clusters()
+            )
+        except KeyError as key_error:
+            raise HTTPException(
+                status_code=400, detail=f"{key_error} is not a valid path"
+            )
 
-    __vbd_list = []
-    _vbd_list = __vbd_list.append
-    for vbd in vbds:
-        if vbd.get_VDI().get_uuid() == vdi_uuid:
-            _vbd_list(serialize(vbd))
+        vbds = VBD.get_all(session=session)
 
-    if vbds is not None:
-        ret = dict(success=True, data=__vbd_list)
-    else:
-        ret = dict(success=False)
+        __vbd_list = []
+        _vbd_list = __vbd_list.append
+        for vbd in vbds:
+            if vbd.get_VDI().get_uuid() == vdi_uuid:
+                _vbd_list(serialize(vbd))
 
-    session.xenapi.session.logout()
-    return ret
+        if vbds is not None:
+            ret = dict(success=True, data=__vbd_list)
+        else:
+            ret = dict(success=False)
+
+        session.xenapi.session.logout()
+        return ret
+    except Fault as xml_rpc_error:
+        raise HTTPException(
+            status_code=int(xml_rpc_error.faultCode),
+            detail=xml_rpc_error.faultString,
+        )
+    except RemoteDisconnected as rd_error:
+        raise HTTPException(status_code=500, detail=rd_error.strerror)
