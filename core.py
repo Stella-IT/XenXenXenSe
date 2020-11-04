@@ -16,7 +16,6 @@ from MySQL import DatabaseCore, init_connection
 # Temp solution
 
 
-
 class XenXenXenSeCore(DatabaseCore):
     def __init__(self, app):
         super().__init__()
