@@ -1,4 +1,7 @@
-from fastapi import APIRouter
+from http.client import RemoteDisconnected
+from xmlrpc.client import Fault
+
+from fastapi import APIRouter, HTTPException
 from XenGarden.session import create_session
 from XenGarden.VM import VM
 
@@ -11,118 +14,176 @@ router = APIRouter()
 @router.get("/{cluster_id}/vm/{vm_uuid}/vif")
 async def instance_vif(cluster_id: str, vm_uuid: str):
     """ Show Instnace VIFs """
-    session = create_session(
-        _id=cluster_id, get_xen_clusters=get_xen_clusters()
-    )
-    vm: VM = VM.get_by_uuid(session=session, uuid=vm_uuid)
+    try:
+        try:
+            session = create_session(
+                _id=cluster_id, get_xen_clusters=get_xen_clusters()
+            )
+        except KeyError as key_error:
+            raise HTTPException(
+                status_code=400, detail=f"{key_error} is not a valid path"
+            )
 
-    if vm is not None:
+        vm: VM = VM.get_by_uuid(session=session, uuid=vm_uuid)
 
-        new_vif = vm.get_VIF()
+        if vm is not None:
 
-        if new_vif is not None:
+            new_vif = vm.get_VIF()
 
-            ret = dict(success=True, data=_vif_serialize(new_vif))
+            if new_vif is not None:
+
+                ret = dict(success=True, data=_vif_serialize(new_vif))
+            else:
+                ret = dict(success=False)
         else:
             ret = dict(success=False)
-    else:
-        ret = dict(success=False)
 
-    session.xenapi.session.logout()
-    return ret
+        session.xenapi.session.logout()
+        return ret
+    except Fault as xml_rpc_error:
+        raise HTTPException(
+            status_code=int(xml_rpc_error.faultCode),
+            detail=xml_rpc_error.faultString,
+        )
+    except RemoteDisconnected as rd_error:
+        raise HTTPException(status_code=500, detail=rd_error.strerror)
 
 
 @router.get("/{cluster_id}/vm/{vm_uuid}/vif/qos")
 async def vif_get_qos_by_uuid(cluster_id: str, vm_uuid: str):
     """ Set VIF QoS by VM """
-    session = create_session(
-        _id=cluster_id, get_xen_clusters=get_xen_clusters()
-    )
-    vm: VM = VM.get_by_uuid(session=session, uuid=vm_uuid)
-
-    if vm is not None:
-
-        vif = vm.get_VIF()
-
-        if vif is not None:
-            ret = dict(
-                success=True,
-                data=dict(type=vif.get_qos_type(), info=vif.get_qos_info()),
+    try:
+        try:
+            session = create_session(
+                _id=cluster_id, get_xen_clusters=get_xen_clusters()
             )
+        except KeyError as key_error:
+            raise HTTPException(
+                status_code=400, detail=f"{key_error} is not a valid path"
+            )
+
+        vm: VM = VM.get_by_uuid(session=session, uuid=vm_uuid)
+
+        if vm is not None:
+
+            vif = vm.get_VIF()
+
+            if vif is not None:
+                ret = dict(
+                    success=True,
+                    data=dict(
+                        type=vif.get_qos_type(), info=vif.get_qos_info()
+                    ),
+                )
+            else:
+                ret = dict(success=False)
+
         else:
             ret = dict(success=False)
 
-    else:
-        ret = dict(success=False)
-
-    session.xenapi.session.logout()
-    return ret
+        session.xenapi.session.logout()
+        return ret
+    except Fault as xml_rpc_error:
+        raise HTTPException(
+            status_code=int(xml_rpc_error.faultCode),
+            detail=xml_rpc_error.faultString,
+        )
+    except RemoteDisconnected as rd_error:
+        raise HTTPException(status_code=500, detail=rd_error.strerror)
 
 
 @router.get("/{cluster_id}/vm/{vm_uuid}/vif/qos/speed/{speed}")
 async def vif_set_qos_speed_by_vm(cluster_id: str, vm_uuid: str, speed: str):
     """ Set VIF QoS Speed by VM """
-    session = create_session(
-        _id=cluster_id, get_xen_clusters=get_xen_clusters()
-    )
-    vm: VM = VM.get_by_uuid(session=session, uuid=vm_uuid)
-
-    if vm is not None:
-
-        vif = vm.get_VIF()
-
+    try:
         try:
-            speedNum = int(speed)
-        except ValueError:
-            return dict(success=False)
+            session = create_session(
+                _id=cluster_id, get_xen_clusters=get_xen_clusters()
+            )
+        except KeyError as key_error:
+            raise HTTPException(
+                status_code=400, detail=f"{key_error} is not a valid path"
+            )
 
-        if speedNum <= 0:
-            a = vif.set_qos_type("")
-            b = vif.set_qos_info({})
+        vm: VM = VM.get_by_uuid(session=session, uuid=vm_uuid)
 
-            ret = dict(success=a and b)
+        if vm is not None:
+
+            vif = vm.get_VIF()
+
+            try:
+                speedNum = int(speed)
+            except ValueError:
+                return dict(success=False)
+
+            if speedNum <= 0:
+                a = vif.set_qos_type("")
+                b = vif.set_qos_info({})
+
+                ret = dict(success=a and b)
+
+            else:
+                if vif is not None:
+                    if vif.get_qos_type() != "ratelimit":
+                        vif.set_qos_type("ratelimit")
+
+                    ret = dict(success=vif.set_qos_info(dict(kbps=speed)))
+                else:
+                    ret = dict(success=False)
 
         else:
-            if vif is not None:
-                if vif.get_qos_type() != "ratelimit":
-                    vif.set_qos_type("ratelimit")
+            ret = dict(success=False)
 
-                ret = dict(success=vif.set_qos_info(dict(kbps=speed)))
-            else:
-                ret = dict(success=False)
-
-    else:
-        ret = dict(success=False)
-
-    session.xenapi.session.logout()
-    return ret
+        session.xenapi.session.logout()
+        return ret
+    except Fault as xml_rpc_error:
+        raise HTTPException(
+            status_code=int(xml_rpc_error.faultCode),
+            detail=xml_rpc_error.faultString,
+        )
+    except RemoteDisconnected as rd_error:
+        raise HTTPException(status_code=500, detail=rd_error.strerror)
 
 
 @router.get("/{cluster_id}/vm/{vm_uuid}/vifs")
 async def instance_vifs(cluster_id: str, vm_uuid: str):
     """ Show Instnace VIFs """
-    session = create_session(
-        _id=cluster_id, get_xen_clusters=get_xen_clusters()
-    )
-    vm: VM = VM.get_by_uuid(session=session, uuid=vm_uuid)
+    try:
+        try:
+            session = create_session(
+                _id=cluster_id, get_xen_clusters=get_xen_clusters()
+            )
+        except KeyError as key_error:
+            raise HTTPException(
+                status_code=400, detail=f"{key_error} is not a valid path"
+            )
 
-    if vm is not None:
+        vm: VM = VM.get_by_uuid(session=session, uuid=vm_uuid)
 
-        new_vifs = vm.get_VIFs()
+        if vm is not None:
 
-        __vif_serialized = []
-        vif_serialized = __vif_serialized.append
+            new_vifs = vm.get_VIFs()
 
-        if new_vifs is not None:
-            for vif in new_vifs:
-                if vif is not None:
-                    vif_serialized(_vif_serialize(vif))
+            __vif_serialized = []
+            vif_serialized = __vif_serialized.append
 
-            ret = dict(success=True, data=__vif_serialized)
+            if new_vifs is not None:
+                for vif in new_vifs:
+                    if vif is not None:
+                        vif_serialized(_vif_serialize(vif))
+
+                ret = dict(success=True, data=__vif_serialized)
+            else:
+                ret = dict(success=False)
         else:
             ret = dict(success=False)
-    else:
-        ret = dict(success=False)
 
-    session.xenapi.session.logout()
-    return ret
+        session.xenapi.session.logout()
+        return ret
+    except Fault as xml_rpc_error:
+        raise HTTPException(
+            status_code=int(xml_rpc_error.faultCode),
+            detail=xml_rpc_error.faultString,
+        )
+    except RemoteDisconnected as rd_error:
+        raise HTTPException(status_code=500, detail=rd_error.strerror)

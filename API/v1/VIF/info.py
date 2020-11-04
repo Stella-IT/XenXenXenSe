@@ -1,4 +1,7 @@
-from fastapi import APIRouter
+from http.client import RemoteDisconnected
+from xmlrpc.client import Fault
+
+from fastapi import APIRouter, HTTPException
 from XenGarden.session import create_session
 from XenGarden.VIF import VIF
 
@@ -11,15 +14,29 @@ router = APIRouter()
 @router.get("/{cluster_id}/vif/{vif_uuid}")
 async def vif_get_by_uuid(cluster_id: str, vif_uuid: str):
     """ Get VIF by UUID """
-    session = create_session(
-        _id=cluster_id, get_xen_clusters=get_xen_clusters()
-    )
-    vif: VIF = VIF.get_by_uuid(session=session, uuid=vif_uuid)
+    try:
+        try:
+            session = create_session(
+                _id=cluster_id, get_xen_clusters=get_xen_clusters()
+            )
+        except KeyError as key_error:
+            raise HTTPException(
+                status_code=400, detail=f"{key_error} is not a valid path"
+            )
 
-    if vif is not None:
-        ret = dict(success=True, data=serialize(vif))
-    else:
-        ret = dict(success=False)
+        vif: VIF = VIF.get_by_uuid(session=session, uuid=vif_uuid)
 
-    session.xenapi.session.logout()
-    return ret
+        if vif is not None:
+            ret = dict(success=True, data=serialize(vif))
+        else:
+            ret = dict(success=False)
+
+        session.xenapi.session.logout()
+        return ret
+    except Fault as xml_rpc_error:
+        raise HTTPException(
+            status_code=int(xml_rpc_error.faultCode),
+            detail=xml_rpc_error.faultString,
+        )
+    except RemoteDisconnected as rd_error:
+        raise HTTPException(status_code=500, detail=rd_error.strerror)

@@ -106,3 +106,5 @@ config.json
 
 .venv
 .venv/*
+.mypy_cache/
+.mypy_cache/*

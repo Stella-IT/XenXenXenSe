@@ -1,7 +1,6 @@
 import asyncio
 import datetime
-import time
-from typing import Optional
+from typing import Optional, no_type_check
 
 import databases
 import schedule
@@ -9,6 +8,7 @@ import sqlalchemy
 from sqlalchemy import INT
 from sqlalchemy.dialects.mysql import (BIGINT, DATETIME, FLOAT, MEDIUMTEXT,
                                        TEXT, VARCHAR)
+from sqlalchemy.engine import Engine
 
 from config import (get_mysql_credentials, get_xen_clusters,
                     mysql_host_update_rate, mysql_update_rate)
@@ -33,17 +33,17 @@ class DatabaseCore:
         url = f"mysql://{cred.user}:{cred.password}@{cred.host}:{str(cred.port)}/{cred.db}"
         return url
 
-    @property
+    @no_type_check
     def metadata(self):
         return sqlalchemy.MetaData()
 
-    @property
+    @no_type_check
     def database(self):
         DATABASE_URL = self.database_connection_url()
         return databases.Database(DATABASE_URL)
 
     @property
-    def create_engine(self):
+    def create_engine(self) -> Engine:
         DATABASE_URL = self.database_connection_url()
         engine = sqlalchemy.create_engine(DATABASE_URL)
         return engine
@@ -116,7 +116,7 @@ class DatabaseManager(DatabaseCore):
         )
         return vms
 
-    async def is_not_generated_table(self):
+    async def is_not_generated_table(self) -> None:
         hosts_table = """CREATE TABLE IF NOT EXISTS `hosts` (
                   `cluster_id` VARCHAR(255) NOT NULL,
                   `host_uuid` VARCHAR(255) NOT NULL,
@@ -138,7 +138,7 @@ class DatabaseManager(DatabaseCore):
         );"""
 
         if not self.create_engine.has_table(
-                "hosts"
+            "hosts"
         ) or self.create_engine.has_table("vms"):
             self.create_engine.execute(hosts_table)
             self.create_engine.execute(vms_table)
@@ -147,17 +147,15 @@ class DatabaseManager(DatabaseCore):
 # =========================================
 
 
-async def sync_mysql_host_database():
+async def sync_mysql_host_database() -> None:
     if status.get_enabled():
         print()
         print("MySQL Sync: MySQL Host Sync Triggered!")
 
-        from .Host import XenHost
-        from .VM import XenVm
-
         from XenGarden.Host import Host
         from XenGarden.session import create_session
-        from XenGarden.VM import VM
+
+        from .Host import XenHost
 
         for cluster_id in get_xen_clusters():
             session = create_session(cluster_id, get_xen_clusters())
@@ -177,16 +175,17 @@ async def sync_mysql_host_database():
 # =========================================
 
 
-async def sync_mysql_database():
+async def sync_mysql_database() -> None:
     if status.get_enabled():
         print()
         print("MySQL Sync: MySQL Sync Triggered!")
 
+        from XenGarden.Host import Host
+        from XenGarden.session import create_session
+        from XenGarden.VM import VM
+
         from .Host import XenHost
         from .VM import XenVm
-        from XenGarden.Host import Host
-        from XenGarden.VM import VM
-        from XenGarden.session import create_session
 
         for cluster_id in get_xen_clusters():
             session = create_session(cluster_id, get_xen_clusters())
@@ -216,10 +215,10 @@ async def sync_mysql_database():
 
 
 class CoreInitialization(DatabaseManager):
-    def __init__(self):
+    def __init__(self) -> None:
         super(CoreInitialization, self).__init__()
 
-    async def init_connection(self):
+    async def init_connection(self) -> None:
         if status.get_enabled():
             print("MySQL Sync: Terminating Multiple Initialization")
             return
@@ -232,7 +231,7 @@ class CoreInitialization(DatabaseManager):
 
         print()
         if not self.create_engine.has_table(
-                "hosts"
+            "hosts"
         ) or self.create_engine.has_table("vms"):
             try:
                 await self.is_not_generated_table()
@@ -241,7 +240,7 @@ class CoreInitialization(DatabaseManager):
                 return
 
 
-def init_connection():
+def init_connection() -> None:
     loop = asyncio.new_event_loop()
     asyncio.set_event_loop(loop)
     try:
