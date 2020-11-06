@@ -6,7 +6,7 @@ from XenGarden.session import create_session
 from XenGarden.VM import VM
 
 from API.v1.Interface import DescriptionArgs, NameArgs
-from config import get_xen_clusters
+from app.settings import Settings
 from MySQL.VM import XenVm
 
 router = APIRouter()
@@ -19,7 +19,7 @@ async def instance_get_name(cluster_id: str, vm_uuid: str):
     try:
         try:
             session = create_session(
-                _id=cluster_id, get_xen_clusters=get_xen_clusters()
+                _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()
             )
         except KeyError as key_error:
             raise HTTPException(
@@ -50,7 +50,7 @@ async def instance_get_description(cluster_id: str, vm_uuid: str):
     try:
         try:
             session = create_session(
-                _id=cluster_id, get_xen_clusters=get_xen_clusters()
+                _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()
             )
         except KeyError as key_error:
             raise HTTPException(
@@ -81,7 +81,7 @@ async def instance_set_name(cluster_id: str, vm_uuid: str, args: NameArgs):
     try:
         try:
             session = create_session(
-                _id=cluster_id, get_xen_clusters=get_xen_clusters()
+                _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()
             )
         except KeyError as key_error:
             raise HTTPException(
@@ -116,7 +116,7 @@ async def instance_set_name_inurl(
     try:
         try:
             session = create_session(
-                _id=cluster_id, get_xen_clusters=get_xen_clusters()
+                _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()
             )
         except KeyError as key_error:
             raise HTTPException(
@@ -151,7 +151,7 @@ async def instance_set_description(
     try:
         try:
             session = create_session(
-                _id=cluster_id, get_xen_clusters=get_xen_clusters()
+                _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()
             )
         except KeyError as key_error:
             raise HTTPException(
@@ -184,7 +184,7 @@ async def instance_set_description_inurl(
     try:
         try:
             session = create_session(
-                _id=cluster_id, get_xen_clusters=get_xen_clusters()
+                _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()
             )
         except KeyError as key_error:
             raise HTTPException(

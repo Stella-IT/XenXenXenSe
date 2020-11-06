@@ -10,15 +10,14 @@ from sqlalchemy.dialects.mysql import (BIGINT, DATETIME, FLOAT, MEDIUMTEXT,
                                        TEXT, VARCHAR)
 from sqlalchemy.engine import Engine
 
-from config import (get_mysql_credentials, get_xen_clusters,
-                    mysql_host_update_rate, mysql_update_rate)
+from app.settings import Settings
 from MySQL.interface import credentials_interface
 from MySQL.Status import status
 
 
 class DatabaseCore:
     def __init__(self) -> None:
-        self.mysql_credentials: dict = get_mysql_credentials()
+        self.mysql_credentials: dict = Settings.get_mysql_credentials()
 
     def database_connection_url(self) -> Optional[str]:
         if status.get_enabled():
@@ -157,8 +156,8 @@ async def sync_mysql_host_database() -> None:
 
         from .Host import XenHost
 
-        for cluster_id in get_xen_clusters():
-            session = create_session(cluster_id, get_xen_clusters())
+        for cluster_id in Settings.get_xen_clusters():
+            session = create_session(cluster_id, Settings.get_xen_clusters())
 
             # ==================================
 
@@ -187,8 +186,8 @@ async def sync_mysql_database() -> None:
         from .Host import XenHost
         from .VM import XenVm
 
-        for cluster_id in get_xen_clusters():
-            session = create_session(cluster_id, get_xen_clusters())
+        for cluster_id in Settings.get_xen_clusters():
+            session = create_session(cluster_id, Settings.get_xen_clusters())
 
             # ==================================
 
@@ -223,7 +222,7 @@ class CoreInitialization(DatabaseManager):
             print("MySQL Sync: Terminating Multiple Initialization")
             return
 
-        mysql_credentials = get_mysql_credentials()
+        mysql_credentials = Settings.get_mysql_credentials()
 
         if mysql_credentials is None:
             print("MySQL Sync: MySQL Caching is disabled!")
@@ -244,9 +243,9 @@ def init_connection() -> None:
     loop = asyncio.new_event_loop()
     asyncio.set_event_loop(loop)
     try:
+        mysql_update_rate = 60 * 1
+        mysql_host_update_rate = 20
         # generate MySQL database table
-        c = CoreInitialization()
-        loop.run_until_complete(c.init_connection())
         schedule.every(mysql_host_update_rate).seconds.do(
             loop.call_soon_threadsafe, sync_mysql_host_database
         )

@@ -1,6 +1,6 @@
 from XenGarden.VM import VM
 
-from config import get_xen_clusters
+from app.settings import Settings
 from MySQL import DatabaseCore
 from MySQL.Status import status
 
@@ -90,7 +90,9 @@ class XenVm(DatabaseCore):
                     vm_uuid = vm_v["vm_uuid"]
                     print(cluster_id, vm_uuid)
 
-                    session = create_session(cluster_id, get_xen_clusters())
+                    session = create_session(
+                        cluster_id, Settings.get_xen_clusters()
+                    )
                     _vm = VM.get_by_uuid(session, vm_uuid)
 
                     if _vm is None:

@@ -5,7 +5,7 @@ from fastapi import APIRouter, HTTPException
 from XenGarden.session import create_session
 from XenGarden.VDI import VDI
 
-from config import get_xen_clusters
+from app.settings import Settings
 
 router = APIRouter()
 
@@ -17,7 +17,7 @@ async def vdi_get_by_uuid(cluster_id: str, vdi_uuid: str):
     try:
         try:
             session = create_session(
-                _id=cluster_id, get_xen_clusters=get_xen_clusters()
+                _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()
             )
         except KeyError as key_error:
             raise HTTPException(

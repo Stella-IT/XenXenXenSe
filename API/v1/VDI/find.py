@@ -7,7 +7,7 @@ from XenGarden.VDI import VDI
 
 from API.v1.Interface import NameArgs
 from API.v1.VDI.serialize import serialize
-from config import get_xen_clusters
+from app.settings import Settings
 
 router = APIRouter()
 
@@ -18,7 +18,7 @@ async def find_VDI_by_name(cluster_id: str, args: NameArgs):
     try:
         try:
             session = create_session(
-                _id=cluster_id, get_xen_clusters=get_xen_clusters()
+                _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()
             )
         except KeyError as key_error:
             raise HTTPException(
@@ -55,7 +55,7 @@ async def insert_cd_inurl_name(cluster_id: str, iso_name: str):
     try:
         try:
             session = create_session(
-                _id=cluster_id, get_xen_clusters=get_xen_clusters()
+                _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()
             )
         except KeyError as key_error:
             raise HTTPException(

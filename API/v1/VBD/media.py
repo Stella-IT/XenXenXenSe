@@ -7,7 +7,7 @@ from XenGarden.VBD import VBD
 from XenGarden.VDI import VDI
 
 from API.v1.Interface import UUIDArgs
-from config import get_xen_clusters
+from app.settings import Settings
 
 router = APIRouter()
 
@@ -20,7 +20,7 @@ async def vbd_insert_vdi_by_uuid(
     try:
         try:
             session = create_session(
-                _id=cluster_id, get_xen_clusters=get_xen_clusters()
+                _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()
             )
         except KeyError as key_error:
             raise HTTPException(
@@ -59,7 +59,7 @@ async def vbd_insert_vdi_by_uuid(
     try:
         try:
             session = create_session(
-                _id=cluster_id, get_xen_clusters=get_xen_clusters()
+                _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()
             )
         except KeyError as key_error:
             raise HTTPException(
@@ -98,7 +98,7 @@ async def vbd_eject_vdi(cluster_id: str, vbd_uuid: str):
     try:
         try:
             session = create_session(
-                _id=cluster_id, get_xen_clusters=get_xen_clusters()
+                _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()
             )
         except KeyError as key_error:
             raise HTTPException(

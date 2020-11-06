@@ -6,7 +6,7 @@ from XenGarden.session import create_session
 from XenGarden.VM import VM
 
 from API.v1.VBD.serialize import serialize as _vbd_serialize
-from config import get_xen_clusters
+from app.settings import Settings
 
 router = APIRouter()
 
@@ -16,7 +16,7 @@ async def get_cd(cluster_id: str, vm_uuid: str):
     try:
         try:
             session = create_session(
-                _id=cluster_id, get_xen_clusters=get_xen_clusters()
+                _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()
             )
         except KeyError as key_error:
             raise HTTPException(
@@ -52,7 +52,7 @@ async def get_cd_insert_inurl(cluster_id: str, vm_uuid: str, vdi_uuid: str):
     try:
         try:
             session = create_session(
-                _id=cluster_id, get_xen_clusters=get_xen_clusters()
+                _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()
             )
         except KeyError as key_error:
             raise HTTPException(
@@ -107,7 +107,7 @@ async def get_cd_eject(cluster_id: str, vm_uuid: str):
     try:
         try:
             session = create_session(
-                _id=cluster_id, get_xen_clusters=get_xen_clusters()
+                _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()
             )
         except KeyError as key_error:
             raise HTTPException(
@@ -145,7 +145,7 @@ async def get_cds(cluster_id: str, vm_uuid: str):
     try:
         try:
             session = create_session(
-                _id=cluster_id, get_xen_clusters=get_xen_clusters()
+                _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()
             )
         except KeyError as key_error:
             raise HTTPException(

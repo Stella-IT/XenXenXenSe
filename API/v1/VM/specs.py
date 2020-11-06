@@ -6,7 +6,7 @@ from XenGarden.session import create_session
 from XenGarden.VM import VM
 
 from API.v1.Interface import MemoryArgs, VCpuArgs
-from config import get_xen_clusters
+from app.settings import Settings
 from MySQL.VM import XenVm
 
 router = APIRouter()
@@ -18,7 +18,7 @@ async def vm_get_vCPU(cluster_id: str, vm_uuid: str):
     try:
         try:
             session = create_session(
-                _id=cluster_id, get_xen_clusters=get_xen_clusters()
+                _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()
             )
         except KeyError as key_error:
             raise HTTPException(
@@ -48,7 +48,7 @@ async def vm_get_vCPU_params(cluster_id: str, vm_uuid: str):
     try:
         try:
             session = create_session(
-                _id=cluster_id, get_xen_clusters=get_xen_clusters()
+                _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()
             )
         except KeyError as key_error:
             raise HTTPException(
@@ -78,7 +78,7 @@ async def vm_set_vCPU(cluster_id: str, vm_uuid: str, args: VCpuArgs):
     try:
         try:
             session = create_session(
-                _id=cluster_id, get_xen_clusters=get_xen_clusters()
+                _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()
             )
         except KeyError as key_error:
             raise HTTPException(
@@ -110,7 +110,7 @@ async def vm_set_vCPU_inurl(cluster_id: str, vm_uuid: str, vCPU_count: int):
     try:
         try:
             session = create_session(
-                _id=cluster_id, get_xen_clusters=get_xen_clusters()
+                _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()
             )
         except KeyError as key_error:
             raise HTTPException(
@@ -143,7 +143,7 @@ async def vm_get_memory(cluster_id: str, vm_uuid: str):
     try:
         try:
             session = create_session(
-                _id=cluster_id, get_xen_clusters=get_xen_clusters()
+                _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()
             )
         except KeyError as key_error:
             raise HTTPException(
@@ -173,7 +173,7 @@ async def vm_set_memory(cluster_id: str, vm_uuid: str, args: MemoryArgs):
     try:
         try:
             session = create_session(
-                _id=cluster_id, get_xen_clusters=get_xen_clusters()
+                _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()
             )
         except KeyError as key_error:
             raise HTTPException(
@@ -205,7 +205,7 @@ async def vm_set_memory_inurl(cluster_id: str, vm_uuid: str, memory_size: int):
     try:
         try:
             session = create_session(
-                _id=cluster_id, get_xen_clusters=get_xen_clusters()
+                _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()
             )
         except KeyError as key_error:
             raise HTTPException(
