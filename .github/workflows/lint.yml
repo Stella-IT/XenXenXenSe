@@ -1,4 +1,4 @@
-name: Python Script Linting
+name: Black Lint
 
 on:
   push:
