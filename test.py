@@ -68,4 +68,4 @@ if __name__ == "__main__":
         print("Test success!")
     except Exception:
         print("test failed!!!!")
-        sys.exit(0)
+        sys.exit(1)
