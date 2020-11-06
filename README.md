@@ -7,8 +7,8 @@ Try not to confuse with [ZenZenZenSe (前前前世)](https://en.wikipedia.org/wi
 ## Build Status
 | Name                      | Status                                                                                                         |
 |---------------------------|----------------------------------------------------------------------------------------------------------------|
-| Python Lint Test          | ![Unit Test](https://github.com/Stella-IT/XenXenXenSe/workflows/Unit%20Test/badge.svg)                         |
-| Python Unit Test          | ![Unit Test](https://github.com/Stella-IT/XenXenXenSe/workflows/Unit%20Test/badge.svg)                         |
+| Python Script Black Lint  | ![Black Test](https://github.com/Stella-IT/XenXenXenSe/workflows/Black%20Lint/badge.svg)                       |
+| XenXenXenSe Unit Testing  | ![Unit Test](https://github.com/Stella-IT/XenXenXenSe/workflows/Unit%20Test/badge.svg)                         |
 | FADe Debian Package Build | ![Build Debian Package](https://github.com/Stella-IT/XenXenXenSe/workflows/Build%20Debian%20Package/badge.svg) |
 
 ## What is this?
