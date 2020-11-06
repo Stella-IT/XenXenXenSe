@@ -25,4 +25,4 @@ jobs:
           pip install black
       - name: Lint with black
         run: |
-          python -m black . --check
+          ./scripts/lint.sh
