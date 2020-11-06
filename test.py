@@ -1,20 +1,23 @@
 import sys
 
-from fastapi import FastAPI
 from fastapi.testclient import TestClient
 
-from core import XenXenXenSeCore
+from API.v1 import router as _v1_router
+from app.service import Server
 
-app = FastAPI(
+app = Server(
+    ctx="",
+    host="127.0.0.1",
+    port=8080,
     title="Xen API v2",
     description="XenServer Management API to REST API",
-    debug=True,
+    fast_api_debug=True,
+    asgi_debug=False,
 )
 
-XXXS_core = XenXenXenSeCore(app)
-XXXS_app = XXXS_core.app
+app.include_router(_v1_router)
 
-client = TestClient(XXXS_app)
+client = TestClient(app)
 
 
 cluster_id = "crongcloud"

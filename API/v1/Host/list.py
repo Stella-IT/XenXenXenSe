@@ -6,13 +6,13 @@ from XenGarden.Host import Host
 from XenGarden.session import create_session
 
 from API.v1.Host.serialize import serialize
-from API.v1.model.host import HostListResponseModel
-from config import get_xen_clusters
+from API.v1.model.host import ResponseModel
+from app.settings import Settings
 
 router = APIRouter()
 
 
-@router.get("/{cluster_id}/host/list", response_model=HostListResponseModel)
+@router.get("/{cluster_id}/host/list", response_model=ResponseModel)
 async def host_list(
     cluster_id: str = Path(
         default=None, title="cluster_id", description="Cluster ID"
@@ -23,7 +23,7 @@ async def host_list(
         # KeyError Handling
         try:
             session = create_session(
-                _id=cluster_id, get_xen_clusters=get_xen_clusters()
+                _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()
             )
         except KeyError as key_error:
             raise HTTPException(

@@ -3,27 +3,27 @@ from typing import List, Optional
 from pydantic import BaseModel
 
 
-class Memory(BaseModel):
-    free: str
-    total: str
+class MEMORY(BaseModel):
+    free: int
+    total: int
 
 
 class CPU(BaseModel):
-    cpu_count: str
-    socket_count: str
+    cpu_count: int
+    socket_count: int
     vendor: str
-    speed: str
+    speed: float
     modelname: str
-    family: str
-    model: str
-    stepping: str
+    family: int
+    model: int
+    stepping: int
     flags: str
     features: str
     features_pv: str
     features_hvm: str
 
 
-class Version(BaseModel):
+class VERSION(BaseModel):
     product_version: str
     product_version_text: str
     product_version_text_short: str
@@ -49,25 +49,25 @@ class BIOS(BaseModel):
     system_manufacturer: str
     system_product_name: str
     system_version: str
-    system_serial_number: str
-    oem_1: str
-    oem_2: str
-    oem_3: str
-    oem_4: str
+    system_serial_number: int
+    oem_1: Optional[str]
+    oem_2: Optional[str]
+    oem_3: Optional[str]
+    oem_4: Optional[str]
     hp_rombios: str
 
 
-class DataModel(BaseModel):
+class DATA(BaseModel):
     uuid: str
     name: str
     description: Optional[str]
     enabled: bool
-    memory: Memory
+    memory: MEMORY
     cpu: CPU
     bios: BIOS
-    version: Version
+    version: VERSION
 
 
-class HostListResponseModel(BaseModel):
+class ResponseModel(BaseModel):
     success: bool
-    data: List[DataModel]
+    data: List[DATA]

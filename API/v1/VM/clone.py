@@ -7,7 +7,7 @@ from XenGarden.VM import VM
 
 from API.v1.Interface import NameArgs
 from API.v1.VM.serialize import serialize
-from config import get_xen_clusters
+from app.settings import Settings
 from MySQL.VM import XenVm
 
 router = APIRouter()
@@ -22,7 +22,7 @@ async def instance_clone(cluster_id: str, vm_uuid: str, args: NameArgs):
     try:
         try:
             session = create_session(
-                _id=cluster_id, get_xen_clusters=get_xen_clusters()
+                _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()
             )
         except KeyError as key_error:
             raise HTTPException(
@@ -57,7 +57,7 @@ async def instance_clone_inurl(cluster_id: str, vm_uuid: str, clone_name: str):
         new_vm = None
         try:
             session = create_session(
-                _id=cluster_id, get_xen_clusters=get_xen_clusters()
+                _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()
             )
         except KeyError as key_error:
             raise HTTPException(

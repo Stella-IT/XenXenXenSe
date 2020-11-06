@@ -6,7 +6,7 @@ from XenGarden.Console import Console
 from XenGarden.session import create_session
 
 from API.v1.Console.serialize import serialize
-from config import get_xen_clusters
+from app.settings import Settings
 
 router = APIRouter()
 
@@ -25,7 +25,7 @@ async def console_get_by_uuid(
         # KeyError Handling
         try:
             session = create_session(
-                cluster_id, get_xen_clusters=get_xen_clusters()
+                cluster_id, get_xen_clusters=Settings.get_xen_clusters()
             )
         except KeyError as key_error:
             raise HTTPException(
