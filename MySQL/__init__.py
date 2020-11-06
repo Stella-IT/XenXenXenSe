@@ -6,8 +6,14 @@ import databases
 import schedule
 import sqlalchemy
 from sqlalchemy import INT
-from sqlalchemy.dialects.mysql import (BIGINT, DATETIME, FLOAT, MEDIUMTEXT,
-                                       TEXT, VARCHAR)
+from sqlalchemy.dialects.mysql import (
+    BIGINT,
+    DATETIME,
+    FLOAT,
+    MEDIUMTEXT,
+    TEXT,
+    VARCHAR,
+)
 from sqlalchemy.engine import Engine
 
 from app.settings import Settings
