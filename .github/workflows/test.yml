@@ -24,6 +24,6 @@ jobs:
           pip install pytest-asyncio
       - name: Run test
         run: |
-          pipenv run test
+          python3 test.py
         env:
           DOCKER_XXXS_CONFIG: ${{ secrets.S4AIT_TESTSRV_XXXS_CONFIG }}
