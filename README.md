@@ -22,7 +22,8 @@ This is a "Core Component" of Stella IT's VM Management and control system.
 1. Clone this repository
 2. Copy config.py.example to config.py
 3. Enter your credentials
-4. run `pip install -r requirements.txt` (or `pip3 install -r requirements.txt` if you are using both python versions)
+4. run `pip install -r requirements.txt`  
+   (or `pip3 install -r requirements.txt` if you are using both python versions)
 5. run server via `python3 main.py`
 
 ### API Docs
