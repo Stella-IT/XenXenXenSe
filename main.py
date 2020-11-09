@@ -23,11 +23,6 @@ app = Controller(
 )
 
 if __name__ == "__main__":
-    # initialization
-    app.initialize()
-    app.mysql_process()
-    app.sync_mysql_database()
-
     # Server initialization
     app.startup()
 

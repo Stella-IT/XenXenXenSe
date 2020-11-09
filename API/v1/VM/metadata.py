@@ -7,7 +7,6 @@ from XenGarden.VM import VM
 
 from API.v1.Interface import DescriptionArgs, NameArgs
 from app.settings import Settings
-from MySQL.VM import XenVm
 
 router = APIRouter()
 
@@ -94,8 +93,6 @@ async def instance_set_name(cluster_id: str, vm_uuid: str, args: NameArgs):
         else:
             ret = dict(success=False)
 
-        await XenVm().update(cluster_id=cluster_id, _vm=_vm)
-
         session.xenapi.session.logout()
         return ret
     except Fault as xml_rpc_error:
@@ -128,8 +125,6 @@ async def instance_set_name_inurl(
             ret = dict(success=_vm.set_name(new_name))
         else:
             ret = dict(success=False)
-
-        await XenVm().update(cluster_id=cluster_id, _vm=_vm)
 
         session.xenapi.session.logout()
         return ret
@@ -196,8 +191,6 @@ async def instance_set_description_inurl(
             ret = dict(success=_vm.set_description(new_description))
         else:
             ret = dict(success=False)
-
-        await XenVm().update(cluster_id=cluster_id, _vm=_vm)
 
         session.xenapi.session.logout()
         return ret

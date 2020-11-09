@@ -29,23 +29,3 @@ class Settings:
                 xen_clusters = cls.get_docker_config()["xen_clusters"]
 
         return xen_clusters
-
-    @classmethod
-    def get_mysql_credentials(cls) -> Dict:
-
-        mysql_credentials = {}
-
-        if os.path.isfile("config.json"):
-            with open("config.json", "r") as config_file:
-                mysql_credentials = ujson.load(config_file)[
-                    "mysql_credentials"
-                ]
-            config_file.close()
-
-        # Docker check
-        if cls.is_docker():
-            if "mysql_credentials" in cls.get_docker_config():
-                mysql_credentials = cls.get_docker_config()[
-                    "mysql_credentials"
-                ]
-        return mysql_credentials

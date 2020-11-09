@@ -6,7 +6,6 @@ from XenGarden.session import create_session
 from XenGarden.VM import VM
 
 from app.settings import Settings
-from MySQL.VM import XenVm
 
 router = APIRouter()
 
@@ -30,8 +29,6 @@ async def vm_delete(cluster_id: str, vm_uuid: str):
             ret = dict(success=_vm.delete())
         else:
             ret = dict(success=False)
-
-        await XenVm().remove_orphaned(cluster_id=cluster_id)
 
         session.xenapi.session.logout()
         return ret
