@@ -108,3 +108,6 @@ config.json
 .venv/*
 .mypy_cache/
 .mypy_cache/*
+
+# add support for GitHub Codespaces
+/pythonenv*/

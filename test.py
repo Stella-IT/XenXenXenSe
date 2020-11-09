@@ -49,7 +49,7 @@ if __name__ == "__main__":
     print("Unit Test Script")
     print()
     print("Copyright (c) Stella IT.")
-    print("This software is distributed under Affero GNU Public License v3.")
+    print("This software is distributed under MIT License.")
     print()
     print("Warning: This software is supposed to be used with GitHub Actions.")
     print(
@@ -68,4 +68,4 @@ if __name__ == "__main__":
         print("Test success!")
     except Exception:
         print("test failed!!!!")
-        sys.exit(0)
+        sys.exit(1)
