@@ -7,7 +7,6 @@ from XenGarden.VM import VM
 
 from API.v1.Interface import MemoryArgs, VCpuArgs
 from app.settings import Settings
-from MySQL.VM import XenVm
 
 router = APIRouter()
 
@@ -91,8 +90,6 @@ async def vm_set_vCPU(cluster_id: str, vm_uuid: str, args: VCpuArgs):
         else:
             ret = dict(success=False)
 
-        await XenVm().update(cluster_id, _vm)
-
         session.xenapi.session.logout()
         return ret
     except Fault as xml_rpc_error:
@@ -122,8 +119,6 @@ async def vm_set_vCPU_inurl(cluster_id: str, vm_uuid: str, vCPU_count: int):
             ret = dict(success=_vm.set_vCPUs(vCPU_count))
         else:
             ret = dict(success=False)
-
-        await XenVm().update(cluster_id, _vm)
 
         session.xenapi.session.logout()
         return ret
@@ -186,8 +181,6 @@ async def vm_set_memory(cluster_id: str, vm_uuid: str, args: MemoryArgs):
         else:
             ret = dict(success=False)
 
-        await XenVm().update(cluster_id, _vm)
-
         session.xenapi.session.logout()
         return ret
     except Fault as xml_rpc_error:
@@ -217,8 +210,6 @@ async def vm_set_memory_inurl(cluster_id: str, vm_uuid: str, memory_size: int):
             ret = dict(success=_vm.set_memory(memory_size))
         else:
             ret = dict(success=False)
-
-        await XenVm().update(cluster_id, _vm)
 
         session.xenapi.session.logout()
         return ret

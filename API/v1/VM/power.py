@@ -6,7 +6,6 @@ from XenGarden.session import create_session
 from XenGarden.VM import VM
 
 from app.settings import Settings
-from MySQL.VM import XenVm
 
 router = APIRouter()
 
@@ -57,12 +56,10 @@ async def vm_start(cluster_id: str, vm_uuid: str):
             )
 
         _vm: VM = VM.get_by_uuid(session=session, uuid=vm_uuid)
-        if XenVm is not None:
+        if _vm is not None:
             ret = dict(success=_vm.start())
         else:
             ret = dict(success=False)
-
-        await XenVm().update(cluster_id=cluster_id, _vm=_vm)
 
         session.xenapi.session.logout()
         return ret
@@ -95,8 +92,6 @@ async def vm_shutdown(cluster_id: str, vm_uuid: str):
         else:
             ret = dict(success=False)
 
-        await XenVm().update(cluster_id=cluster_id, _vm=_vm)
-
         session.xenapi.session.logout()
         return ret
     except Fault as xml_rpc_error:
@@ -126,8 +121,6 @@ async def vm_power_force_shutdown(cluster_id: str, vm_uuid: str):
             ret = dict(success=_vm.force_shutdown())
         else:
             ret = dict(success=False)
-
-        await XenVm().update(cluster_id=cluster_id, _vm=_vm)
 
         session.xenapi.session.logout()
         return ret
@@ -160,8 +153,6 @@ async def vm_power_restart(cluster_id: str, vm_uuid: str):
         else:
             ret = dict(success=False)
 
-        await XenVm().update(cluster_id=cluster_id, _vm=_vm)
-
         session.xenapi.session.logout()
         return ret
     except Fault as xml_rpc_error:
@@ -191,8 +182,6 @@ async def vm_power_suspend(cluster_id: str, vm_uuid: str):
             ret = dict(success=_vm.suspend())
         else:
             ret = dict(success=False)
-
-        await XenVm().update(cluster_id=cluster_id, _vm=_vm)
 
         session.xenapi.session.logout()
         return ret
@@ -224,8 +213,6 @@ async def vm_power_resume(cluster_id: str, vm_uuid: str):
         else:
             ret = dict(success=False)
 
-        await XenVm().update(cluster_id=cluster_id, _vm=_vm)
-
         session.xenapi.session.logout()
         return ret
     except Fault as xml_rpc_error:
@@ -256,8 +243,6 @@ async def vm_power_pause(cluster_id: str, vm_uuid: str):
         else:
             ret = dict(success=False)
 
-        await XenVm().update(cluster_id=cluster_id, _vm=_vm)
-
         session.xenapi.session.logout()
         return ret
     except Fault as xml_rpc_error:
@@ -287,8 +272,6 @@ async def vm_power_unpause(cluster_id: str, vm_uuid: str):
             ret = dict(success=_vm.unpause())
         else:
             ret = dict(success=False)
-
-        await XenVm().update(cluster_id=cluster_id, _vm=_vm)
 
         session.xenapi.session.logout()
         return ret

@@ -8,7 +8,6 @@ from XenGarden.VM import VM
 from API.v1.Interface import NameArgs
 from API.v1.VM.serialize import serialize
 from app.settings import Settings
-from MySQL.VM import XenVm
 
 router = APIRouter()
 
@@ -73,8 +72,6 @@ async def instance_clone_inurl(cluster_id: str, vm_uuid: str, clone_name: str):
                 ret = dict(success=False)
         else:
             ret = dict(success=False)
-
-        await XenVm().update(cluster_id=cluster_id, _vm=new_vm)
 
         session.xenapi.session.logout()
         return ret
