@@ -3,7 +3,7 @@
 set -e
 set -x
 
-mypy app API MySQL
-flake8 main.py test.py app API MySQL
-black main.py  test.py app API MySQL --check
-isort main.py test.py app API MySQL --check-only
+mypy app API
+flake8 main.py test.py app API
+black main.py  test.py app API --check
+isort main.py test.py app API --check-only

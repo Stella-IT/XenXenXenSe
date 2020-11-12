@@ -8,16 +8,22 @@ class Server(FastAPI):
         ctx,
         host: str,
         port: int,
+        title: str,
+        description: str,
         asgi_debug: bool = False,
+        debug: bool = False,
         *args,
         **kwargs,
-    ) -> None:
+    ):
         self.controller = ctx
 
         # ASGI Server configuration parameters
         self.server = uvicorn
         self._host = host
         self._port = port
+        self._title = title
+        self._description = description
+        self._debug = debug
         self._asgi_debug = asgi_debug
 
         super(Server, self).__init__(*args, **kwargs)
@@ -32,20 +38,20 @@ class Server(FastAPI):
 #    def __init__(self):
 #        self.terminating = False
 
-    # def schedule_process(self) -> None:
-    #    """ The Thread content to run on scheduler """
-    #    print("Data Caching Schedule handling has been started!")
-    #    print()
-    #    try:
-    #        while not self.terminating:
-    #            schedule.run_pending()
-    #            time.sleep(1)
-    #    except Exception as e:
-    #        print("Exception was detected", e)
-    #        self.terminating = True
-    #
-    #    print()
-    #    print("Schedule handling is terminating!")
+# def schedule_process(self) -> None:
+#    """ The Thread content to run on scheduler """
+#    print("Data Caching Schedule handling has been started!")
+#    print()
+#    try:
+#        while not self.terminating:
+#            schedule.run_pending()
+#            time.sleep(1)
+#    except Exception as e:
+#        print("Exception was detected", e)
+#        self.terminating = True
+#
+#    print()
+#    print("Schedule handling is terminating!")
 
 
 # class Initializer(CoreInitialization):

@@ -1,4 +1,5 @@
 import asyncio
+from typing import Optional
 
 from app.console import Console
 from app.service import Server
@@ -14,7 +15,7 @@ class Controller:
         fast_api_debug: bool = False,
         asgi_debug: bool = False,
         loop=None,
-    ):
+    ) -> None:
         self.loop = loop or self._loop()
         self.host = host
         self.port = port
@@ -22,25 +23,15 @@ class Controller:
         self.description = description
         self.fast_api_debug = fast_api_debug
         self.asgi_debug = asgi_debug
-        self.manager = None
-        self.core = None
-        self.smd = None
-        self.sc = None
+        self.core: Optional[Server] = None
 
     @staticmethod
     def _loop():
         return asyncio.get_event_loop()
 
-    # @property
-    # def logger(self):
-    #    return logging.getLogger(
-    #        f"{self.__class__.__module__}: {self.__class__.__name__}"
-    #    )
-
     @staticmethod
-    def init_console():
-        co = Console()
-        return co
+    def __console():
+        return Console()
 
     def startup(self):
         self.core = Server(
@@ -55,8 +46,8 @@ class Controller:
 
     def start(self):
         try:
-            self.init_console().show_banner(True)
-            self.init_console().print_xen_hostnames(True)
+            self.__console().show_banner(True)
+            self.__console().print_xen_hostnames(True)
             asyncio.ensure_future(self.core.make_process(), loop=self.loop())
             self.loop.run_forever()
         except TypeError:
