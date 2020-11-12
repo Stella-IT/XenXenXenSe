@@ -102,7 +102,9 @@ fabric.properties
 Pipfile.lock
 
 # Prevent default config to be committed.
+None
 config.json
+logging_config.json
 
 .venv
 .venv/*

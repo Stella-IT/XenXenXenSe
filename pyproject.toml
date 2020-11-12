@@ -6,7 +6,7 @@ authors = [
     "zeroday0619 <zeroday0619@kakao.com>",
     "Alex4386 <alex4386@stella-it.com>"
 ]
-license = "AGPL-3.0-or-later"
+license = "MIT"
 readme = "README.md"
 python = "^3.7"
 homepage = "https://github.com/Stella-IT/XenXenXenSe"

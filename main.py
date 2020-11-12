@@ -1,7 +1,10 @@
 import xmlrpc
 
+from fastapi import Depends
+
 from API.v1 import router as _v1_router
 from app.controller import Controller
+from app.costum_logging.customizeLogger import CustomizeLogger
 
 # Flag is StellaIT{Pororo}
 # https://developer-docs.citrix.com/projects/citrix-hypervisor-management-api/en/latest/api-ref-autogen/
@@ -9,9 +12,11 @@ from app.controller import Controller
 __author__ = "Stella IT <admin@stella-it.com>"
 __copyright__ = "Copyright 2020, Stella IT"
 
+
 # Override XML RPC Settings for 64bit support
 xmlrpc.client.MAXINT = 2 ** 63 - 1
 xmlrpc.client.MININT = -(2 ** 63)
+
 
 app = Controller(
     host="127.0.0.1",
@@ -25,7 +30,7 @@ app = Controller(
 if __name__ == "__main__":
     # Server initialization
     app.startup()
-
-    app.core.include_router(_v1_router)
-
+    app.core.include_router(
+        _v1_router, dependencies=[(Depends(CustomizeLogger.make_logger))]
+    )
     app.start()
