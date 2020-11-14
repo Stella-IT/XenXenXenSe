@@ -1,6 +1,7 @@
 import xmlrpc
 
 from fastapi import Depends
+from fastapi.responses import UJSONResponse
 
 from API.v1 import router as _v1_router
 from app.controller import Controller
@@ -30,7 +31,9 @@ app = Controller(
 if __name__ == "__main__":
     # Server initialization
     app.startup()
+
     app.core.include_router(
-        _v1_router, dependencies=[(Depends(CustomizeLogger.make_logger))]
+        _v1_router, dependencies=[(Depends(CustomizeLogger.make_logger))],
+        default_response_class=UJSONResponse
     )
     app.start()

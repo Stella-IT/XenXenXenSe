@@ -76,3 +76,10 @@ router.include_router(_vdi_delete, prefix=_prefix, tags=["vdi"])
 router.include_router(_vif_list, prefix=_prefix, tags=["vif"])
 router.include_router(_vif_info, prefix=_prefix, tags=["vif"])
 router.include_router(_vif_qos, prefix=_prefix, tags=["vif"])
+
+
+@router.get("/", status_code=404)
+async def root_dir():
+    return {
+        "status_code": 404
+    }

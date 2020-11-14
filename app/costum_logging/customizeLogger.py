@@ -1,7 +1,7 @@
 import logging
 import sys
 from pathlib import Path
-
+import json
 import ujson
 from loguru import logger
 
@@ -11,23 +11,15 @@ from app.costum_logging.interceptHandler import InterceptHandler
 class CustomizeLogger:
     @classmethod
     def make_logger(cls):
-        """
-
-        :param config_path:
-        :type config_path:
-        :return:
-        :rtype:
-        """
         config_path = "logging_config.json"
         config = cls.load_logging_config(config_path)
-        logging_config = config.get("logger")
-
+        logging_config = config["logger"]
         _logger = cls.customize_logging(
-            filepath=logging_config.get("path"),
-            level=logging_config.get("level"),
-            retention=logging_config.get("retention"),
-            rotation=logging_config.get("rotation"),
-            format=logging_config.get("format"),
+            filepath=logging_config["path"]+logging_config["filename"],
+            level=logging_config["level"],
+            retention=logging_config["retention"],
+            rotation=logging_config["rotation"],
+            format=logging_config["format"],
         )
         return _logger
 
@@ -49,7 +41,7 @@ class CustomizeLogger:
             format=format,
         )
         logger.add(
-            str(filepath),
+            sink=str(filepath),
             rotation=rotation,
             retention=retention,
             enqueue=True,
@@ -67,7 +59,7 @@ class CustomizeLogger:
         return logger.bind(request_id=None, method=None)
 
     @classmethod
-    def load_logging_config(cls, config_path) -> dict:
+    def load_logging_config(cls, config_path: str) -> dict:
         """
 
         :param config_path:
@@ -75,8 +67,7 @@ class CustomizeLogger:
         :return: logging config
         :rtype: dict
         """
-
-        config = None
-        with open(config_path) as config_file:
-            config = ujson.load(config_file)
-        return config
+        conf_path = config_path
+        with open(conf_path, 'r') as config_file:
+            conf = ujson.load(config_file)
+        return conf
