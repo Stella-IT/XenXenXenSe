@@ -30,7 +30,7 @@ Please refer to automatic documentation page of FastAPI (available at /docs) for
 Please refer to [CONTRIBUTING.md](CONTRIBUTING.md) for more information.  
 
 ## Code of Conduct
-This project has adopted Stella IT Opensource Project Code of Conduct (also known as: Stella IT HongseeLab Code of Conduct).  
+This project has adopted Stella IT Opensource Project Code of Conduct.    
 Please refer to [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md) for more information.  
 
 ## License
