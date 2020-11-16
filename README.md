@@ -4,18 +4,21 @@
 A Modern RESTful API implemenation of XenAPI for Citrix Hypervisor® and XCP-ng.  
 Try not to confuse with [ZenZenZenSe (前前前世)](https://en.wikipedia.org/wiki/Zenzenzense). 
   
+## What is this?
+Utilizing XenGarden, which is a object-oriented Python encapsulation of XenAPI, It generates RESTful API from XenGarden.
+
+## Where does Stella IT use this?
+This is a "Core Component" of Stella IT's VM Management and control system.
+  
 ## Build Status
 | Name                      | Status                                                                                                         |
 |---------------------------|----------------------------------------------------------------------------------------------------------------|
 | Python Script Black Lint  | ![Black Test](https://github.com/Stella-IT/XenXenXenSe/workflows/Black%20Lint/badge.svg)                       |
 | XenXenXenSe Unit Testing  | ![Unit Test](https://github.com/Stella-IT/XenXenXenSe/workflows/Unit%20Test/badge.svg)                         |
 | FADe Debian Package Build | ![Build Debian Package](https://github.com/Stella-IT/XenXenXenSe/workflows/Build%20Debian%20Package/badge.svg) |
-
-## What is this?
-Utilizing XenGarden, which is a object-oriented Python encapsulation of XenAPI, It generates RESTful API from XenGarden.
-
-## Where does Stella IT use this?
-This is a "Core Component" of Stella IT's VM Management and control system.
+  
+## Community
+[Discord](https://opensource.stella-it.com/discord/)  
 
 ## Guide
 ### How to Install
