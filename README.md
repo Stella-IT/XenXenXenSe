@@ -2,13 +2,9 @@
 
 # Project XenXenXenSe
 A Modern RESTful API implemenation of XenAPI for Citrix Hypervisor® and XCP-ng.  
-Try not to confuse with [ZenZenZenSe (前前前世)](https://en.wikipedia.org/wiki/Zenzenzense). 
-  
-## What is this?
-Utilizing XenGarden, which is a object-oriented Python encapsulation of XenAPI, It generates RESTful API from XenGarden.
+Try not to confuse with [ZenZenZenSe (前前前世)](https://en.wikipedia.org/wiki/Zenzenzense).  
 
-## Where does Stella IT use this?
-This is a "Core Component" of Stella IT's VM Management and control system.
+[Discord Community](https://opensource.stella-it.com/discord/)   
   
 ## Build Status
 | Name                      | Status                                                                                                         |
@@ -17,9 +13,6 @@ This is a "Core Component" of Stella IT's VM Management and control system.
 | XenXenXenSe Unit Testing  | ![Unit Test](https://github.com/Stella-IT/XenXenXenSe/workflows/Unit%20Test/badge.svg)                         |
 | FADe Debian Package Build | ![Build Debian Package](https://github.com/Stella-IT/XenXenXenSe/workflows/Build%20Debian%20Package/badge.svg) |
   
-## Community
-[Discord](https://opensource.stella-it.com/discord/)  
-
 ## Guide
 ### How to Install
 1. Clone this repository
@@ -42,7 +35,3 @@ Please refer to [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md) for more information.
 
 ## License
 Distributed under MIT License.  
-If you need commercial license, feel free to contact us at [contact@stella-it.com](mailto:contact@stella-it.com)  
-
-## Copyright
-Copyright (c) Stella IT Co, Ltd.
