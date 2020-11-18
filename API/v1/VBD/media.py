@@ -13,9 +13,7 @@ router = APIRouter()
 
 
 @router.get("/{cluster_id}/vbd/{vbd_uuid}/insert/{vdi_uuid}")
-async def vbd_insert_vdi_by_uuid(
-    cluster_id: str, vbd_uuid: str, vdi_uuid: str
-):
+async def vbd_insert_vdi_by_uuid(cluster_id: str, vbd_uuid: str, vdi_uuid: str):
     """ Insert VDI into VBD by UUID """
     try:
         try:
@@ -52,9 +50,7 @@ async def vbd_insert_vdi_by_uuid(
 
 
 @router.put("/{cluster_id}/vbd/{vbd_uuid}/insert")
-async def vbd_insert_vdi_by_uuid(
-    cluster_id: str, vbd_uuid: str, res: UUIDArgs
-):
+async def _vbd_insert_vdi_by_uuid(cluster_id: str, vbd_uuid: str, res: UUIDArgs):
     """ Insert VDI into VBD by UUID """
     try:
         try:

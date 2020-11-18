@@ -33,7 +33,8 @@ if __name__ == "__main__":
     app.startup()
 
     app.core.include_router(
-        _v1_router, dependencies=[(Depends(CustomizeLogger.make_logger))],
-        default_response_class=UJSONResponse
+        _v1_router,
+        dependencies=[(Depends(CustomizeLogger.make_logger))],
+        default_response_class=UJSONResponse,
     )
     app.start()

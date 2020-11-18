@@ -14,9 +14,7 @@ router = APIRouter()
 
 @router.get("/{cluster_id}/host/list", response_model=ResponseModel)
 async def host_list(
-    cluster_id: str = Path(
-        default=None, title="cluster_id", description="Cluster ID"
-    )
+    cluster_id: str = Path(default=None, title="cluster_id", description="Cluster ID")
 ):
     """ Get All from Existance Host """
     try:

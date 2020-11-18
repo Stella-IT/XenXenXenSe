@@ -14,12 +14,8 @@ router = APIRouter()
 
 @router.get("/{cluster_id}/guest/{guest_uuid}")
 async def guest_get_by_uuid(
-    cluster_id: str = Path(
-        default=None, title="cluster_id", description="Cluster ID"
-    ),
-    guest_uuid: str = Path(
-        default=None, title="guest_uuid", description="Guest UUID"
-    ),
+    cluster_id: str = Path(default=None, title="cluster_id", description="Cluster ID"),
+    guest_uuid: str = Path(default=None, title="guest_uuid", description="Guest UUID"),
 ):
     """ Get GuestMetrics by UUID """
     try:
@@ -33,9 +29,7 @@ async def guest_get_by_uuid(
                 status_code=400, detail=f"{key_error} is not a valid path"
             )
 
-        guest: GuestMetrics = Host.get_by_uuid(
-            session=session, uuid=guest_uuid
-        )
+        guest: GuestMetrics = Host.get_by_uuid(session=session, uuid=guest_uuid)
 
         if guest is not None:
             ret = dict(success=True, data=serialize(guest))

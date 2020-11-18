@@ -1,7 +1,7 @@
 import logging
 import sys
 from pathlib import Path
-import json
+
 import ujson
 from loguru import logger
 
@@ -14,8 +14,9 @@ class CustomizeLogger:
         config_path = "logging_config.json"
         config = cls.load_logging_config(config_path)
         logging_config = config["logger"]
+
         _logger = cls.customize_logging(
-            filepath=logging_config["path"]+logging_config["filename"],
+            filepath=logging_config["path"] + logging_config["filename"],
             level=logging_config["level"],
             retention=logging_config["retention"],
             rotation=logging_config["rotation"],
@@ -68,6 +69,6 @@ class CustomizeLogger:
         :rtype: dict
         """
         conf_path = config_path
-        with open(conf_path, 'r') as config_file:
+        with open(conf_path, "r") as config_file:
             conf = ujson.load(config_file)
         return conf

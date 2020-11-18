@@ -43,9 +43,7 @@ async def instance_get_bios(cluster_id: str, vm_uuid: str):
 
 @router.get("/{cluster_id}/vm/{vm_uuid}/bios/{name}")
 @router.get("/{cluster_id}/template/{vm_uuid}/bios/{name}")
-async def instance_set_bios_property_byname(
-    cluster_id: str, vm_uuid: str, name: str
-):
+async def instance_set_bios_property_byname(cluster_id: str, vm_uuid: str, name: str):
     """ Get Instance (VM/Template) BIOS Property by Name """
     try:
         try:
