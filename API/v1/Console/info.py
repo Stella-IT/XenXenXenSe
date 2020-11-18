@@ -13,9 +13,7 @@ router = APIRouter()
 
 @router.get("/{cluster_id}/console/{console_uuid}")
 async def console_get_by_uuid(
-    cluster_id: str = Path(
-        default=None, title="cluster_id", description="Cluster ID"
-    ),
+    cluster_id: str = Path(default=None, title="cluster_id", description="Cluster ID"),
     console_uuid: str = Path(
         default=None, title="console_uuid", description="Console UUID"
     ),

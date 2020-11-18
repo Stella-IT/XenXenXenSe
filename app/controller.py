@@ -1,4 +1,5 @@
 import asyncio
+from asyncio import AbstractEventLoop
 from typing import Optional
 
 from app.console import Console
@@ -14,7 +15,7 @@ class Controller:
         description: str = "",
         fast_api_debug: bool = False,
         asgi_debug: bool = False,
-        loop=None,
+        loop: Optional[AbstractEventLoop] = None,
     ) -> None:
         self.loop = loop or self._loop()
         self.host = host
@@ -26,14 +27,14 @@ class Controller:
         self.core: Optional[Server] = None
 
     @staticmethod
-    def _loop():
+    def _loop() -> AbstractEventLoop:
         return asyncio.get_event_loop()
 
     @staticmethod
-    def __console():
+    def __console() -> Console:
         return Console()
 
-    def startup(self):
+    def startup(self) -> None:
         self.core = Server(
             ctx=self,
             host=self.host,
@@ -44,11 +45,11 @@ class Controller:
             debug=self.fast_api_debug,
         )
 
-    def start(self):
+    def start(self) -> None:
         try:
             self.__console().show_banner(True)
             self.__console().print_xen_hostnames(True)
-            asyncio.ensure_future(self.core.make_process(), loop=self.loop())
+            asyncio.ensure_future(self.core.make_process(), loop=self.loop)
             self.loop.run_forever()
         except TypeError:
             pass

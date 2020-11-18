@@ -80,6 +80,4 @@ router.include_router(_vif_qos, prefix=_prefix, tags=["vif"])
 
 @router.get("/", status_code=404)
 async def root_dir():
-    return {
-        "status_code": 404
-    }
+    return {"status_code": 404}

@@ -14,7 +14,7 @@ class Server(FastAPI):
         debug: bool = False,
         *args,
         **kwargs,
-    ):
+    ) -> None:
         self.controller = ctx
 
         # ASGI Server configuration parameters

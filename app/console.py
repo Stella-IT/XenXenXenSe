@@ -4,7 +4,7 @@ from app.settings import Settings
 
 
 class Console:
-    def __init__(self):
+    def __init__(self) -> None:
         pass
 
     @classmethod

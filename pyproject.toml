@@ -15,17 +15,6 @@ documentation = "https://github.com/Stella-IT/XenXenXenSe"
 
 keywords = ["xenapi", "restful", "api"]
 
-[tool.black]
-line-length = 79     # PEP8 specs requires you to use 79,
-                     # but black maintainers recommends 88.
-                     # since maintainer (zeroday0619) made
-                     # choice of using PEP8, this will be 79.
-
-                     # Plus, single quote can not be enforced
-                     # in black. therefore, full PEP8 enforcing
-                     # is impossible. Use third-party project
-                     # (ex. prettify) for that
-
 target-version = ['py37','py38']
 include = '\.pyi?$'
 exclude = '''
@@ -51,3 +40,6 @@ exclude = '''
                      # the root of the project
 )
 '''
+[tool.isort]
+profile = "black"
+known_third_party = ["fastapi", "pydantic", "starlette"]

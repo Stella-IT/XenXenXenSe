@@ -11,9 +11,7 @@ def serialize(host: Host):
         name=host.get_name(),
         description=host.get_description(),
         enabled=host.get_enabled(),
-        memory=dict(
-            free=host.get_free_memory(), total=host.get_total_memory()
-        ),
+        memory=dict(free=host.get_free_memory(), total=host.get_total_memory()),
         cpu=host.get_cpu_info(),
         bios=replace_under_bar(host.get_bios_strings()),
         version=host.get_software_version(),

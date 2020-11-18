@@ -71,9 +71,7 @@ async def vif_get_qos_by_uuid(cluster_id: str, vm_uuid: str):
             if vif is not None:
                 ret = dict(
                     success=True,
-                    data=dict(
-                        type=vif.get_qos_type(), info=vif.get_qos_info()
-                    ),
+                    data=dict(type=vif.get_qos_type(), info=vif.get_qos_info()),
                 )
             else:
                 ret = dict(success=False)

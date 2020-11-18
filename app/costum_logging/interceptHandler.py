@@ -25,6 +25,4 @@ class InterceptHandler(logging.Handler):
             depth += 1
 
         log = logger.bind(request_id="app")
-        log.opt(depth=depth, exception=record.exc_info).log(
-            level, record.getMessage()
-        )
+        log.opt(depth=depth, exception=record.exc_info).log(level, record.getMessage())

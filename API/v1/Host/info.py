@@ -13,12 +13,8 @@ router = APIRouter()
 
 @router.get("/{cluster_id}/host/{host_uuid}")
 async def host_get_by_uuid(
-    cluster_id: str = Path(
-        default=None, title="cluster_id", description="Cluster ID"
-    ),
-    host_uuid: str = Path(
-        default=None, title="host_uuid", description="Host UUID"
-    ),
+    cluster_id: str = Path(default=None, title="cluster_id", description="Cluster ID"),
+    host_uuid: str = Path(default=None, title="host_uuid", description="Host UUID"),
 ):
     """ Get Host by UUID """
     try:
