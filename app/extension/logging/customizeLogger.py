@@ -5,7 +5,7 @@ from pathlib import Path
 import ujson
 from loguru import logger
 
-from app.costum_logging.interceptHandler import InterceptHandler
+from app.extension.logging.interceptHandler import InterceptHandler
 
 
 class CustomizeLogger:

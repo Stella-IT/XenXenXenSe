@@ -1,6 +1,6 @@
-from app.console import Console
 from app.controller import Controller
-from app.service import Server
+from app.extension import CustomizeLogger
+from app.services import Console, Server
 from app.settings import Settings
 
-__all__ = ["controller", "service", "console", "settings"]
+__all__ = ["services", "controller", "settings", "extension"]

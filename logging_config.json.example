@@ -1,7 +1,7 @@
 {
   "logger": {
     "path:": "/var/logs",
-    "filename": "access.log",
+    "filename": "x3s_access.log",
     "level": "info",
     "rotation": "20 days",
     "retention": "1 months",
