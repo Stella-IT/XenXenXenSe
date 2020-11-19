@@ -5,7 +5,7 @@ from fastapi.responses import UJSONResponse
 
 from API.v1 import router as _v1_router
 from app.controller import Controller
-from app.costum_logging.customizeLogger import CustomizeLogger
+from app.extension import CustomizeLogger
 
 # Flag is StellaIT{Pororo}
 # https://developer-docs.citrix.com/projects/citrix-hypervisor-management-api/en/latest/api-ref-autogen/

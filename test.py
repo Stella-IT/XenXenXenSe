@@ -3,7 +3,7 @@ import sys
 from fastapi.testclient import TestClient
 
 from API.v1 import router as _v1_router
-from app.service import Server
+from app.services import Server
 
 app = Server(
     ctx="",

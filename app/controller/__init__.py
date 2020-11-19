@@ -2,8 +2,8 @@ import asyncio
 from asyncio import AbstractEventLoop
 from typing import Optional
 
-from app.console import Console
-from app.service import Server
+from app.services.console import Console
+from app.services.server import Server
 
 
 class Controller:
