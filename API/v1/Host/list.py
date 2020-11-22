@@ -6,13 +6,13 @@ from XenGarden.Host import Host
 from XenGarden.session import create_session
 
 from API.v1.Host.serialize import serialize
-from API.v1.model.host import ResponseModel
+from API.v1.model.host import HLResponseModel
 from app.settings import Settings
 
 router = APIRouter()
 
 
-@router.get("/{cluster_id}/host/list", response_model=ResponseModel)
+@router.get("/{cluster_id}/host/list", response_model=HLResponseModel)
 async def host_list(
     cluster_id: str = Path(default=None, title="cluster_id", description="Cluster ID")
 ):

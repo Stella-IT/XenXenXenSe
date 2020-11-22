@@ -68,6 +68,6 @@ class DATA(BaseModel):
     version: VERSION
 
 
-class ResponseModel(BaseModel):
+class HLResponseModel(BaseModel):
     success: bool
     data: List[DATA]

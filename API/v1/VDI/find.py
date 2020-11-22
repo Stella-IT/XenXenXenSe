@@ -6,13 +6,14 @@ from XenGarden.session import create_session
 from XenGarden.VDI import VDI
 
 from API.v1.Interface import NameArgs
+from API.v1.model.vdi import VDIFindResponseModel
 from API.v1.VDI.serialize import serialize
 from app.settings import Settings
 
 router = APIRouter()
 
 
-@router.post("/{cluster_id}/vdi/find")
+@router.post("/{cluster_id}/vdi/find", response_model=VDIFindResponseModel)
 async def find_VDI_by_name(cluster_id: str, args: NameArgs):
     """ Find VDI by Name """
     try:
@@ -49,7 +50,7 @@ async def find_VDI_by_name(cluster_id: str, args: NameArgs):
         raise HTTPException(status_code=500, detail=rd_error.strerror)
 
 
-@router.get("/{cluster_id}/vdi/find/{iso_name}")
+@router.get("/{cluster_id}/vdi/find/{iso_name}", response_model=VDIFindResponseModel)
 async def insert_cd_inurl_name(cluster_id: str, iso_name: str):
     """ Find VDI by Name """
     try:
