@@ -12,7 +12,7 @@
 ## Build Status
 | Name                      | Status                                                                                                         |
 |---------------------------|----------------------------------------------------------------------------------------------------------------|
-| Python Script Black Lint  | ![Black Test](https://github.com/Stella-IT/XenXenXenSe/workflows/Black%20Lint/badge.svg)                       |
+| Python Script Lint        | ![Python Lint](https://github.com/Stella-IT/XenXenXenSe/workflows/Python%20Lint/badge.svg)                       |
 | XenXenXenSe Unit Testing  | ![Unit Test](https://github.com/Stella-IT/XenXenXenSe/workflows/Unit%20Test/badge.svg)                         |
 | FADe Debian Package Build | ![Build Debian Package](https://github.com/Stella-IT/XenXenXenSe/workflows/Build%20Debian%20Package/badge.svg) |
   

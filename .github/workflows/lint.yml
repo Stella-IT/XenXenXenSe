@@ -1,4 +1,4 @@
-name: Black Lint
+name: Python Lint
 
 on:
   push:
