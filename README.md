@@ -1,11 +1,14 @@
-![XenXenXenSe Project banner](demonstration/banner.png)
+<img src="demonstration/banner.png" />
+<h1 align="center">XenXenXenSe</h1>
+<p align="center"><b>An easy-to-use HTTP API of XenAPI for Web Application Developers</b></p>
+<p align="center">XenXenXenSe modernizes your Xen hypervisor infrastructure controller for web developers.</p>
+<hr>
+<p align="right">
+   Developed with &lt;3 by Stella IT OpenSource Project Team<br>
+   <a href="https://opensource.stella-it.com/discord/">Join our Community</a>
+</p> 
+<hr />
 
-# Project XenXenXenSe
-A Modern RESTful API implemenation of XenAPI for Citrix Hypervisor® and XCP-ng.  
-Try not to confuse with [ZenZenZenSe (前前前世)](https://en.wikipedia.org/wiki/Zenzenzense).  
-
-[Discord Community](https://opensource.stella-it.com/discord/)   
-  
 ## Build Status
 | Name                      | Status                                                                                                         |
 |---------------------------|----------------------------------------------------------------------------------------------------------------|
@@ -16,8 +19,8 @@ Try not to confuse with [ZenZenZenSe (前前前世)](https://en.wikipedia.org/wi
 ## Guide
 ### How to Install
 1. Clone this repository
-2. Copy config.py.example to config.py
-3. Enter your credentials
+2. Copy config.example.json to config.json
+3. Enter your credentials in JSON form!
 4. run `pip install -r requirements.txt`  
    (or `pip3 install -r requirements.txt` if you are using both python versions)
 5. run server via `python3 main.py`
@@ -34,4 +37,4 @@ This project has adopted Stella IT Opensource Project Code of Conduct.
 Please refer to [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md) for more information.  
 
 ## License
-Distributed under MIT License.  
+[Distributed under MIT License.](LICENSE)  
