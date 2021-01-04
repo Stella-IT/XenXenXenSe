@@ -1,5 +1,4 @@
-<img src="demonstration/banner.png" />
-<h1 align="center">XenXenXenSe</h1>
+<img src="demonstration/banner.png" alt="XenXenXenSe" />
 <p align="center"><b>An easy-to-use HTTP API of XenAPI for Web Application Developers</b></p>
 <p align="center">XenXenXenSe modernizes your Xen hypervisor infrastructure controller for web developers.</p>
 <hr>
