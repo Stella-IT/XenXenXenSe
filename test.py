@@ -35,6 +35,12 @@ def test_vm_list():
     print("OK")
 
 
+def test_vdi_list():
+    response = client.get("/v1/" + cluster_id + "/vdi/list")
+    assert response.status_code == 200
+    print("OK")
+
+
 if __name__ == "__main__":
 
     from pyfiglet import Figlet
@@ -64,6 +70,9 @@ if __name__ == "__main__":
 
         print("Testing /vm/list against test cluster ...", end="")
         test_vm_list()
+
+        print(f"Testing /vdi/list against test cluster ...", end="")
+        test_vdi_list()
 
         print("Test success!")
     except Exception:
