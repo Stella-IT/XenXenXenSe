@@ -71,7 +71,7 @@ if __name__ == "__main__":
         print("Testing /vm/list against test cluster ...", end="")
         test_vm_list()
 
-        print(f"Testing /vdi/list against test cluster ...", end="")
+        print("Testing /vdi/list against test cluster ...", end="")
         test_vdi_list()
 
         print("Test success!")
