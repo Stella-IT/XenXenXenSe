@@ -1,13 +1,13 @@
 # Xen RESTful API
-databases[mysql]==0.4.0
-mysqlclient==2.0.1
-requests==2.25.0
-schedule==0.6.0
-XenGarden==1.0.0
-pyfiglet==0.8.post1
-fastapi==0.61.2
-uvicorn==0.12.2
-loguru==0.5.3
-ujson==4.0.1
-pydantic~=1.7.2
-SQLAlchemy~=1.3.20
+databases[mysql]
+mysqlclient
+requests
+schedule
+XenGarden
+pyfiglet
+fastapi
+uvicorn
+loguru
+ujson
+pydantic
+SQLAlchemy
