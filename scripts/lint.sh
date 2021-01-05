@@ -3,7 +3,7 @@
 set -e
 set -x
 
-mypy app API
-flake8 main.py test.py app API
-black main.py  test.py app API --check
-isort main.py test.py app API --check-only
+./lint-mypy.sh && ./lint-flake8.sh && ./lint-black.sh && ./lint-isort.sh && exit 0
+
+# this is not good...
+exit 1
