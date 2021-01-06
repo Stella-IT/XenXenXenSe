@@ -1,7 +1,8 @@
 import asyncio
-from fastapi import Depends
 from asyncio import AbstractEventLoop
-from typing import Optional, List
+from typing import List, Optional
+
+from fastapi import Depends
 
 from app.services.console import Console
 from app.services.server import Server

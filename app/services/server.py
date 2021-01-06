@@ -1,5 +1,6 @@
 import uvicorn
-from fastapi import FastAPI, Depends
+from fastapi import Depends, FastAPI
+
 from app.extension import CustomizeLogger
 
 
@@ -33,5 +34,9 @@ class Server(FastAPI):
 
     def make_process(self) -> None:
         return self.server.run(
-            app=self, host=self._host, port=self._port, debug=self._asgi_debug, log_config=self._log_config
+            app=self,
+            host=self._host,
+            port=self._port,
+            debug=self._asgi_debug,
+            log_config=self._log_config,
         )

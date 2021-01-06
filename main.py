@@ -1,12 +1,12 @@
-import uvicorn
 import xmlrpc
+
+import uvicorn
 from fastapi import Depends
 from fastapi.responses import UJSONResponse
 
 from API.v1 import router as _v1_router
 from app.controller import Controller
 from app.extension import CustomizeLogger
-
 
 # Flag is StellaIT{Pororo}
 # https://developer-docs.citrix.com/projects/citrix-hypervisor-management-api/en/latest/api-ref-autogen/
@@ -20,7 +20,7 @@ xmlrpc.client.MAXINT = 2 ** 63 - 1
 xmlrpc.client.MININT = -(2 ** 63)
 
 uvicorn_log_config = uvicorn.config.LOGGING_CONFIG
-del uvicorn_log_config['loggers']['uvicorn']
+del uvicorn_log_config["loggers"]["uvicorn"]
 
 app = Controller(
     host="127.0.0.1",
@@ -29,7 +29,7 @@ app = Controller(
     description="XenServer Management API to REST API",
     fast_api_debug=True,
     asgi_debug=False,
-    log_config=uvicorn_log_config
+    log_config=uvicorn_log_config,
 )
 
 
@@ -40,6 +40,6 @@ if __name__ == "__main__":
     app.core.include_router(
         _v1_router,
         default_response_class=UJSONResponse,
-        dependencies=[Depends(CustomizeLogger.make_logger)]
+        dependencies=[Depends(CustomizeLogger.make_logger)],
     )
     app.start()
