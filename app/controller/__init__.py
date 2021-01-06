@@ -1,6 +1,8 @@
 import asyncio
 from asyncio import AbstractEventLoop
-from typing import Optional
+from typing import List, Optional
+
+from fastapi import Depends
 
 from app.services.console import Console
 from app.services.server import Server
@@ -13,6 +15,8 @@ class Controller:
         port: int = 8080,
         title: str = "",
         description: str = "",
+        dependencies: Optional[list] = None,
+        log_config=None,
         fast_api_debug: bool = False,
         asgi_debug: bool = False,
         loop: Optional[AbstractEventLoop] = None,
@@ -22,6 +26,8 @@ class Controller:
         self.port = port
         self.title = title
         self.description = description
+        self.dependencies = dependencies
+        self.log_config = log_config
         self.fast_api_debug = fast_api_debug
         self.asgi_debug = asgi_debug
         self.core: Optional[Server] = None
@@ -41,6 +47,8 @@ class Controller:
             port=self.port,
             title=self.title,
             description=self.description,
+            dependencies=self.dependencies,
+            log_config=self.log_config,
             asgi_debug=self.asgi_debug,
             debug=self.fast_api_debug,
         )

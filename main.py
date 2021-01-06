@@ -1,5 +1,6 @@
 import xmlrpc
 
+import uvicorn
 from fastapi import Depends
 from fastapi.responses import UJSONResponse
 
@@ -18,6 +19,8 @@ __copyright__ = "Copyright 2020, Stella IT"
 xmlrpc.client.MAXINT = 2 ** 63 - 1
 xmlrpc.client.MININT = -(2 ** 63)
 
+uvicorn_log_config = uvicorn.config.LOGGING_CONFIG
+del uvicorn_log_config["loggers"]["uvicorn"]
 
 app = Controller(
     host="127.0.0.1",
@@ -26,15 +29,17 @@ app = Controller(
     description="XenServer Management API to REST API",
     fast_api_debug=True,
     asgi_debug=False,
+    log_config=uvicorn_log_config,
 )
+
 
 if __name__ == "__main__":
     # Server initialization
     app.startup()
-
+    app.dependencies = [Depends(CustomizeLogger.make_logger())]
     app.core.include_router(
         _v1_router,
-        dependencies=[(Depends(CustomizeLogger.make_logger))],
         default_response_class=UJSONResponse,
+        dependencies=[Depends(CustomizeLogger.make_logger)],
     )
     app.start()

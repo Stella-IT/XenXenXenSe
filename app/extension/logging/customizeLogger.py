@@ -20,7 +20,7 @@ class CustomizeLogger:
             level=logging_config["level"],
             retention=logging_config["retention"],
             rotation=logging_config["rotation"],
-            format=logging_config["format"],
+            _format=logging_config["format"],
         )
         return _logger
 
@@ -31,7 +31,7 @@ class CustomizeLogger:
         level: str,
         rotation: str,
         retention: str,
-        format: str,
+        _format: str,
     ):
         logger.remove()
         logger.add(
@@ -39,7 +39,7 @@ class CustomizeLogger:
             enqueue=True,
             backtrace=True,
             level=level.upper(),
-            format=format,
+            format=_format,
         )
         logger.add(
             sink=str(filepath),
@@ -48,12 +48,13 @@ class CustomizeLogger:
             enqueue=True,
             backtrace=True,
             level=level.upper(),
-            format=format,
+            format=_format,
         )
+
         # noinspection PyArgumentList
-        logging.basicConfig(handlers=[InterceptHandler()], level=0)
+        # logging.basicConfig(handlers=[InterceptHandler()], level=0)
         logging.getLogger("uvicorn.access").handlers = [InterceptHandler()]
-        for _log in ["uvicorn", "uvicorn.error", "fastapi"]:
+        for _log in ["fastapi", "uvicorn", "uvicorn.error"]:
             _logger = logging.getLogger(_log)
             _logger.handlers = [InterceptHandler()]
 
