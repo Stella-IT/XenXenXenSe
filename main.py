@@ -27,6 +27,7 @@ app = Controller(
     port=8080,
     title="Xen API v2",
     description="XenServer Management API to REST API",
+    dependencies=None,
     fast_api_debug=True,
     asgi_debug=False,
     log_config=uvicorn_log_config,
