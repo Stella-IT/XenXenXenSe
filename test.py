@@ -5,6 +5,17 @@ from fastapi.testclient import TestClient
 from API.v1 import router as _v1_router
 from app.services import Server
 
+
+# Temporary uvicorn import for revised logging system by @zeroday0619
+
+import uvicorn
+
+from app.controller import Controller
+from app.extension import CustomizeLogger
+
+uvicorn_log_config = uvicorn.config.LOGGING_CONFIG
+del uvicorn_log_config["loggers"]["uvicorn"]
+
 app = Server(
     ctx="",
     host="127.0.0.1",
@@ -13,6 +24,7 @@ app = Server(
     description="XenServer Management API to REST API",
     fast_api_debug=True,
     asgi_debug=False,
+    log_config=uvicorn_log_config,
 )
 
 app.include_router(_v1_router)
