@@ -13,6 +13,7 @@ app = Server(
     description="XenServer Management API to REST API",
     fast_api_debug=True,
     asgi_debug=False,
+    log_config=None,
 )
 
 app.include_router(_v1_router)

@@ -37,3 +37,5 @@ Please refer to [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md) for more information.
 
 ## License
 [Distributed under MIT License.](LICENSE)  
+Mascot of Stella IT Xen Platform is copyrighted by [O-Kreator](https://github.com/O-Kreator/) and used with special proprietary license, MIT License does NOT cover the usage of the mascot.  
+

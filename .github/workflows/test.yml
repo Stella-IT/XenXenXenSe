@@ -22,6 +22,9 @@ jobs:
           pip install -r requirements.txt
           pip install pytest
           pip install pytest-asyncio
+      - name: Setup default logging config
+        run: |
+          cp ./.github/workflows-resources/logging_config.json ./logging_config.json
       - name: Run test
         run: |
           python3 test.py
