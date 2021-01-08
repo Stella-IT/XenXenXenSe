@@ -1,7 +1,5 @@
 import uvicorn
-from fastapi import Depends, FastAPI
-
-from app.extension import CustomizeLogger
+from fastapi import FastAPI
 
 
 class Server(FastAPI):
@@ -13,6 +11,7 @@ class Server(FastAPI):
         title: str,
         description: str,
         log_config,
+        dependencies=None,
         asgi_debug: bool = False,
         debug: bool = False,
         *args,
@@ -26,7 +25,7 @@ class Server(FastAPI):
         self._port = port
         self._title = title
         self._description = description
-        self.dependencies = [Depends(CustomizeLogger.make_logger())]
+        self.dependencies = dependencies
         self._log_config = log_config
         self._debug = debug
         self._asgi_debug = asgi_debug
