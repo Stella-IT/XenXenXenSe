@@ -1,13 +1,11 @@
 from http.client import RemoteDisconnected
 from xmlrpc.client import Fault
 
-from fastapi import APIRouter
-from fastapi import HTTPException
+from fastapi import APIRouter, HTTPException
 from XenGarden.session import create_session
 from XenGarden.VM import VM
 
-from API.v1.Interface import DescriptionArgs
-from API.v1.Interface import NameArgs
+from API.v1.Interface import DescriptionArgs, NameArgs
 from app.settings import Settings
 
 router = APIRouter()

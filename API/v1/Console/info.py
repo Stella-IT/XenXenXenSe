@@ -1,9 +1,7 @@
 from http.client import RemoteDisconnected
 from xmlrpc.client import Fault
 
-from fastapi import APIRouter
-from fastapi import HTTPException
-from fastapi import Path
+from fastapi import APIRouter, HTTPException, Path
 from XenGarden.Console import Console
 from XenGarden.session import create_session
 
