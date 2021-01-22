@@ -1,7 +1,7 @@
 import sys
+
 import uvicorn
 from fastapi.testclient import TestClient
-
 
 from API.v1 import router as _v1_router
 from app.services import Server
