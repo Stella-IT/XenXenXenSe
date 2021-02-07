@@ -5,6 +5,7 @@ from fastapi.testclient import TestClient
 
 from API.v1 import router as _v1_router
 from app.services import Server
+from app.services.info import Info
 
 log_config = uvicorn.config.LOGGING_CONFIG
 
@@ -12,8 +13,8 @@ app = Server(
     ctx="",
     host="127.0.0.1",
     port=8080,
-    title="Xen API v2",
-    description="XenServer Management API to REST API",
+    title=Info.get_name(),
+    description=Info.get_description(),
     fast_api_debug=True,
     asgi_debug=False,
     log_config=log_config,

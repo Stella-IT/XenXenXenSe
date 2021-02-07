@@ -10,5 +10,5 @@ class XXXS_V1_App(BaseModel):
 
 class XXXS_V1_Root(BaseModel):
     hello: str
-    app: XXXS_V1_App
+    api: XXXS_V1_App
     clusters: List[str]

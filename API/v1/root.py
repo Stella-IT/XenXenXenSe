@@ -2,7 +2,7 @@ from fastapi import APIRouter
 
 from app.settings import Settings
 
-from ._root import XXXS_V1_Root
+from .model._root import XXXS_V1_Root
 
 root_router = APIRouter()
 
@@ -14,6 +14,6 @@ async def v1_root():
 
     return {
         "hello": "world",
-        "app": {"version": 1, "name": "XenXenXenSe"},
+        "api": {"version": 1, "name": "XenXenXenSe"},
         "clusters": xen_cluster_names,
     }

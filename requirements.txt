@@ -11,3 +11,4 @@ loguru
 ujson
 pydantic
 SQLAlchemy
+tomlkit

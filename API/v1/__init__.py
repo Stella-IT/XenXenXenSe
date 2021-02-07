@@ -10,15 +10,14 @@ from API.v1.VDI import vdi_router
 from API.v1.VIF import vif_router
 from API.v1.VM import vm_router
 
-_prefix = "/v1"
-router = APIRouter()
+v1_router = APIRouter()
 
-router.include_router(root_router, prefix=_prefix)
-router.include_router(host_router, prefix=_prefix)
-router.include_router(console_router, prefix=_prefix)
-router.include_router(sr_router, prefix=_prefix)
-router.include_router(vbd_router, prefix=_prefix)
-router.include_router(vdi_router, prefix=_prefix)
-router.include_router(vif_router, prefix=_prefix)
-router.include_router(vm_router, prefix=_prefix)
-router.include_router(guest_router, prefix=_prefix)
+v1_router.include_router(root_router)
+v1_router.include_router(host_router)
+v1_router.include_router(console_router)
+v1_router.include_router(sr_router)
+v1_router.include_router(vbd_router)
+v1_router.include_router(vdi_router)
+v1_router.include_router(vif_router)
+v1_router.include_router(vm_router)
+v1_router.include_router(guest_router)

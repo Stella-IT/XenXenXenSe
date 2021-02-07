@@ -2,9 +2,11 @@ import asyncio
 from asyncio import AbstractEventLoop
 from typing import List, Optional
 
+import poetry_version
 from fastapi import Depends
 
 from app.services.console import Console
+from app.services.info import Info
 from app.services.server import Server
 
 
@@ -19,7 +21,9 @@ class Controller:
         log_config=None,
         fast_api_debug: bool = False,
         asgi_debug: bool = False,
+        version: str = Info.get_version(),
         loop: Optional[AbstractEventLoop] = None,
+        quiet: bool = False,
     ) -> None:
         self.loop = loop or self._loop()
         self.host = host
@@ -30,6 +34,8 @@ class Controller:
         self.log_config = log_config
         self.fast_api_debug = fast_api_debug
         self.asgi_debug = asgi_debug
+        self.version = version
+        self.quiet = quiet
         self.core: Optional[Server] = None
 
     @staticmethod
@@ -51,12 +57,15 @@ class Controller:
             log_config=self.log_config,
             asgi_debug=self.asgi_debug,
             debug=self.fast_api_debug,
+            version=self.version,
         )
 
     def start(self) -> None:
         try:
-            self.__console().show_banner(True)
-            self.__console().print_xen_hostnames(True)
+            if not self.quiet:
+                self.__console().show_banner(True)
+                self.__console().print_xen_hostnames(True)
+
             asyncio.ensure_future(self.core.make_process(), loop=self.loop)
             self.loop.run_forever()
         except TypeError:

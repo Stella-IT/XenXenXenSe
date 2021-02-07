@@ -1,7 +1,7 @@
 [project]
 name = "XenXenXenSe"
 version = "0.0.1"
-description = "Create a pyproject.toml file for an existing project."
+description = "An easy-to-use HTTP API of XenAPI for Web Application Developers."
 authors = [
     "zeroday0619 <zeroday0619@kakao.com>",
     "Alex4386 <alex4386@stella-it.com>"
@@ -13,9 +13,9 @@ homepage = "https://github.com/Stella-IT/XenXenXenSe"
 repository = "https://github.com/Stella-IT/XenXenXenSe"
 documentation = "https://github.com/Stella-IT/XenXenXenSe"
 
-keywords = ["xenapi", "restful", "api"]
+keywords = ["xenapi", "http", "api"]
 
-target-version = ['py37','py38']
+target-version = ['py37','py38','py39']
 include = '\.pyi?$'
 exclude = '''
 
