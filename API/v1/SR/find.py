@@ -17,8 +17,8 @@ async def find_cd_by_name(cluster_id: str, args: NameArgs):
     """ Find SR by Name """
     try:
         session = create_session(
-                _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()
-            )
+            _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()
+        )
 
         name = args.name
         srs = SR.get_by_name(session=session, name=name)

@@ -1,5 +1,6 @@
 from XenGarden.VIF import VIF
 
+
 def serialize(vif: VIF):
     from API.v1.VM.serialize import serialize as _vm_serialize
 

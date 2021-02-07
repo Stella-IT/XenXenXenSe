@@ -16,8 +16,8 @@ async def vm_list(cluster_id: str):
     """ Gets VMs available on Xen Server """
     try:
         session = create_session(
-                _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()
-            )
+            _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()
+        )
 
         vms = VM.list_vm(session=session)
 
@@ -42,8 +42,8 @@ async def template_list(cluster_id: str):
     """ Gets Templates available on Xen Server """
     try:
         session = create_session(
-                _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()
-            )
+            _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()
+        )
 
         vms = VM.list_templates(session=session)
 

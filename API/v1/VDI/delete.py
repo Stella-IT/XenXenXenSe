@@ -17,8 +17,8 @@ async def vdi_get_by_uuid(cluster_id: str, vdi_uuid: str):
     """ Delete SR by UUID """
     try:
         session = create_session(
-                _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()
-            )
+            _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()
+        )
 
         vdi: VDI = VDI.get_by_uuid(session=session, uuid=vdi_uuid)
 

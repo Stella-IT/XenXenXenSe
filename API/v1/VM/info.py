@@ -17,8 +17,8 @@ async def instance_info(cluster_id: str, vm_uuid: str):
     """ Get an Info of VM or Template """
     try:
         session = create_session(
-                _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()
-            )
+            _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()
+        )
 
         vm: VM = VM.get_by_uuid(session=session, uuid=vm_uuid)
 
@@ -36,4 +36,3 @@ async def instance_info(cluster_id: str, vm_uuid: str):
         )
     except RemoteDisconnected as rd_error:
         raise HTTPException(status_code=500, detail=rd_error.strerror)
-

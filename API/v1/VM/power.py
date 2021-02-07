@@ -15,8 +15,8 @@ async def vm_power(cluster_id: str, vm_uuid: str):
     """ Get VM's power status, Can be "Paused", "Halted", "Running" """
     try:
         session = create_session(
-                _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()
-            )
+            _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()
+        )
 
         _vm: VM = VM.get_by_uuid(session=session, uuid=vm_uuid)
 
@@ -39,8 +39,8 @@ async def vm_start(cluster_id: str, vm_uuid: str):
     System powerstate must be checked beforehand"""
     try:
         session = create_session(
-                _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()
-            )
+            _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()
+        )
 
         _vm: VM = VM.get_by_uuid(session=session, uuid=vm_uuid)
         ret = dict(success=_vm.start())
@@ -62,8 +62,8 @@ async def vm_shutdown(cluster_id: str, vm_uuid: str):
     System powerstate must be checked beforehand"""
     try:
         session = create_session(
-                _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()
-            )
+            _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()
+        )
 
         _vm: VM = VM.get_by_uuid(session=session, uuid=vm_uuid)
         ret = dict(success=_vm.shutdown())
@@ -84,8 +84,8 @@ async def vm_power_force_shutdown(cluster_id: str, vm_uuid: str):
     """ Force Shutdown the VM """
     try:
         session = create_session(
-                _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()
-            )
+            _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()
+        )
 
         _vm: VM = VM.get_by_uuid(session=session, uuid=vm_uuid)
         ret = dict(success=_vm.force_shutdown())
@@ -107,8 +107,8 @@ async def vm_power_restart(cluster_id: str, vm_uuid: str):
     System powerstate must be checked beforehand"""
     try:
         session = create_session(
-                _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()
-            )
+            _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()
+        )
 
         _vm: VM = VM.get_by_uuid(session=session, uuid=vm_uuid)
         ret = dict(success=_vm.reboot())
@@ -129,8 +129,8 @@ async def vm_power_suspend(cluster_id: str, vm_uuid: str):
     """ Suspend the VM """
     try:
         session = create_session(
-                _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()
-            )
+            _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()
+        )
 
         _vm: VM = VM.get_by_uuid(session=session, uuid=vm_uuid)
         ret = dict(success=_vm.suspend())
@@ -151,8 +151,8 @@ async def vm_power_resume(cluster_id: str, vm_uuid: str):
     """ Resume the VM """
     try:
         session = create_session(
-                _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()
-            )
+            _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()
+        )
 
         _vm: VM = VM.get_by_uuid(session=session, uuid=vm_uuid)
         ret = dict(success=_vm.resume())
@@ -173,8 +173,8 @@ async def vm_power_pause(cluster_id: str, vm_uuid: str):
     """ Pause the VM """
     try:
         session = create_session(
-                _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()
-            )
+            _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()
+        )
 
         _vm: VM = VM.get_by_uuid(session=session, uuid=vm_uuid)
         ret = dict(success=_vm.pause())

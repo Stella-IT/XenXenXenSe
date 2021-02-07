@@ -1,5 +1,5 @@
 from XenGarden.VBD import VBD
-    
+
 
 def serialize(vbd: VBD):
     from API.v1.VDI.serialize import serialize as _vdi_serialize

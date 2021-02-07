@@ -17,8 +17,8 @@ async def vdi_list(cluster_id: str):
     """ Get VDI by UUID """
     try:
         session = create_session(
-                _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()
-            )
+            _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()
+        )
 
         vdis = VDI.get_all(session=session)
 

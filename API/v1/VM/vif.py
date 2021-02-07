@@ -16,8 +16,8 @@ async def instance_vif(cluster_id: str, vm_uuid: str, url_after: str):
     """ Show Instnace VIFs """
     try:
         session = create_session(
-                _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()
-            )
+            _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()
+        )
 
         vm: VM = VM.get_by_uuid(session=session, uuid=vm_uuid)
         vif = vm.get_VIF()
@@ -26,7 +26,7 @@ async def instance_vif(cluster_id: str, vm_uuid: str, url_after: str):
 
         if vif is not None:
             vif_uuid = vif.get_uuid()
-            return RedirectResponse(url=f'/{cluster_id}/vif/{vif_uuid}{url_after}')
+            return RedirectResponse(url=f"/{cluster_id}/vif/{vif_uuid}{url_after}")
 
         else:
             raise HTTPException(
@@ -47,8 +47,8 @@ async def instance_vifs(cluster_id: str, vm_uuid: str):
     """ Show Instnace VIFs """
     try:
         session = create_session(
-                _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()
-            )
+            _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()
+        )
 
         vm: VM = VM.get_by_uuid(session=session, uuid=vm_uuid)
 

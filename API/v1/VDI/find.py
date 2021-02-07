@@ -18,8 +18,8 @@ async def find_VDI_by_name(cluster_id: str, args: NameArgs):
     """ Find VDI by Name """
     try:
         session = create_session(
-                _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()
-            )
+            _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()
+        )
 
         name = args.name
         vdis = VDI.get_by_name(session=session, name=name)
@@ -42,4 +42,3 @@ async def find_VDI_by_name(cluster_id: str, args: NameArgs):
         )
     except RemoteDisconnected as rd_error:
         raise HTTPException(status_code=500, detail=rd_error.strerror)
-

@@ -15,8 +15,8 @@ async def vif_get_qos_by_uuid(cluster_id: str, vif_uuid: str):
     """ Set VIF QoS by UUID """
     try:
         session = create_session(
-                _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()
-            )
+            _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()
+        )
 
         vif: VIF = VIF.get_by_uuid(session=session, uuid=vif_uuid)
 
@@ -44,8 +44,8 @@ async def vif_get_qos_type_by_uuid(cluster_id: str, vif_uuid: str):
     """ Set VIF QoS Type by UUID """
     try:
         session = create_session(
-                _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()
-            )
+            _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()
+        )
 
         vif: VIF = VIF.get_by_uuid(session=session, uuid=vif_uuid)
 
@@ -70,8 +70,8 @@ async def vif_get_qos_speed_by_uuid(cluster_id: str, vif_uuid: str):
     """ Set VIF QoS Type by UUID """
     try:
         session = create_session(
-                _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()
-            )
+            _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()
+        )
         vif: VIF = VIF.get_by_uuid(session=session, uuid=vif_uuid)
 
         if vif is not None:
@@ -95,8 +95,8 @@ async def vif_set_qos_speed_by_uuid(cluster_id: str, vif_uuid: str, speed: str):
     """ Set VIF QoS Speed by UUID """
     try:
         session = create_session(
-                _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()
-            )
+            _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()
+        )
 
         vif: VIF = VIF.get_by_uuid(session=session, uuid=vif_uuid)
 

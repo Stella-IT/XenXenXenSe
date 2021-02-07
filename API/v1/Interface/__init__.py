@@ -1,4 +1,5 @@
 from typing import Optional
+
 from pydantic import BaseModel
 
 
@@ -9,8 +10,10 @@ class VCpuArgs(BaseModel):
 class MemoryArgs(BaseModel):
     memory: int
 
+
 class NameArgs(BaseModel):
     name: str
+
 
 class NameDescriptionArgs(BaseModel):
     name: Optional[str]

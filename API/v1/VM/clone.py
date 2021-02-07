@@ -18,8 +18,8 @@ async def instance_clone(cluster_id: str, vm_uuid: str, args: NameArgs):
     """ Clone Instance (VM/Template) """
     try:
         session = create_session(
-                _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()
-            )
+            _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()
+        )
 
         _vm: VM = VM.get_by_uuid(session=session, uuid=vm_uuid)
         new_vm = _vm.clone(args.name)
@@ -37,4 +37,3 @@ async def instance_clone(cluster_id: str, vm_uuid: str, args: NameArgs):
         )
     except RemoteDisconnected as rd_error:
         raise HTTPException(status_code=500, detail=rd_error.strerror)
-

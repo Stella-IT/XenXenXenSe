@@ -16,8 +16,8 @@ async def vif_list(cluster_id: str):
     """ Get All from Storage Repos """
     try:
         session = create_session(
-                _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()
-            )
+            _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()
+        )
 
         vifs = VIF.get_all(session=session)
 

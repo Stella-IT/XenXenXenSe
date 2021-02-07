@@ -16,8 +16,8 @@ async def vif_get_by_uuid(cluster_id: str, vif_uuid: str):
     """ Get VIF by UUID """
     try:
         session = create_session(
-                _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()
-            )
+            _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()
+        )
 
         vif: VIF = VIF.get_by_uuid(session=session, uuid=vif_uuid)
 

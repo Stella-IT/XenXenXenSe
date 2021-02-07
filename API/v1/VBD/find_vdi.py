@@ -4,8 +4,8 @@ from xmlrpc.client import Fault
 from fastapi import APIRouter, HTTPException
 from XenGarden.session import create_session
 from XenGarden.VBD import VBD
-from API.v1.VBD.serialize import serialize
 
+from API.v1.VBD.serialize import serialize
 from app.settings import Settings
 
 router = APIRouter()

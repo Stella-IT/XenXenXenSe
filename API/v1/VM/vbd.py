@@ -16,8 +16,8 @@ async def instance_vbds(cluster_id: str, vm_uuid: str):
     """ Show Instance VBDs """
     try:
         session = create_session(
-                _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()
-            )
+            _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()
+        )
 
         vm: VM = VM.get_by_uuid(session=session, uuid=vm_uuid)
 

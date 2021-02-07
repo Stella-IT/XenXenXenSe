@@ -16,8 +16,8 @@ async def vm_get_vCPU(cluster_id: str, vm_uuid: str):
     """ Get VM vCPU count """
     try:
         session = create_session(
-                _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()
-            )
+            _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()
+        )
 
         _vm: VM = VM.get_by_uuid(session=session, uuid=vm_uuid)
         if _vm is not None:
@@ -41,8 +41,8 @@ async def vm_get_vCPU_params(cluster_id: str, vm_uuid: str):
     """ Get vCPU Parameters """
     try:
         session = create_session(
-                _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()
-            )
+            _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()
+        )
 
         _vm: VM = VM.get_by_uuid(session=session, uuid=vm_uuid)
         if _vm is not None:
@@ -66,8 +66,8 @@ async def vm_set_vCPU(cluster_id: str, vm_uuid: str, args: VCpuArgs):
     """ Set VM vCPU count """
     try:
         session = create_session(
-                _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()
-            )
+            _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()
+        )
 
         _vm: VM = VM.get_by_uuid(session=session, uuid=vm_uuid)
         if _vm is not None:
@@ -85,14 +85,15 @@ async def vm_set_vCPU(cluster_id: str, vm_uuid: str, args: VCpuArgs):
     except RemoteDisconnected as rd_error:
         raise HTTPException(status_code=500, detail=rd_error.strerror)
 
+
 # TODO: Trouble shooting required.
 @router.get("/{cluster_id}/vm/{vm_uuid}/memory")
 async def vm_get_memory(cluster_id: str, vm_uuid: str):
     """ Get VM Memory (needs troubleshooting) """
     try:
         session = create_session(
-                _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()
-            )
+            _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()
+        )
 
         _vm: VM = VM.get_by_uuid(session=session, uuid=vm_uuid)
         if _vm is not None:
@@ -116,8 +117,8 @@ async def vm_set_memory(cluster_id: str, vm_uuid: str, args: MemoryArgs):
     """ Set VM Memory (needs troubleshooting) """
     try:
         session = create_session(
-                _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()
-            )
+            _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()
+        )
 
         _vm: VM = VM.get_by_uuid(session=session, uuid=vm_uuid)
         if _vm is not None:
@@ -134,4 +135,3 @@ async def vm_set_memory(cluster_id: str, vm_uuid: str, args: MemoryArgs):
         )
     except RemoteDisconnected as rd_error:
         raise HTTPException(status_code=500, detail=rd_error.strerror)
-

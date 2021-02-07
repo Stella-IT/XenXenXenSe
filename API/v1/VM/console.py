@@ -1,15 +1,13 @@
-from typing import Optional
-
 from http.client import RemoteDisconnected
 from xmlrpc.client import Fault
 
 from fastapi import APIRouter, HTTPException
+from starlette.responses import RedirectResponse
 from XenGarden.session import create_session
 from XenGarden.VM import VM
 
 from API.v1.Console.serialize import serialize as _console_serialize
 from app.settings import Settings
-from starlette.responses import RedirectResponse
 
 router = APIRouter()
 
@@ -35,7 +33,9 @@ async def vm_console(cluster_id: str, vm_uuid: str, url_after: str = ""):
         console: Console = consoles[0]
         console_uuid = console.get_uuid()
 
-        return RedirectResponse(url=f'/v1/{cluster_id}/console/{console_uuid}{url_after}')
+        return RedirectResponse(
+            url=f"/v1/{cluster_id}/console/{console_uuid}{url_after}"
+        )
     except Fault as xml_rpc_error:
         raise HTTPException(
             status_code=int(xml_rpc_error.faultCode),
@@ -50,8 +50,8 @@ async def vm_consoles(cluster_id: str, vm_uuid: str):
     """ Get all consoles are available to the VM """
     try:
         session = create_session(
-                _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()
-            )
+            _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()
+        )
 
         vm: VM = VM.get_by_uuid(session=session, uuid=vm_uuid)
         consoles = vm.get_consoles()

@@ -17,14 +17,14 @@ async def instance_get_metadata(cluster_id: str, vm_uuid: str):
     """ Get Instance (VM/Template) Metadata """
     try:
         session = create_session(
-                _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()
-            )
+            _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()
+        )
 
         _vm: VM = VM.get_by_uuid(session=session, uuid=vm_uuid)
-        ret = dict(success=True, data={
-            "name": _vm.get_name(),
-            "description": _vm.get_description()
-        })
+        ret = dict(
+            success=True,
+            data={"name": _vm.get_name(), "description": _vm.get_description()},
+        )
 
         session.xenapi.session.logout()
         return ret
@@ -45,8 +45,8 @@ async def instance_set_description(
     """ Set Instance (VM/Template) Description """
     try:
         session = create_session(
-                _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()
-            )
+            _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()
+        )
 
         _vm: VM = VM.get_by_uuid(session=session, uuid=vm_uuid)
         ret = dict(success=_vm.set_description(args.description))

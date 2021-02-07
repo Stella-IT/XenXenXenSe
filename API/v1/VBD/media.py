@@ -51,8 +51,8 @@ async def vbd_eject_vdi(cluster_id: str, vbd_uuid: str):
     """ Eject VDI from VBD """
     try:
         session = create_session(
-                _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()
-            )
+            _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()
+        )
         vbd: VBD = VBD.get_by_uuid(session=session, uuid=vbd_uuid)
 
         if vbd is not None:
