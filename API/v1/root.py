@@ -2,8 +2,6 @@ from fastapi import APIRouter
 
 from app.settings import Settings
 
-from .model._root import XXXS_V1_Root
-
 root_router = APIRouter()
 
 
