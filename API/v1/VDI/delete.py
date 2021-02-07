@@ -5,14 +5,13 @@ from fastapi import APIRouter, HTTPException
 from XenGarden.session import create_session
 from XenGarden.VDI import VDI
 
-from API.v1.model.VDI import VDIDelResponseModel
 from app.settings import Settings
 
 router = APIRouter()
 
 
-@router.get("/{cluster_id}/vdi/{vdi_uuid}/delete", response_model=VDIDelResponseModel)
-@router.delete("/{cluster_id}/vdi/{vdi_uuid}", response_model=VDIDelResponseModel)
+@router.get("/{cluster_id}/vdi/{vdi_uuid}/delete")
+@router.delete("/{cluster_id}/vdi/{vdi_uuid}")
 async def vdi_get_by_uuid(cluster_id: str, vdi_uuid: str):
     """ Delete SR by UUID """
     try:

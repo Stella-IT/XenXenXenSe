@@ -5,14 +5,13 @@ from fastapi import APIRouter, HTTPException
 from XenGarden.session import create_session
 from XenGarden.VDI import VDI
 
-from API.v1.model.VDI import VDInfoResponseModel
 from API.v1.VDI.serialize import serialize
 from app.settings import Settings
 
 router = APIRouter()
 
 
-@router.get("/{cluster_id}/vdi/{vdi_uuid}", response_model=VDInfoResponseModel)
+@router.get("/{cluster_id}/vdi/{vdi_uuid}")
 async def vdi_get_by_uuid(cluster_id: str, vdi_uuid: str):
     """ Get VDI by UUID """
     try:
