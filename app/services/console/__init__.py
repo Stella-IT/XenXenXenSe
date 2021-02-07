@@ -15,8 +15,7 @@ class Console:
 
         print(figlet.renderText("XenXenXenSe"))
         print(
-            "Project XenXenXenSe : a RESTful API implementation for Citrix Hypervisor®"
-            " and XCP-ng"
+            "XenXenXenSe : An easy-to-use HTTP API of XenAPI for Web Application Developers"
         )
         print()
         print("Copyright (c) Stella IT.")

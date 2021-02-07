@@ -1,5 +1,5 @@
-import xmlrpc
 import os
+import xmlrpc
 
 import uvicorn
 from fastapi import Depends
@@ -27,7 +27,7 @@ app = Controller(
     host="127.0.0.1",
     port=8080,
     title="XenXenXenSe",
-    description="XenServer Management API to REST API",
+    description="An easy-to-use HTTP API of XenAPI for Web Application Developers",
     dependencies=None,
     fast_api_debug=True,
     asgi_debug=False,
