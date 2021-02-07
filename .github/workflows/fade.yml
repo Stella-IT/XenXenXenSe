@@ -15,11 +15,14 @@ jobs:
     timeout-minutes: 1200
     steps:
       - uses: actions/checkout@v2
+      - name: Get required libraries
+        run: |
+          pip3 install -r requirements.txt
       - name: Build Debian Package
         run: |
           sudo npm install -g typescript
           COMMIT=$(git rev-parse HEAD | head -c 7)
-          XXXS_VERSION=$(python3 ./test.py --version)
+          XXXS_VERSION=$(python3 ./main.py --version)
           cd /tmp; git clone https://github.com/fade-project/fade
           cd fade; yarn install
           yarn start --init --name xenxenxense --path $GITHUB_WORKSPACE --version $XXXS_VERSION-$COMMIT-$PYTHON_VERSION \
