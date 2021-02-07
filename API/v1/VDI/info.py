@@ -5,7 +5,7 @@ from fastapi import APIRouter, HTTPException
 from XenGarden.session import create_session
 from XenGarden.VDI import VDI
 
-from API.v1.model.vdi import VDInfoResponseModel
+from API.v1.model.VDI import VDInfoResponseModel
 from API.v1.VDI.serialize import serialize
 from app.settings import Settings
 

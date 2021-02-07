@@ -6,7 +6,7 @@ from XenGarden.session import create_session
 from XenGarden.VDI import VDI
 
 from API.v1.Interface import NameArgs
-from API.v1.model.vdi import VDIFindResponseModel
+from API.v1.model.VDI import VDIFindResponseModel
 from API.v1.VDI.serialize import serialize
 from app.settings import Settings
 

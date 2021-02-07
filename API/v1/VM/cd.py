@@ -11,7 +11,7 @@ from app.settings import Settings
 router = APIRouter()
 
 
-@router("/{cluster_id}/vm/{vm_uuid}/cd")
+@router.all("/{cluster_id}/vm/{vm_uuid}/cd")
 async def get_cd(cluster_id: str, vm_uuid: str):
     try:
         try:

@@ -5,7 +5,7 @@ from fastapi import APIRouter, HTTPException
 from XenGarden.session import create_session
 from XenGarden.VDI import VDI
 
-from API.v1.model.vdi import VDIDelResponseModel
+from API.v1.model.VDI import VDIDelResponseModel
 from app.settings import Settings
 
 router = APIRouter()

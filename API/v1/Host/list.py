@@ -6,7 +6,7 @@ from XenGarden.Host import Host
 from XenGarden.session import create_session
 
 from API.v1.Host.serialize import serialize
-from API.v1.model.host import HLResponseModel
+from API.v1.model.Host import HLResponseModel
 from app.settings import Settings
 
 router = APIRouter()

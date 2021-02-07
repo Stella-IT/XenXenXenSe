@@ -1,4 +1,4 @@
-from API.v1.model.host import HLResponseModel
-from API.v1.model.vdi import VDLResponseModel
+from API.v1.model.Host import HLResponseModel
+from API.v1.model.VDI import VDLResponseModel
 
-__all__ = ["host", "vdi"]
+__all__ = ["HOST", "VDI"]

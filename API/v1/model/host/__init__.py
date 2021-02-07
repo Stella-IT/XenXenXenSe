@@ -1,3 +1,3 @@
-from API.v1.model.host._list import HLResponseModel
+from API.v1.model.Host._list import HLResponseModel
 
 __main__ = ["_list"]
