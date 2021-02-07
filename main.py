@@ -40,7 +40,7 @@ if __name__ == "__main__":
     app.startup()
 
     if os.path.exists(CustomizeLogger.default_config_path):
-        app.dependencies = [Depends(CustomizeLogger.make_logger())]
+        app.register_dependency(Depends(CustomizeLogger.make_logger()))
 
     app.core.include_router(
         _v1_router,

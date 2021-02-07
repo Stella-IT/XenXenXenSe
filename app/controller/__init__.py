@@ -61,3 +61,10 @@ class Controller:
             self.loop.run_forever()
         except TypeError:
             pass
+
+    def register_dependency(self, dependency) -> None:
+        if self.dependencies is None:
+            self.dependencies = []
+
+        self.dependencies.append(dependency)
+
