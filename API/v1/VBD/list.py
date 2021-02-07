@@ -15,14 +15,9 @@ router = APIRouter()
 async def vbd_list(cluster_id: str):
     """ Get VBD by UUID """
     try:
-        try:
-            session = create_session(
-                _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()
-            )
-        except KeyError as key_error:
-            raise HTTPException(
-                status_code=400, detail=f"{key_error} is not a valid path"
-            )
+        session = create_session(
+            cluster_id, get_xen_clusters=Settings.get_xen_clusters()
+        )
 
         vbds = VBD.get_all(session)
 

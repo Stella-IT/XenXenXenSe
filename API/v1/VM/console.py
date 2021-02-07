@@ -1,3 +1,5 @@
+from typing import Optional
+
 from http.client import RemoteDisconnected
 from xmlrpc.client import Fault
 
@@ -7,32 +9,33 @@ from XenGarden.VM import VM
 
 from API.v1.Console.serialize import serialize as _console_serialize
 from app.settings import Settings
+from starlette.responses import RedirectResponse
 
 router = APIRouter()
 
 
-@router.get("/{cluster_id}/vm/{vm_uuid}/console")
-async def vm_console(cluster_id: str, vm_uuid: str):
+@router.get("/{cluster_id}/vm/{vm_uuid}/console{url_after:path}")
+async def vm_console(cluster_id: str, vm_uuid: str, url_after: str = ""):
     """ Get the first console of the VM """
+
     try:
-        try:
-            session = create_session(
-                _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()
-            )
-        except KeyError as key_error:
-            raise HTTPException(
-                status_code=400, detail=f"{key_error} is not a valid path"
-            )
+        session = create_session(
+            _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()
+        )
 
         vm: VM = VM.get_by_uuid(session=session, uuid=vm_uuid)
-        if vm is not None:
-            consoles = vm.get_consoles()
-            ret = dict(success=True, data=_console_serialize(consoles[0]))
-        else:
-            ret = dict(success=False)
+        consoles: Console = vm.get_consoles()
 
-        session.xenapi.session.logout()
-        return ret
+        if len(consoles) == 0:
+            raise HTTPException(
+                status_code=404,
+                detail=f"Console doesn't exist on VM {vm_uuid}",
+            )
+
+        console: Console = consoles[0]
+        console_uuid = console.get_uuid()
+
+        return RedirectResponse(url=f'/v1/{cluster_id}/console/{console_uuid}{url_after}')
     except Fault as xml_rpc_error:
         raise HTTPException(
             status_code=int(xml_rpc_error.faultCode),
@@ -46,26 +49,18 @@ async def vm_console(cluster_id: str, vm_uuid: str):
 async def vm_consoles(cluster_id: str, vm_uuid: str):
     """ Get all consoles are available to the VM """
     try:
-        try:
-            session = create_session(
+        session = create_session(
                 _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()
-            )
-        except KeyError as key_error:
-            raise HTTPException(
-                status_code=400, detail=f"{key_error} is not a valid path"
             )
 
         vm: VM = VM.get_by_uuid(session=session, uuid=vm_uuid)
-        if vm is not None:
-            consoles = vm.get_consoles()
+        consoles = vm.get_consoles()
 
-            __consoleList = []
-            for console in consoles:
-                __consoleList.append(_console_serialize(console))
+        __consoleList = []
+        for console in consoles:
+            __consoleList.append(_console_serialize(console))
 
-            ret = dict(success=True, data=__consoleList)
-        else:
-            ret = dict(success=False)
+        ret = dict(success=True, data=__consoleList)
 
         session.xenapi.session.logout()
         return ret

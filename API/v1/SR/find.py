@@ -16,13 +16,8 @@ router = APIRouter()
 async def find_cd_by_name(cluster_id: str, args: NameArgs):
     """ Find SR by Name """
     try:
-        try:
-            session = create_session(
+        session = create_session(
                 _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()
-            )
-        except KeyError as key_error:
-            raise HTTPException(
-                status_code=400, detail=f"{key_error} is not a valid path"
             )
 
         name = args.name

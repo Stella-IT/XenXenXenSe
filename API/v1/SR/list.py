@@ -15,14 +15,9 @@ router = APIRouter()
 async def sr_list(cluster_id: str):
     """ Get All from Storage Repos """
     try:
-        try:
-            session = create_session(
-                _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()
-            )
-        except KeyError as key_error:
-            raise HTTPException(
-                status_code=400, detail=f"{key_error} is not a valid path"
-            )
+        session = create_session(
+            cluster_id, get_xen_clusters=Settings.get_xen_clusters()
+        )
 
         srs = SR.get_all(session=session)
 

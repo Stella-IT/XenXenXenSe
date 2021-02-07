@@ -1,43 +1,33 @@
 from http.client import RemoteDisconnected
 from xmlrpc.client import Fault
 
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Request
 from XenGarden.session import create_session
 from XenGarden.VM import VM
 
 from API.v1.VBD.serialize import serialize as _vbd_serialize
 from app.settings import Settings
+from starlette.responses import RedirectResponse
 
 router = APIRouter()
 
 
-@router.all("/{cluster_id}/vm/{vm_uuid}/cd")
-async def get_cd(cluster_id: str, vm_uuid: str):
+@router.route("/{cluster_id}/vm/{vm_uuid}/cd{url_after:path}")
+async def get_cd(cluster_id: str, vm_uuid: str, url_after: str = ""):
+    from XenGarden.VBD import VBD
+    
     try:
-        try:
-            session = create_session(
-                _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()
-            )
-        except KeyError as key_error:
-            raise HTTPException(
-                status_code=400, detail=f"{key_error} is not a valid path"
-            )
+        session = create_session(
+            _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()
+        )
 
         vm: VM = VM.get_by_uuid(session=session, uuid=vm_uuid)
-
-        if vm is not None:
-
-            new_vbd = vm.get_CD()
-
-            if new_vbd is not None:
-                ret = dict(success=True, data=_vbd_serialize(new_vbd))
-            else:
-                ret = dict(success=False)
-        else:
-            ret = dict(success=False)
+        vbd: VBD = vm.get_CD()
+        vbd_uuid = vbd.get_uuid()
 
         session.xenapi.session.logout()
-        return ret
+
+        return RedirectResponse(url=f'/{cluster_id}/vbd/{vbd_uuid}{url_after}')
     except Fault as xml_rpc_error:
         raise HTTPException(
             status_code=int(xml_rpc_error.faultCode),
@@ -49,14 +39,11 @@ async def get_cd(cluster_id: str, vm_uuid: str):
 
 @router.get("/{cluster_id}/vm/{vm_uuid}/cds")
 async def get_cds(cluster_id: str, vm_uuid: str):
+    from XenGarden.VBD import VBD
+
     try:
-        try:
-            session = create_session(
+        session = create_session(
                 _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()
-            )
-        except KeyError as key_error:
-            raise HTTPException(
-                status_code=400, detail=f"{key_error} is not a valid path"
             )
 
         vm: VM = VM.get_by_uuid(session=session, uuid=vm_uuid)

@@ -15,23 +15,14 @@ router = APIRouter()
 async def instance_get_bios(cluster_id: str, vm_uuid: str):
     """ Get Instance (VM/Template) BIOS """
     try:
-        try:
-            session = create_session(
-                _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()
-            )
-        except KeyError as key_error:
-            raise HTTPException(
-                status_code=400, detail=f"{key_error} is not a valid path"
-            )
+        session = create_session(
+            _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()
+        )
 
         vm: VM = VM.get_by_uuid(session=session, uuid=vm_uuid)
-        if vm is not None:
-            ret = dict(success=True, data=vm.get_bios_strings())
-        else:
-            ret = dict(success=False)
-
         session.xenapi.session.logout()
-        return ret
+
+        return dict(success=True, data=vm.get_bios_strings())
     except Fault as xml_rpc_error:
         raise HTTPException(
             status_code=int(xml_rpc_error.faultCode),
@@ -46,20 +37,12 @@ async def instance_get_bios(cluster_id: str, vm_uuid: str):
 async def instance_set_bios_property_byname_inurl(cluster_id: str, vm_uuid: str, data):
     """ Set Instance (VM/Template) BIOS Property by Name """
     try:
-        try:
-            session = create_session(
-                _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()
-            )
-        except KeyError as key_error:
-            raise HTTPException(
-                status_code=400, detail=f"{key_error} is not a valid path"
-            )
+        session = create_session(
+            _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()
+        )
 
         vm: VM = VM.get_by_uuid(session=session, uuid=vm_uuid)
-        if vm is not None:
-            ret = dict(success=vm.set_bios_strings(data))
-        else:
-            ret = dict(success=False)
+        ret = dict(success=vm.set_bios_strings(data))
 
         session.xenapi.session.logout()
         return ret

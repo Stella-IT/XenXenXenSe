@@ -1,10 +1,10 @@
 from XenGarden.VBD import VBD
-
-from API.v1.VDI.serialize import serialize as _vdi_serialize
-from API.v1.VM.serialize import serialize as _vm_serialize
-
+    
 
 def serialize(vbd: VBD):
+    from API.v1.VDI.serialize import serialize as _vdi_serialize
+    from API.v1.VM.serialize import serialize as _vm_serialize
+
     vm = vbd.get_VM()
     vdi = vbd.get_VDI()
 

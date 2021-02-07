@@ -15,13 +15,8 @@ router = APIRouter()
 async def vm_list(cluster_id: str):
     """ Gets VMs available on Xen Server """
     try:
-        try:
-            session = create_session(
+        session = create_session(
                 _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()
-            )
-        except KeyError as key_error:
-            raise HTTPException(
-                status_code=400, detail=f"{key_error} is not a valid path"
             )
 
         vms = VM.list_vm(session=session)
@@ -46,13 +41,8 @@ async def vm_list(cluster_id: str):
 async def template_list(cluster_id: str):
     """ Gets Templates available on Xen Server """
     try:
-        try:
-            session = create_session(
+        session = create_session(
                 _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()
-            )
-        except KeyError as key_error:
-            raise HTTPException(
-                status_code=400, detail=f"{key_error} is not a valid path"
             )
 
         vms = VM.list_templates(session=session)

@@ -11,18 +11,12 @@ from app.settings import Settings
 router = APIRouter()
 
 
-@router.get("/{cluster_id}/vm/{vm_uuid}/vbd")
 @router.get("/{cluster_id}/vm/{vm_uuid}/vbds")
 async def instance_vbds(cluster_id: str, vm_uuid: str):
     """ Show Instance VBDs """
     try:
-        try:
-            session = create_session(
+        session = create_session(
                 _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()
-            )
-        except KeyError as key_error:
-            raise HTTPException(
-                status_code=400, detail=f"{key_error} is not a valid path"
             )
 
         vm: VM = VM.get_by_uuid(session=session, uuid=vm_uuid)

@@ -7,32 +7,25 @@ from XenGarden.VM import VM
 
 from API.v1.GuestMetrics.serialize import serialize as _guest_serialize
 from app.settings import Settings
+from starlette.responses import RedirectResponse
 
 router = APIRouter()
 
 
-@router.get("/{cluster_id}/vm/{vm_uuid}/guest")
-async def vm_guest(cluster_id: str, vm_uuid: str):
+@router.get("/{cluster_id}/vm/{vm_uuid}/guest{url_after:path}")
+async def vm_guest(cluster_id: str, vm_uuid: str, url_after: str):
     """ Get VM Guest Info """
     try:
-        try:
-            session = create_session(
+        session = create_session(
                 _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()
-            )
-        except KeyError as key_error:
-            raise HTTPException(
-                status_code=400, detail=f"{key_error} is not a valid path"
             )
 
         vm: VM = VM.get_by_uuid(session=session, uuid=vm_uuid)
-        if vm is not None:
-            ret = dict(success=True, data=_guest_serialize(vm.get_guest_metrics()))
-        else:
-            session.xenapi.session.logout()
-            ret = dict(success=False)
+        guest_metrics: GuestMetrics = vm.get_guest_metrics()
+        guest_uuid = guest_metrics.get_uuid()
 
         session.xenapi.session.logout()
-        return ret
+        return RedirectResponse(url=f'/{cluster_id}/guest/{guest_uuid}{url_after}')
     except Fault as xml_rpc_error:
         raise HTTPException(
             status_code=int(xml_rpc_error.faultCode),

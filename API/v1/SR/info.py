@@ -15,14 +15,9 @@ router = APIRouter()
 async def sr_get_by_uuid(cluster_id: str, sr_uuid: str):
     """ Get SR by UUID """
     try:
-        try:
-            session = create_session(
-                _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()
-            )
-        except KeyError as key_error:
-            raise HTTPException(
-                status_code=400, detail=f"{key_error} is not a valid path"
-            )
+        session = create_session(
+            cluster_id, get_xen_clusters=Settings.get_xen_clusters()
+        )
 
         sr: SR = SR.get_by_uuid(session=session, uuid=sr_uuid)
 

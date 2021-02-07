@@ -10,25 +10,16 @@ from app.settings import Settings
 router = APIRouter()
 
 
-@router.get("/{cluster_id}/vm/{vm_uuid}/delete")
 @router.delete("/{cluster_id}/vm/{vm_uuid}")
 async def vm_delete(cluster_id: str, vm_uuid: str):
     """ Delete VM """
     try:
-        try:
-            session = create_session(
-                _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()
-            )
-        except KeyError as key_error:
-            raise HTTPException(
-                status_code=400, detail=f"{key_error} is not a valid path"
-            )
+        session = create_session(
+            _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()
+        )
 
         _vm: VM = VM.get_by_uuid(session=session, uuid=vm_uuid)
-        if _vm is not None:
-            ret = dict(success=_vm.delete())
-        else:
-            ret = dict(success=False)
+        ret = dict(success=_vm.delete())
 
         session.xenapi.session.logout()
         return ret

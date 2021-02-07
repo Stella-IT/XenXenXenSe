@@ -9,7 +9,6 @@ def serialize(host: Host):
     return dict(
         uuid=host.get_uuid(),
         name=host.get_name(),
-        description=host.get_description(),
         enabled=host.get_enabled(),
         memory=dict(free=host.get_free_memory(), total=host.get_total_memory()),
         cpu=host.get_cpu_info(),

@@ -4,8 +4,8 @@ from xmlrpc.client import Fault
 from fastapi import APIRouter, HTTPException
 from XenGarden.session import create_session
 from XenGarden.VBD import VBD
-
 from API.v1.VBD.serialize import serialize
+
 from app.settings import Settings
 
 router = APIRouter()
@@ -14,15 +14,11 @@ router = APIRouter()
 @router.get("/{cluster_id}/vbd/find-by-vdi/{vdi_uuid}")
 async def vbd_list(cluster_id: str, vdi_uuid: str):
     """ Get VBD by UUID """
+
     try:
-        try:
-            session = create_session(
-                _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()
-            )
-        except KeyError as key_error:
-            raise HTTPException(
-                status_code=400, detail=f"{key_error} is not a valid path"
-            )
+        session = create_session(
+            cluster_id, get_xen_clusters=Settings.get_xen_clusters()
+        )
 
         vbds = VBD.get_all(session=session)
 

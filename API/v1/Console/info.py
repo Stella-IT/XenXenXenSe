@@ -13,31 +13,24 @@ router = APIRouter()
 
 @router.get("/{cluster_id}/console/{console_uuid}")
 async def console_get_by_uuid(
-    cluster_id: str = Path(default=None, title="cluster_id", description="Cluster ID"),
-    console_uuid: str = Path(
-        default=None, title="console_uuid", description="Console UUID"
-    ),
+    cluster_id: str,
+    console_uuid: str,
 ):
     """ Get Console by UUID """
     try:
-        # KeyError Handling
-        try:
-            session = create_session(
-                cluster_id, get_xen_clusters=Settings.get_xen_clusters()
-            )
-        except KeyError as key_error:
-            raise HTTPException(
-                status_code=400, detail=f"{key_error} is not a valid path"
-            )
+        session = create_session(
+            cluster_id, get_xen_clusters=Settings.get_xen_clusters()
+        )
 
+        vm: VM = VM.get_by_uuid(session, "")
         console: Console = Console.get_by_uuid(session, console_uuid)
+        print(console.get_protocol())
 
         if console is not None:
             ret = dict(success=True, data=serialize(console))
         else:
             ret = dict(success=False)
 
-        session.xenapi.session.logout()
         return ret
     except Fault as xml_rpc_error:
         raise HTTPException(

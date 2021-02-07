@@ -6,27 +6,20 @@ from XenGarden.Host import Host
 from XenGarden.session import create_session
 
 from API.v1.Host.serialize import serialize
-from API.v1.model.Host import HLResponseModel
 from app.settings import Settings
 
 router = APIRouter()
 
 
-@router.get("/{cluster_id}/host/list", response_model=HLResponseModel)
+@router.get("/{cluster_id}/host/list")
 async def host_list(
     cluster_id: str = Path(default=None, title="cluster_id", description="Cluster ID")
 ):
     """ Get All from Existance Host """
     try:
-        # KeyError Handling
-        try:
-            session = create_session(
-                _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()
-            )
-        except KeyError as key_error:
-            raise HTTPException(
-                status_code=400, detail=f"{key_error} is not a valid path"
-            )
+        session = create_session(
+            cluster_id, get_xen_clusters=Settings.get_xen_clusters()
+        )
 
         hosts = Host.list_host(session=session)
 
