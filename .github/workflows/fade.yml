@@ -47,6 +47,7 @@ jobs:
       - name: Test Debian Package
         run: |
           COMMIT=$(git rev-parse HEAD | head -c 7)
+          XXXS_VERSION=$(python3 ./main.py --version)
           sudo dpkg --ignore-depends=python$PYTHON_VERSION -i $GITHUB_WORKSPACE/xenxenxense_$XXXS_VERSION-$COMMIT-$PYTHON_VERSION\_all.deb
         env:
             PYTHON_VERSION: ${{ matrix.python-version }}
