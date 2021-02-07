@@ -1,4 +1,5 @@
 import xmlrpc
+import os
 
 import uvicorn
 from fastapi import Depends
@@ -25,7 +26,7 @@ del uvicorn_log_config["loggers"]["uvicorn"]
 app = Controller(
     host="127.0.0.1",
     port=8080,
-    title="Xen API v2",
+    title="XenXenXenSe",
     description="XenServer Management API to REST API",
     dependencies=None,
     fast_api_debug=True,
@@ -37,7 +38,10 @@ app = Controller(
 if __name__ == "__main__":
     # Server initialization
     app.startup()
-    app.dependencies = [Depends(CustomizeLogger.make_logger())]
+
+    if os.path.exists(CustomizeLogger.default_config_path):
+        app.dependencies = [Depends(CustomizeLogger.make_logger())]
+
     app.core.include_router(
         _v1_router,
         default_response_class=UJSONResponse,

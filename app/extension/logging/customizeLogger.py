@@ -9,9 +9,10 @@ from app.extension.logging.interceptHandler import InterceptHandler
 
 
 class CustomizeLogger:
+    default_config_path = "logging_config.json"
+
     @classmethod
-    def make_logger(cls):
-        config_path = "logging_config.json"
+    def make_logger(cls, config_path=default_config_path):
         config = cls.load_logging_config(config_path)
         logging_config = config["logger"]
 
