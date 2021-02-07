@@ -3,8 +3,8 @@ name = "XenXenXenSe"
 version = "0.0.1"
 description = "An easy-to-use HTTP API of XenAPI for Web Application Developers."
 authors = [
-    "zeroday0619 <zeroday0619@kakao.com>",
-    "Alex4386 <alex4386@stella-it.com>"
+    "Alex4386 <alex4386@stella-it.com>",
+    "zeroday0619 <zeroday0619@kakao.com>"
 ]
 license = "MIT"
 readme = "README.md"
