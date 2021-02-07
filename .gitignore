@@ -113,3 +113,6 @@ logging_config.json
 
 # add support for GitHub Codespaces
 /pythonenv*/
+
+# Logs
+x3s_access.log

@@ -3,7 +3,6 @@ from xmlrpc.client import Fault
 
 from fastapi import APIRouter, HTTPException, Path
 from XenGarden.GuestMetrics import GuestMetrics
-from XenGarden.Host import Host
 from XenGarden.session import create_session
 
 from API.v1.GuestMetrics.serialize import serialize
@@ -23,7 +22,7 @@ async def guest_get_by_uuid(
             cluster_id, get_xen_clusters=Settings.get_xen_clusters()
         )
 
-        guest: GuestMetrics = Host.get_by_uuid(session=session, uuid=guest_uuid)
+        guest: GuestMetrics = GuestMetrics.get_by_uuid(session=session, uuid=guest_uuid)
 
         if guest is not None:
             ret = dict(success=True, data=serialize(guest))

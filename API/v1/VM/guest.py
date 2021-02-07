@@ -24,7 +24,7 @@ async def vm_guest(cluster_id: str, vm_uuid: str, url_after: str):
         guest_uuid = guest_metrics.get_uuid()
 
         session.xenapi.session.logout()
-        return RedirectResponse(url=f"/{cluster_id}/guest/{guest_uuid}{url_after}")
+        return RedirectResponse(url=f"/v1/{cluster_id}/guest/{guest_uuid}{url_after}")
     except Fault as xml_rpc_error:
         raise HTTPException(
             status_code=int(xml_rpc_error.faultCode),

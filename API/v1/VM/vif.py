@@ -2,6 +2,7 @@ from http.client import RemoteDisconnected
 from xmlrpc.client import Fault
 
 from fastapi import APIRouter, HTTPException
+from starlette.responses import RedirectResponse
 from XenGarden.session import create_session
 from XenGarden.VM import VM
 
@@ -9,37 +10,6 @@ from API.v1.VIF.serialize import serialize as _vif_serialize
 from app.settings import Settings
 
 router = APIRouter()
-
-
-@router.get("/{cluster_id}/vm/{vm_uuid}/vif{url_after:path}")
-async def instance_vif(cluster_id: str, vm_uuid: str, url_after: str):
-    """ Show Instnace VIFs """
-    try:
-        session = create_session(
-            _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()
-        )
-
-        vm: VM = VM.get_by_uuid(session=session, uuid=vm_uuid)
-        vif = vm.get_VIF()
-
-        session.xenapi.session.logout()
-
-        if vif is not None:
-            vif_uuid = vif.get_uuid()
-            return RedirectResponse(url=f"/{cluster_id}/vif/{vif_uuid}{url_after}")
-
-        else:
-            raise HTTPException(
-                status_code=int(xml_rpc_error.faultCode),
-                detail=xml_rpc_error.faultString,
-            )
-    except Fault as xml_rpc_error:
-        raise HTTPException(
-            status_code=int(xml_rpc_error.faultCode),
-            detail=xml_rpc_error.faultString,
-        )
-    except RemoteDisconnected as rd_error:
-        raise HTTPException(status_code=500, detail=rd_error.strerror)
 
 
 @router.get("/{cluster_id}/vm/{vm_uuid}/vifs")

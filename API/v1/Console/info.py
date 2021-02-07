@@ -18,13 +18,13 @@ async def console_get_by_uuid(
 ):
     """ Get Console by UUID """
     try:
+        from XenGarden.VM import VM
+        
         session = create_session(
             cluster_id, get_xen_clusters=Settings.get_xen_clusters()
         )
 
-        vm: VM = VM.get_by_uuid(session, "")
         console: Console = Console.get_by_uuid(session, console_uuid)
-        print(console.get_protocol())
 
         if console is not None:
             ret = dict(success=True, data=serialize(console))
