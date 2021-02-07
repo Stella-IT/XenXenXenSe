@@ -34,7 +34,7 @@ jobs:
           sudo -H -u xenxenxense python3 -m pip install -r requirements.txt
           echo "WARNING: config.py is currently default; please edit before use."
           EOF
-          node dist/ --create-deb --path $GITHUB_WORKSPACE --output $GITHUB_WORKSPACE/xenxenxense_0.0.0-$COMMIT-$PYTHON_VERSION\_all.deb
+          node dist/ --create-deb --path $GITHUB_WORKSPACE --output $GITHUB_WORKSPACE/xenxenxense_$XXXS_VERSION-$COMMIT-$PYTHON_VERSION\_all.deb
         env:
           PYTHON_VERSION: ${{ matrix.python-version }}
       - name: Upload Debian Package
@@ -43,7 +43,7 @@ jobs:
           # Artifact name
           name: Debian Package - ${{ matrix.python-version }}
           # A file, directory or wildcard pattern that describes what to upload
-          path: xenxenxense_0.0.0-*_all.deb
+          path: xenxenxense_*_all.deb
       - name: Test Debian Package
         run: |
           COMMIT=$(git rev-parse HEAD | head -c 7)
