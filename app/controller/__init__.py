@@ -2,7 +2,6 @@ import asyncio
 from asyncio import AbstractEventLoop
 from typing import List, Optional
 
-import poetry_version
 from fastapi import Depends
 
 from app.services.console import Console
