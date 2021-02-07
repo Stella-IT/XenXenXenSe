@@ -3,7 +3,7 @@ import sys
 import uvicorn
 from fastapi.testclient import TestClient
 
-from API.v1 import router as _v1_router
+from API import router as _api_router
 from app.services import Server
 from app.services.info import Info
 
@@ -20,7 +20,7 @@ app = Server(
     log_config=log_config,
 )
 
-app.include_router(_v1_router)
+app.include_router(_api_router)
 
 client = TestClient(app)
 
