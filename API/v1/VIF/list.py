@@ -27,9 +27,8 @@ async def vif_list(cluster_id: str):
         vifs = VIF.get_all(session=session)
 
         __santilized_vifs = []
-        santilized_vifs = __santilized_vifs.append
         for vif in vifs:
-            santilized_vifs(serialize(vif))
+            __santilized_vifs.append(serialize(vif))
 
         ret = dict(success=True, data=__santilized_vifs)
 

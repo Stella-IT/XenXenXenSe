@@ -163,12 +163,11 @@ async def instance_vifs(cluster_id: str, vm_uuid: str):
             new_vifs = vm.get_VIFs()
 
             __vif_serialized = []
-            vif_serialized = __vif_serialized.append
 
             if new_vifs is not None:
                 for vif in new_vifs:
                     if vif is not None:
-                        vif_serialized(_vif_serialize(vif))
+                        __vif_serialized.append(_vif_serialize(vif))
 
                 ret = dict(success=True, data=__vif_serialized)
             else:

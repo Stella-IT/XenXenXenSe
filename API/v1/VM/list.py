@@ -27,9 +27,8 @@ async def vm_list(cluster_id: str):
         vms = VM.list_vm(session=session)
 
         __sat = []
-        sat = __sat.append
         for vm in vms:
-            sat(serialize(vm))
+            __sat.append(serialize(vm))
 
         ret = dict(success=True, data=__sat)
         session.xenapi.session.logout()
@@ -59,9 +58,8 @@ async def template_list(cluster_id: str):
         vms = VM.list_templates(session=session)
 
         __sat = []
-        sat = __sat.append
         for vm in vms:
-            sat(serialize(vm))
+            __sat.append(serialize(vm))
 
         ret = dict(success=True, data=__sat)
         session.xenapi.session.logout()

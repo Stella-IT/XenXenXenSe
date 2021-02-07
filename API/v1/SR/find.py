@@ -31,47 +31,10 @@ async def find_cd_by_name(cluster_id: str, args: NameArgs):
         sr = None
 
         __srs_list = []
-        srs_list = __srs_list.append
         for sr in srs:
-            srs_list(serialize(sr))
+            __srs_list.append(serialize(sr))
 
         if sr is not None:
-            ret = dict(success=True, data=__srs_list)
-        else:
-            ret = dict(success=False)
-
-        session.xenapi.session.logout()
-        return ret
-    except Fault as xml_rpc_error:
-        raise HTTPException(
-            status_code=int(xml_rpc_error.faultCode),
-            detail=xml_rpc_error.faultString,
-        )
-    except RemoteDisconnected as rd_error:
-        raise HTTPException(status_code=500, detail=rd_error.strerror)
-
-
-@router.get("/{cluster_id}/sr/find/{iso_name}")
-async def insert_cd_inurl_name(cluster_id: str, iso_name: str):
-    """ Find SR by Name """
-    try:
-        try:
-            session = create_session(
-                _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()
-            )
-        except KeyError as key_error:
-            raise HTTPException(
-                status_code=400, detail=f"{key_error} is not a valid path"
-            )
-
-        srs = SR.get_by_name(session=session, name=iso_name)
-
-        if srs is not None:
-            __srs_list = []
-            srs_list = __srs_list.append
-            for sr in srs:
-                srs_list(serialize(sr))
-
             ret = dict(success=True, data=__srs_list)
         else:
             ret = dict(success=False)

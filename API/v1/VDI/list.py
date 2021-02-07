@@ -5,7 +5,7 @@ from fastapi import APIRouter, HTTPException
 from XenGarden.session import create_session
 from XenGarden.VDI import VDI
 
-from API.v1.model.vdi import VDLResponseModel
+from API.v1.model.VDI import VDLResponseModel
 from API.v1.VDI.serialize import serialize
 from app.settings import Settings
 
@@ -28,9 +28,8 @@ async def vdi_list(cluster_id: str):
         vdis = VDI.get_all(session=session)
 
         __vdi_list = []
-        _vdi_list = __vdi_list.append
         for vdi in vdis:
-            _vdi_list(serialize(vdi))
+            __vdi_list.append(serialize(vdi))
 
         if vdis is not None:
             ret = dict(success=True, data=__vdi_list)

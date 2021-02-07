@@ -6,10 +6,9 @@ from API.v1.VDI.serialize import serialize as _vdi_serialize
 def serialize(sr: SR):
     vdis = sr.get_VDIs()
     __vdi_list = []
-    vdi_list = __vdi_list.append
     if vdis is not None:
         for vdi in vdis:
-            vdi_list(_vdi_serialize(vdi))
+            __vdi_list.append(_vdi_serialize(vdi))
     else:
         __vdi_list = None
 

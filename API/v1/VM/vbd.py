@@ -32,12 +32,11 @@ async def instance_vbds(cluster_id: str, vm_uuid: str):
             newVBDs = vm.get_VBDs()
 
             __vbd_serialized = []
-            vbd_serialized = __vbd_serialized.append
 
             if newVBDs is not None:
                 for vbd in newVBDs:
                     if vbd is not None:
-                        vbd_serialized(_vbd_serialize(vbd))
+                        __vbd_serialized.append(_vbd_serialize(vbd))
 
                 print(__vbd_serialized)
 

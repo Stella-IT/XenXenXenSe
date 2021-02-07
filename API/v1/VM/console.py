@@ -60,9 +60,8 @@ async def vm_consoles(cluster_id: str, vm_uuid: str):
             consoles = vm.get_consoles()
 
             __consoleList = []
-            consoleList = __consoleList.append
             for console in consoles:
-                consoleList(_console_serialize(console))
+                __consoleList.append(_console_serialize(console))
 
             ret = dict(success=True, data=__consoleList)
         else:

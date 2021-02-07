@@ -27,9 +27,8 @@ async def sr_list(cluster_id: str):
         srs = SR.get_all(session=session)
 
         __sant_sr = []
-        sant_sr = __sant_sr.append
         for sr in srs:
-            sant_sr(serialize(sr))
+            __sant_sr.append(serialize(sr))
 
         ret = dict(success=True, data=__sant_sr)
 
