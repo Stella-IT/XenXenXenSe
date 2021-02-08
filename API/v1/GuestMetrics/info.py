@@ -10,10 +10,10 @@ from API.v1.Common import xenapi_failure_jsonify
 from API.v1.GuestMetrics.serialize import serialize
 from app.settings import Settings
 
-guest_router = APIRouter()
+router = APIRouter()
 
 
-@guest_router.get("/{cluster_id}/guest/{guest_uuid}", tags=["guest"])
+@router.get("/{cluster_id}/guest/{guest_uuid}", tags=["guest"])
 async def guest_get_by_uuid(
     cluster_id: str = Path(default=None, title="cluster_id", description="Cluster ID"),
     guest_uuid: str = Path(default=None, title="guest_uuid", description="Guest UUID"),

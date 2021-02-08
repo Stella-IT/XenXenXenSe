@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from XenGarden.session import create_session
 
 from API.v1.Console import console_router
-from API.v1.GuestMetrics.info import guest_router
+from API.v1.GuestMetrics import guest_router
 from API.v1.Host import host_router
 from API.v1.root import root_router
 from API.v1.SR import sr_router
