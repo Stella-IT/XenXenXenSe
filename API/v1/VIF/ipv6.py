@@ -9,9 +9,7 @@ from XenGarden.VIF import VIF
 from API.v1.Common import xenapi_failure_jsonify
 from app.settings import Settings
 
-from .model import IPModel, IPAddressModel, IPAddressesModel
-from XenGarden.VIF import VIFIPv6ConfigurationMode
-
+from .model import IPModel
 
 router = APIRouter()
 
@@ -57,7 +55,9 @@ async def vif_set_ipv6_by_uuid(cluster_id: str, vif_uuid: str, data: IPModel):
         )
 
         vif: VIF = VIF.get_by_uuid(session=session, uuid=vif_uuid)
-        result = vif.config_ipv6("Static", data.address, "" if data.gateway is None else data.gateway)
+        result = vif.config_ipv6(
+            "Static", data.address, "" if data.gateway is None else data.gateway
+        )
 
         ret = dict(success=True, data=result)
 

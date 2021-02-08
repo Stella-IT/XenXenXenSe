@@ -9,7 +9,7 @@ from XenGarden.VIF import VIF
 from API.v1.Common import xenapi_failure_jsonify
 from app.settings import Settings
 
-from .model import IPModel, IPAddressModel, IPAddressesModel
+from .model import IPAddressesModel, IPAddressModel
 
 router = APIRouter()
 
@@ -53,7 +53,7 @@ async def vif_get_ipv6_by_uuid(cluster_id: str, vif_uuid: str, address: IPAddres
 
         vif: VIF = VIF.get_by_uuid(session=session, uuid=vif_uuid)
         vif.add_allowed_address_v6(address.address)
-        
+
         ret = dict(
             success=True,
         )
@@ -74,7 +74,9 @@ async def vif_get_ipv6_by_uuid(cluster_id: str, vif_uuid: str, address: IPAddres
 
 
 @router.put("/{cluster_id}/vif/{vif_uuid}/ipv6/allowed")
-async def vif_get_ipv6_by_uuid(cluster_id: str, vif_uuid: str, addresses: IPAddressesModel):
+async def vif_get_ipv6_by_uuid(
+    cluster_id: str, vif_uuid: str, addresses: IPAddressesModel
+):
     """ Set VIF IPv6 by UUID """
     try:
         session = create_session(
@@ -83,7 +85,7 @@ async def vif_get_ipv6_by_uuid(cluster_id: str, vif_uuid: str, addresses: IPAddr
 
         vif: VIF = VIF.get_by_uuid(session=session, uuid=vif_uuid)
         vif.set_allowed_address_v6(addresses.address)
-        
+
         ret = dict(
             success=True,
         )
@@ -113,7 +115,7 @@ async def vif_get_ipv6_by_uuid(cluster_id: str, vif_uuid: str, address: IPAddres
 
         vif: VIF = VIF.get_by_uuid(session=session, uuid=vif_uuid)
         vif.delete_allowed_address_v6(address.address)
-        
+
         ret = dict(
             success=True,
         )
