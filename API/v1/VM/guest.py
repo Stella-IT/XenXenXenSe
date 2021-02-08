@@ -4,6 +4,7 @@ from xmlrpc.client import Fault
 from fastapi import APIRouter, HTTPException
 from starlette.responses import RedirectResponse
 from XenAPI.XenAPI import Failure
+from XenGarden.GuestMetrics import GuestMetrics
 from XenGarden.session import create_session
 from XenGarden.VM import VM
 

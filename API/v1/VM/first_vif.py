@@ -30,7 +30,7 @@ async def get_first_vif(cluster_id: str, vm_uuid: str, url_after: str = ""):
 
         try:
             vif = vm.get_VIF()
-        except:
+        except Exception:
             session.xenapi.session.logout()
             raise HTTPException(
                 status_code=404, detail=f"VM {vm_uuid} does not have VIF Interface"

@@ -44,7 +44,7 @@ async def vif_get_ipv6_by_uuid(cluster_id: str, vif_uuid: str):
 
 
 @router.post("/{cluster_id}/vif/{vif_uuid}/ipv6/allowed")
-async def vif_get_ipv6_by_uuid(cluster_id: str, vif_uuid: str, address: IPAddressModel):
+async def vif_add_ipv6_by_uuid(cluster_id: str, vif_uuid: str, address: IPAddressModel):
     """ Add VIF IPv6 by UUID """
     try:
         session = create_session(
@@ -74,7 +74,7 @@ async def vif_get_ipv6_by_uuid(cluster_id: str, vif_uuid: str, address: IPAddres
 
 
 @router.put("/{cluster_id}/vif/{vif_uuid}/ipv6/allowed")
-async def vif_get_ipv6_by_uuid(
+async def vif_set_ipv6_by_uuid(
     cluster_id: str, vif_uuid: str, addresses: IPAddressesModel
 ):
     """ Set VIF IPv6 by UUID """
@@ -106,7 +106,9 @@ async def vif_get_ipv6_by_uuid(
 
 
 @router.delete("/{cluster_id}/vif/{vif_uuid}/ipv6/allowed")
-async def vif_get_ipv6_by_uuid(cluster_id: str, vif_uuid: str, address: IPAddressModel):
+async def vif_reset_ipv6_by_uuid(
+    cluster_id: str, vif_uuid: str, address: IPAddressModel
+):
     """ Set VIF IPv6 by UUID """
     try:
         session = create_session(
