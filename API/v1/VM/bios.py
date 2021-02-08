@@ -1,10 +1,13 @@
 from http.client import RemoteDisconnected
 from xmlrpc.client import Fault
 
-from fastapi import APIRouter, HTTPException
+import ujson
+from fastapi import APIRouter, HTTPException, Request
+from XenAPI.XenAPI import Failure
 from XenGarden.session import create_session
 from XenGarden.VM import VM
 
+from API.v1.Common import xenapi_failure_jsonify
 from app.settings import Settings
 
 router = APIRouter()
@@ -20,9 +23,14 @@ async def instance_get_bios(cluster_id: str, vm_uuid: str):
         )
 
         vm: VM = VM.get_by_uuid(session=session, uuid=vm_uuid)
-        session.xenapi.session.logout()
+        bios_strings = vm.get_bios_strings()
 
-        return dict(success=True, data=vm.get_bios_strings())
+        session.xenapi.session.logout()
+        return dict(success=True, data=bios_strings)
+    except Failure as xenapi_error:
+        raise HTTPException(
+            status_code=500, detail=xenapi_failure_jsonify(xenapi_error)
+        )
     except Fault as xml_rpc_error:
         raise HTTPException(
             status_code=int(xml_rpc_error.faultCode),
@@ -32,20 +40,26 @@ async def instance_get_bios(cluster_id: str, vm_uuid: str):
         raise HTTPException(status_code=500, detail=rd_error.strerror)
 
 
-@router.post("/{cluster_id}/vm/{vm_uuid}/bios")
-@router.post("/{cluster_id}/template/{vm_uuid}/bios")
-async def instance_set_bios_property_byname_inurl(cluster_id: str, vm_uuid: str, data):
+@router.put("/{cluster_id}/vm/{vm_uuid}/bios")
+@router.put("/{cluster_id}/template/{vm_uuid}/bios")
+async def instance_set_bios_property(request: Request, cluster_id: str, vm_uuid: str):
     """ Set Instance (VM/Template) BIOS Property by Name """
     try:
+        body = ujson.decode(await request.body())
+
         session = create_session(
             _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()
         )
 
         vm: VM = VM.get_by_uuid(session=session, uuid=vm_uuid)
-        ret = dict(success=vm.set_bios_strings(data))
+        ret = dict(success=vm.set_bios_strings(body))
 
         session.xenapi.session.logout()
         return ret
+    except Failure as xenapi_error:
+        raise HTTPException(
+            status_code=500, detail=xenapi_failure_jsonify(xenapi_error)
+        )
     except Fault as xml_rpc_error:
         raise HTTPException(
             status_code=int(xml_rpc_error.faultCode),

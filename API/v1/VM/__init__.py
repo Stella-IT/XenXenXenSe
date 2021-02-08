@@ -9,6 +9,7 @@ from API.v1.VM.cd import router as _vm_cd
 from API.v1.VM.clone import router as _vm_clone
 from API.v1.VM.console import router as _vm_console
 from API.v1.VM.delete import router as _vm_delete
+from API.v1.VM.first_vif import router as _vm_first_vif
 from API.v1.VM.guest import router as _vm_guest
 from API.v1.VM.info import router as _vm_info
 from API.v1.VM.list import router as _vm_list
@@ -18,7 +19,6 @@ from API.v1.VM.power import router as _vm_power
 from API.v1.VM.specs import router as _vm_specs
 from API.v1.VM.vbd import router as _vm_vbd
 from API.v1.VM.vif import router as _vm_vif
-from API.v1.VM.first_vif import router as _vm_first_vif
 from app.settings import Settings
 
 
@@ -32,6 +32,10 @@ async def verify_vm_uuid(cluster_id: str, vm_uuid: str):
 
         if vm is None:
             raise HTTPException(status_code=404, detail=f"VM {vm_uuid} does not exist")
+    except Failure as xenapi_error:
+        raise HTTPException(
+            status_code=500, detail=xenapi_failure_jsonify(xenapi_error)
+        )
     except Fault as xml_rpc_error:
         raise HTTPException(
             status_code=int(xml_rpc_error.faultCode),

@@ -1,7 +1,7 @@
+from typing import Optional
+
 import uvicorn
 from fastapi import FastAPI
-
-from typing import Optional
 
 
 class Server(FastAPI):
@@ -40,15 +40,13 @@ class Server(FastAPI):
             "host": self._host,
             "port": self._port,
         }
-        
+
         if self._sock is not None:
-            _connect_option = {
-                "uds": self._sock
-            }
-        
+            _connect_option = {"uds": self._sock}
+
         return self.server.run(
             app=self,
             debug=self._asgi_debug,
             log_config=self._log_config,
-            **_connect_option
+            **_connect_option,
         )

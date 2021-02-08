@@ -3,9 +3,11 @@ from xmlrpc.client import Fault
 
 from fastapi import APIRouter, HTTPException
 from starlette.responses import RedirectResponse
+from XenAPI.XenAPI import Failure
 from XenGarden.session import create_session
 from XenGarden.VM import VM
 
+from API.v1.Common import xenapi_failure_jsonify
 from app.settings import Settings
 
 router = APIRouter()
@@ -31,6 +33,10 @@ async def get_cd(cluster_id: str, vm_uuid: str, url_after: str = ""):
         session.xenapi.session.logout()
 
         return RedirectResponse(url=f"/v1/{cluster_id}/vbd/{vbd_uuid}{url_after}")
+    except Failure as xenapi_error:
+        raise HTTPException(
+            status_code=500, detail=xenapi_failure_jsonify(xenapi_error)
+        )
     except Fault as xml_rpc_error:
         raise HTTPException(
             status_code=int(xml_rpc_error.faultCode),

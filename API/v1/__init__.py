@@ -28,6 +28,10 @@ async def verify_cluster_id(cluster_id: str):
         raise HTTPException(
             status_code=404, detail=f"{key_error} cluster does not exist"
         )
+    except Failure as xenapi_error:
+        raise HTTPException(
+            status_code=500, detail=xenapi_failure_jsonify(xenapi_error)
+        )
     except Fault as xml_rpc_error:
         raise HTTPException(
             status_code=int(xml_rpc_error.faultCode),

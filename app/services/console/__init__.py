@@ -36,7 +36,9 @@ class Console:
             "--sock",
             dest="sock",
             default=None,
-            help="The unix socket " + name + " will listen to (overrides host and port)",
+            help="The unix socket "
+            + name
+            + " will listen to (overrides host and port)",
         )
         parser.add_argument(
             "--debug",
@@ -71,7 +73,7 @@ class Console:
         figlet = Figlet()
 
         print(figlet.renderText(Info.get_name()))
-        print(Info.get_name() + " - " + "v." + Info.get_version())
+        print(Info.get_name() + " - " + "ver." + Info.get_version())
         print(Info.get_description())
         print()
         print("Copyright (c) Stella IT.")

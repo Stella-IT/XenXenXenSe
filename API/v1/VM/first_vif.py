@@ -2,12 +2,12 @@ from http.client import RemoteDisconnected
 from xmlrpc.client import Fault
 
 from fastapi import APIRouter, HTTPException
+from starlette.responses import RedirectResponse
+from XenAPI.XenAPI import Failure
 from XenGarden.session import create_session
 from XenGarden.VM import VM
 
-from starlette.responses import RedirectResponse
-
-from API.v1.VIF.serialize import serialize as _vif_serialize
+from API.v1.Common import xenapi_failure_jsonify
 from app.settings import Settings
 
 router = APIRouter()
@@ -27,17 +27,23 @@ async def get_first_vif(cluster_id: str, vm_uuid: str, url_after: str = ""):
 
         vm: VM = VM.get_by_uuid(session=session, uuid=vm_uuid)
         vif = None
-        
+
         try:
             vif = vm.get_VIF()
         except:
             session.xenapi.session.logout()
-            raise HTTPException(status_code=404, detail=f"VM {vm_uuid} does not have VIF Interface")
+            raise HTTPException(
+                status_code=404, detail=f"VM {vm_uuid} does not have VIF Interface"
+            )
 
         vif_uuid = vif.get_uuid()
-        
+
         session.xenapi.session.logout()
-        return RedirectResponse(f'/v1/{cluster_id}/vif/{vif_uuid}{url_after}')
+        return RedirectResponse(f"/v1/{cluster_id}/vif/{vif_uuid}{url_after}")
+    except Failure as xenapi_error:
+        raise HTTPException(
+            status_code=500, detail=xenapi_failure_jsonify(xenapi_error)
+        )
     except Fault as xml_rpc_error:
         raise HTTPException(
             status_code=int(xml_rpc_error.faultCode),
