@@ -1,13 +1,12 @@
-from fastapi import APIRouter, HTTPException, Depends
-from XenGarden.session import create_session
-from app.settings import Settings
-from XenAPI.XenAPI import Failure
-from API.v1.Common import xenapi_failure_jsonify
-from xmlrpc.client import Fault
 from typing import Optional
+from xmlrpc.client import Fault
 
+from fastapi import APIRouter, Depends, HTTPException
+from XenAPI.XenAPI import Failure
+from XenGarden.session import create_session
 from XenGarden.VIF import VIF
 
+from API.v1.Common import xenapi_failure_jsonify
 from API.v1.VIF.info import router as _vif_info
 from API.v1.VIF.ipv4 import router as _vif_ipv4
 from API.v1.VIF.ipv4_allowed import router as _vif_ipv4_allowed
@@ -16,13 +15,14 @@ from API.v1.VIF.ipv6_allowed import router as _vif_ipv6_allowed
 from API.v1.VIF.list import router as _vif_list
 from API.v1.VIF.lock import router as _vif_lock
 from API.v1.VIF.qos import router as _vif_qos
+from app.settings import Settings
 
 
 # === Condition Checker ===
 async def verify_vif_uuid(cluster_id: str, vif_uuid: Optional[str] = None):
     if vif_uuid is None:
         return
-    
+
     session = create_session(cluster_id, get_xen_clusters=Settings.get_xen_clusters())
 
     try:
@@ -30,8 +30,10 @@ async def verify_vif_uuid(cluster_id: str, vif_uuid: Optional[str] = None):
 
     except Failure as xenapi_error:
         if xenapi_error.details[0] == "UUID_INVALID":
-            raise HTTPException(status_code=404, detail=f"VIF {vif_uuid} does not exist")
-        
+            raise HTTPException(
+                status_code=404, detail=f"VIF {vif_uuid} does not exist"
+            )
+
         raise HTTPException(
             status_code=500, detail=xenapi_failure_jsonify(xenapi_error)
         )
@@ -42,7 +44,7 @@ async def verify_vif_uuid(cluster_id: str, vif_uuid: Optional[str] = None):
         )
 
     session.xenapi.session.logout()
-    
+
 
 # === Router Actions ===
 vif_router = APIRouter(dependencies=[Depends(verify_vif_uuid)])

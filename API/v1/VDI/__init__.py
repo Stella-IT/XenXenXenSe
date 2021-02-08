@@ -1,23 +1,24 @@
-from fastapi import APIRouter, HTTPException, Depends
-from XenGarden.session import create_session
-from app.settings import Settings
-from XenAPI.XenAPI import Failure
-from API.v1.Common import xenapi_failure_jsonify
-from xmlrpc.client import Fault
 from typing import Optional
+from xmlrpc.client import Fault
 
+from fastapi import APIRouter, Depends, HTTPException
+from XenAPI.XenAPI import Failure
+from XenGarden.session import create_session
 from XenGarden.VDI import VDI
 
+from API.v1.Common import xenapi_failure_jsonify
 from API.v1.VDI.delete import router as _vdi_delete
 from API.v1.VDI.find import router as _vdi_find
 from API.v1.VDI.info import router as _vdi_info
 from API.v1.VDI.list import router as _vdi_list
+from app.settings import Settings
+
 
 # === Condition Checker ===
 async def verify_vdi_uuid(cluster_id: str, vdi_uuid: Optional[str] = None):
     if vdi_uuid is None:
         return
-      
+
     session = create_session(cluster_id, get_xen_clusters=Settings.get_xen_clusters())
 
     try:
@@ -25,8 +26,10 @@ async def verify_vdi_uuid(cluster_id: str, vdi_uuid: Optional[str] = None):
 
     except Failure as xenapi_error:
         if xenapi_error.details[0] == "UUID_INVALID":
-            raise HTTPException(status_code=404, detail=f"VDI {vdi_uuid} does not exist")
-          
+            raise HTTPException(
+                status_code=404, detail=f"VDI {vdi_uuid} does not exist"
+            )
+
         raise HTTPException(
             status_code=500, detail=xenapi_failure_jsonify(xenapi_error)
         )
