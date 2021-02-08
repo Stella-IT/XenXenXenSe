@@ -16,6 +16,7 @@ router = APIRouter()
 @router.get("/{cluster_id}/vif/list")
 async def vif_list(cluster_id: str):
     """ Get All from Storage Repos """
+
     try:
         session = create_session(
             _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()

@@ -19,6 +19,7 @@ def serialize(vif: VIF):
             info=vif.get_qos_info(),
             supported=vif.supported_qos_types(),
         ),
+        locking_mode=vif.get_locking_mode(),
         ipv4=dict(address=vif.get_address_v4(), gateway=vif.get_gateway_v4()),
         ipv6=dict(address=vif.get_address_v6(), gateway=vif.get_gateway_v6()),
     )
