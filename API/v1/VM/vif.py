@@ -2,7 +2,6 @@ from http.client import RemoteDisconnected
 from xmlrpc.client import Fault
 
 from fastapi import APIRouter, HTTPException
-from starlette.responses import RedirectResponse
 from XenGarden.session import create_session
 from XenGarden.VM import VM
 

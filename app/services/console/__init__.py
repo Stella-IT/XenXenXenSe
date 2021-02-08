@@ -82,5 +82,5 @@ class Console:
 
         for clusters in Settings.get_xen_clusters():
             print("*", clusters)
-        
+
         print()

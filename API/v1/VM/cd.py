@@ -1,12 +1,11 @@
 from http.client import RemoteDisconnected
 from xmlrpc.client import Fault
 
-from fastapi import APIRouter, HTTPException, Request
+from fastapi import APIRouter, HTTPException
 from starlette.responses import RedirectResponse
 from XenGarden.session import create_session
 from XenGarden.VM import VM
 
-from API.v1.VBD.serialize import serialize as _vbd_serialize
 from app.settings import Settings
 
 router = APIRouter()

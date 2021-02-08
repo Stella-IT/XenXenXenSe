@@ -18,8 +18,8 @@ async def console_get_by_uuid(
 ):
     """ Get Console by UUID """
     try:
-        from XenGarden.VM import VM
-        
+        pass
+
         session = create_session(
             cluster_id, get_xen_clusters=Settings.get_xen_clusters()
         )
