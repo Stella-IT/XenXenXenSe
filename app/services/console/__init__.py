@@ -33,6 +33,12 @@ class Console:
             help="The port " + name + " will listen to (default: 8080)",
         )
         parser.add_argument(
+            "--sock",
+            dest="sock",
+            default=None,
+            help="The unix socket " + name + " will listen to (overrides host and port)",
+        )
+        parser.add_argument(
             "--debug",
             dest="debug_mode",
             default=False,

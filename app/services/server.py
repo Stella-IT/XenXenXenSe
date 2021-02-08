@@ -1,6 +1,8 @@
 import uvicorn
 from fastapi import FastAPI
 
+from typing import Optional
+
 
 class Server(FastAPI):
     def __init__(
@@ -8,6 +10,7 @@ class Server(FastAPI):
         ctx,
         host: str,
         port: int,
+        sock: Optional[str],
         title: str,
         description: str,
         log_config,
@@ -23,6 +26,7 @@ class Server(FastAPI):
         self.server = uvicorn
         self._host = host
         self._port = port
+        self._sock = sock
         self._title = title
         self._description = description
         self.dependencies = dependencies
@@ -32,10 +36,19 @@ class Server(FastAPI):
         super().__init__(*args, **kwargs)
 
     def make_process(self) -> None:
+        _connect_option = {
+            "host": self._host,
+            "port": self._port,
+        }
+        
+        if self._sock is not None:
+            _connect_option = {
+                "uds": self._sock
+            }
+        
         return self.server.run(
             app=self,
-            host=self._host,
-            port=self._port,
             debug=self._asgi_debug,
             log_config=self._log_config,
+            **_connect_option
         )

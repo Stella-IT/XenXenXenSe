@@ -14,6 +14,7 @@ class Controller:
         self,
         host: str = "127.0.0.1",
         port: int = 8080,
+        sock: Optional[str] = None,
         title: str = "",
         description: str = "",
         dependencies: Optional[list] = None,
@@ -27,6 +28,7 @@ class Controller:
         self.loop = loop or self._loop()
         self.host = host
         self.port = port
+        self.sock = sock
         self.title = title
         self.description = description
         self.dependencies = dependencies
@@ -50,6 +52,7 @@ class Controller:
             ctx=self,
             host=self.host,
             port=self.port,
+            sock=self.sock,
             title=self.title,
             description=self.description,
             dependencies=self.dependencies,

@@ -41,6 +41,7 @@ if __name__ == "__main__":
     app = Controller(
         host=args.host,
         port=8080,
+        sock=args.sock,
         title=Info.get_name(),
         description=Info.get_description(),
         fast_api_debug=args.debug_mode,
