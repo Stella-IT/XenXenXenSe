@@ -1,7 +1,7 @@
 from http.client import RemoteDisconnected
 from xmlrpc.client import Fault
 
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Request
 from starlette.responses import RedirectResponse
 from XenGarden.session import create_session
 from XenGarden.VM import VM
@@ -12,6 +12,10 @@ router = APIRouter()
 
 
 @router.get("/{cluster_id}/vm/{vm_uuid}/guest{url_after:path}")
+@router.post("/{cluster_id}/vm/{vm_uuid}/guest{url_after:path}")
+@router.put("/{cluster_id}/vm/{vm_uuid}/guest{url_after:path}")
+@router.delete("/{cluster_id}/vm/{vm_uuid}/guest{url_after:path}")
+@router.patch("/{cluster_id}/vm/{vm_uuid}/guest{url_after:path}")
 async def vm_guest(cluster_id: str, vm_uuid: str, url_after: str):
     """ Get VM Guest Info """
     try:

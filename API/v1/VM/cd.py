@@ -1,7 +1,7 @@
 from http.client import RemoteDisconnected
 from xmlrpc.client import Fault
 
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Request
 from starlette.responses import RedirectResponse
 from XenGarden.session import create_session
 from XenGarden.VM import VM
@@ -12,7 +12,11 @@ from app.settings import Settings
 router = APIRouter()
 
 
-@router.route("/{cluster_id}/vm/{vm_uuid}/cd{url_after:path}")
+@router.get("/{cluster_id}/vm/{vm_uuid}/cd{url_after:path}")
+@router.post("/{cluster_id}/vm/{vm_uuid}/cd{url_after:path}")
+@router.patch("/{cluster_id}/vm/{vm_uuid}/cd{url_after:path}")
+@router.put("/{cluster_id}/vm/{vm_uuid}/cd{url_after:path}")
+@router.delete("/{cluster_id}/vm/{vm_uuid}/cd{url_after:path}")
 async def get_cd(cluster_id: str, vm_uuid: str, url_after: str = ""):
     from XenGarden.VBD import VBD
 
@@ -27,7 +31,7 @@ async def get_cd(cluster_id: str, vm_uuid: str, url_after: str = ""):
 
         session.xenapi.session.logout()
 
-        return RedirectResponse(url=f"/{cluster_id}/vbd/{vbd_uuid}{url_after}")
+        return RedirectResponse(url=f"/v1/{cluster_id}/vbd/{vbd_uuid}{url_after}")
     except Fault as xml_rpc_error:
         raise HTTPException(
             status_code=int(xml_rpc_error.faultCode),
