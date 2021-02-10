@@ -9,7 +9,7 @@ async def serialize(sr: SR):
     vdis = sr.get_VDIs()
     __vdi_list = []
     if vdis is not None:
-        __vdi_list = asyncio.gather([_vdi_serialize(vdi) for vdi in vdis])
+        __vdi_list = await asyncio.gather([_vdi_serialize(vdi) for vdi in vdis])
     else:
         __vdi_list = None
 
