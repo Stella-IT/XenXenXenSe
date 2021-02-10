@@ -1,3 +1,4 @@
+import asyncio
 from http.client import RemoteDisconnected
 from xmlrpc.client import Fault
 
@@ -9,7 +10,6 @@ from XenGarden.session import create_session
 from API.v1.Common import xenapi_failure_jsonify
 from API.v1.Host.serialize import serialize
 from app.settings import Settings
-import asyncio
 
 router = APIRouter()
 
@@ -27,7 +27,7 @@ async def host_list(
         hosts = Host.list_host(session=session)
 
         __hosts_list = await asyncio.gather(*[serialize(host) for host in hosts])
-        
+
         ret = dict(success=True, data=__hosts_list)
 
         session.xenapi.session.logout()
