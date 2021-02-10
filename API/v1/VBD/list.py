@@ -9,6 +9,7 @@ from XenGarden.VBD import VBD
 from API.v1.Common import xenapi_failure_jsonify
 from API.v1.VBD.serialize import serialize
 from app.settings import Settings
+import asyncio
 
 router = APIRouter()
 
@@ -23,9 +24,7 @@ async def vbd_list(cluster_id: str):
 
         vbds = VBD.get_all(session)
 
-        __vbd_list = []
-        for vbd in vbds:
-            __vbd_list.append(await serialize(vbd))
+        __vbd_list = await asyncio.gather(*[serialize(vbd) for vbd in vbds])
 
         if vbds is not None:
             ret = dict(success=True, data=__vbd_list)

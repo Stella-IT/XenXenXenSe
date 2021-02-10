@@ -9,6 +9,7 @@ from XenGarden.session import create_session
 from API.v1.Common import xenapi_failure_jsonify
 from API.v1.Host.serialize import serialize
 from app.settings import Settings
+import asyncio
 
 router = APIRouter()
 
@@ -25,12 +26,8 @@ async def host_list(
 
         hosts = Host.list_host(session=session)
 
-        __hosts_list = []
-        hosts_list = __hosts_list.append
-
-        for host in hosts:
-            hosts_list(await serialize(host))
-
+        __hosts_list = await asyncio.gather(*[serialize(host) for host in hosts])
+        
         ret = dict(success=True, data=__hosts_list)
 
         session.xenapi.session.logout()

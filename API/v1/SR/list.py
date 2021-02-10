@@ -9,6 +9,7 @@ from XenGarden.SR import SR
 from API.v1.Common import xenapi_failure_jsonify
 from API.v1.SR.serialize import serialize
 from app.settings import Settings
+import asyncio
 
 router = APIRouter()
 
@@ -22,10 +23,7 @@ async def sr_list(cluster_id: str):
         )
 
         srs = SR.get_all(session=session)
-
-        __sant_sr = []
-        for sr in srs:
-            __sant_sr.append(await serialize(sr))
+        __sant_sr = await asyncio.gather(*[serialize(sr) for sr in srs])
 
         ret = dict(success=True, data=__sant_sr)
 
