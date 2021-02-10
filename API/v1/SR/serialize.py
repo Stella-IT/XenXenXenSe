@@ -1,7 +1,9 @@
+import asyncio
+
 from XenGarden.SR import SR
 
 from API.v1.VDI.serialize import serialize as _vdi_serialize
-import asyncio
+
 
 async def serialize(sr: SR):
     vdis = sr.get_VDIs()

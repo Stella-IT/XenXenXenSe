@@ -1,3 +1,4 @@
+import asyncio
 from http.client import RemoteDisconnected
 from xmlrpc.client import Fault
 
@@ -9,8 +10,6 @@ from XenGarden.VM import VM
 from API.v1.Common import xenapi_failure_jsonify
 from API.v1.VM.serialize import serialize
 from app.settings import Settings
-
-import asyncio
 
 router = APIRouter()
 

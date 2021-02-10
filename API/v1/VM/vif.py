@@ -1,3 +1,4 @@
+import asyncio
 from http.client import RemoteDisconnected
 from xmlrpc.client import Fault
 
@@ -9,7 +10,6 @@ from XenGarden.VM import VM
 from API.v1.Common import xenapi_failure_jsonify
 from API.v1.VIF.serialize import serialize as _vif_serialize
 from app.settings import Settings
-import asyncio
 
 router = APIRouter()
 
@@ -31,7 +31,9 @@ async def instance_vifs(cluster_id: str, vm_uuid: str):
             __vif_serialized = []
 
             if new_vifs is not None:
-                __vif_serialized = await asyncio.gather(*[_vif_serialize(vif) for vif in new_vifs])
+                __vif_serialized = await asyncio.gather(
+                    *[_vif_serialize(vif) for vif in new_vifs]
+                )
 
                 ret = dict(success=True, data=__vif_serialized)
             else:
