@@ -15,9 +15,12 @@ class CustomizeLogger:
     def make_logger(cls, config_path=default_config_path):
         config = cls.load_logging_config(config_path)
         logging_config = config["logger"]
+        
+        filepath = Path(logging_config["path"])
+        filepath.joinpath(logging_config['filename'])
 
         _logger = cls.customize_logging(
-            filepath=logging_config["path"] + logging_config["filename"],
+            filepath=filepath,
             level=logging_config["level"],
             retention=logging_config["retention"],
             rotation=logging_config["rotation"],
