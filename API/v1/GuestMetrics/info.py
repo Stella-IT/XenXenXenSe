@@ -27,7 +27,7 @@ async def guest_get_by_uuid(
         guest: GuestMetrics = GuestMetrics.get_by_uuid(session=session, uuid=guest_uuid)
 
         if guest is not None:
-            ret = dict(success=True, data=serialize(guest))
+            ret = dict(success=True, data=await serialize(guest))
         else:
             ret = dict(success=False)
 

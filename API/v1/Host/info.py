@@ -27,7 +27,7 @@ async def host_get_by_uuid(
         host: Host = Host.get_by_uuid(session=session, uuid=host_uuid)
 
         if host is not None:
-            ret = dict(success=True, data=serialize(host))
+            ret = dict(success=True, data=await serialize(host))
         else:
             ret = dict(success=False)
 

@@ -1,7 +1,7 @@
 from XenGarden.VBD import VBD
 
 
-def serialize(vbd: VBD):
+async def serialize(vbd: VBD):
     from API.v1.VDI.serialize import serialize as _vdi_serialize
     from API.v1.VM.serialize import serialize as _vm_serialize
 
@@ -9,10 +9,10 @@ def serialize(vbd: VBD):
     vdi = vbd.get_VDI()
 
     if vm is not None:
-        vm = _vm_serialize(vm)
+        vm = await _vm_serialize(vm)
 
     if vdi is not None:
-        vdi = _vdi_serialize(vdi)
+        vdi = await _vdi_serialize(vdi)
 
     return dict(
         vm=vm,

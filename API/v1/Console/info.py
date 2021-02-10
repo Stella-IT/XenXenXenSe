@@ -29,7 +29,7 @@ async def console_get_by_uuid(
         console: Console = Console.get_by_uuid(session, console_uuid)
 
         if console is not None:
-            ret = dict(success=True, data=serialize(console))
+            ret = dict(success=True, data=await serialize(console))
         else:
             ret = dict(success=False)
 

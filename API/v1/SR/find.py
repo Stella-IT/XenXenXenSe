@@ -29,7 +29,7 @@ async def find_cd_by_name(cluster_id: str, args: NameArgs):
 
         __srs_list = []
         for sr in srs:
-            __srs_list.append(serialize(sr))
+            __srs_list.append(await serialize(sr))
 
         if sr is not None:
             ret = dict(success=True, data=__srs_list)

@@ -1,12 +1,12 @@
 from XenGarden.VIF import VIF
 
 
-def serialize(vif: VIF):
+async def serialize(vif: VIF):
     from API.v1.VM.serialize import serialize as _vm_serialize
 
     vm = vif.get_vm()
     if vm is not None:
-        vm = _vm_serialize(vm)
+        vm = await _vm_serialize(vm)
 
     return dict(
         attached=vif.get_attached(),

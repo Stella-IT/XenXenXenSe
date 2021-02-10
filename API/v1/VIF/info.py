@@ -24,7 +24,7 @@ async def vif_get_by_uuid(cluster_id: str, vif_uuid: str):
         vif: VIF = VIF.get_by_uuid(session=session, uuid=vif_uuid)
 
         if vif is not None:
-            ret = dict(success=True, data=serialize(vif))
+            ret = dict(success=True, data=await serialize(vif))
         else:
             ret = dict(success=False)
 

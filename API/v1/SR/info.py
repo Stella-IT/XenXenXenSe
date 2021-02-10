@@ -24,7 +24,7 @@ async def sr_get_by_uuid(cluster_id: str, sr_uuid: str):
         sr: SR = SR.get_by_uuid(session=session, uuid=sr_uuid)
 
         if sr is not None:
-            ret = dict(success=True, data=serialize(sr))
+            ret = dict(success=True, data=await serialize(sr))
         else:
             ret = dict(success=False)
 

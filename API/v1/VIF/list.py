@@ -9,6 +9,7 @@ from XenGarden.VIF import VIF
 from API.v1.Common import xenapi_failure_jsonify
 from API.v1.VIF.serialize import serialize
 from app.settings import Settings
+import asyncio
 
 router = APIRouter()
 
@@ -23,10 +24,7 @@ async def vif_list(cluster_id: str):
         )
 
         vifs = VIF.get_all(session=session)
-
-        __santilized_vifs = []
-        for vif in vifs:
-            __santilized_vifs.append(serialize(vif))
+        __santilized_vifs = await asyncio.gather(*[serialize(vif) for vif in vifs])
 
         ret = dict(success=True, data=__santilized_vifs)
 

@@ -1,7 +1,7 @@
 from XenGarden.Console import Console
 
 
-def serialize(console: Console):
+async def serialize(console: Console):
     return dict(
         location=console.get_location(),
         protocol=console.get_protocol(),

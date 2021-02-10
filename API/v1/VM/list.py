@@ -10,6 +10,8 @@ from API.v1.Common import xenapi_failure_jsonify
 from API.v1.VM.serialize import serialize
 from app.settings import Settings
 
+import asyncio
+
 router = APIRouter()
 
 
@@ -23,9 +25,7 @@ async def vm_list(cluster_id: str):
 
         vms = VM.list_vm(session=session)
 
-        __sat = []
-        for vm in vms:
-            __sat.append(serialize(vm))
+        __sat = await asyncio.gather(*[serialize(vm) for vm in vms])
 
         ret = dict(success=True, data=__sat)
         session.xenapi.session.logout()
@@ -55,7 +55,7 @@ async def template_list(cluster_id: str):
 
         __sat = []
         for vm in vms:
-            __sat.append(serialize(vm))
+            __sat.append(await serialize(vm))
 
         ret = dict(success=True, data=__sat)
         session.xenapi.session.logout()

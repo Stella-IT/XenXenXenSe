@@ -24,7 +24,7 @@ async def vdi_get_by_uuid(cluster_id: str, vdi_uuid: str):
         vdi: VDI = VDI.get_by_uuid(session=session, uuid=vdi_uuid)
 
         if vdi is not None:
-            ret = dict(success=True, data=serialize(vdi))
+            ret = dict(success=True, data=await serialize(vdi))
         else:
             ret = dict(success=False)
 

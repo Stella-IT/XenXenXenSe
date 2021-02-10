@@ -1,14 +1,13 @@
 from XenGarden.SR import SR
 
 from API.v1.VDI.serialize import serialize as _vdi_serialize
+import asyncio
 
-
-def serialize(sr: SR):
+async def serialize(sr: SR):
     vdis = sr.get_VDIs()
     __vdi_list = []
     if vdis is not None:
-        for vdi in vdis:
-            __vdi_list.append(_vdi_serialize(vdi))
+        __vdi_list = asyncio.gather([_vdi_serialize(vdi) for vdi in vdis])
     else:
         __vdi_list = None
 

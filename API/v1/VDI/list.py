@@ -10,6 +10,8 @@ from API.v1.Common import xenapi_failure_jsonify
 from API.v1.VDI.serialize import serialize
 from app.settings import Settings
 
+import asyncio
+
 router = APIRouter()
 
 
@@ -22,11 +24,8 @@ async def vdi_list(cluster_id: str):
         )
 
         vdis = VDI.get_all(session=session)
-
-        __vdi_list = []
-        for vdi in vdis:
-            __vdi_list.append(serialize(vdi))
-
+        __vdi_list = await asyncio.gather(*[serialize(vdi) for vdi in vdis])
+        
         if vdis is not None:
             ret = dict(success=True, data=__vdi_list)
         else:

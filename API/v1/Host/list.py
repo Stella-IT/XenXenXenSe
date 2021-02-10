@@ -29,7 +29,7 @@ async def host_list(
         hosts_list = __hosts_list.append
 
         for host in hosts:
-            hosts_list(serialize(host))
+            hosts_list(await serialize(host))
 
         ret = dict(success=True, data=__hosts_list)
 

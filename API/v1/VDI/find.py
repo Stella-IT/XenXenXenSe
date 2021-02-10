@@ -28,7 +28,7 @@ async def find_VDI_by_name(cluster_id: str, args: NameArgs):
         if vdis is not None:
             __vdis_list = []
             for vdi in vdis:
-                __vdis_list.append(serialize(vdi))
+                __vdis_list.append(await serialize(vdi))
 
             ret = dict(success=True, data=__vdis_list)
         else:

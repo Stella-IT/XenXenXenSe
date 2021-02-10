@@ -25,7 +25,7 @@ async def instance_info(cluster_id: str, vm_uuid: str):
         vm: VM = VM.get_by_uuid(session=session, uuid=vm_uuid)
 
         if vm is not None:
-            ret = dict(success=True, data=serialize(vm))
+            ret = dict(success=True, data=await serialize(vm))
         else:
             ret = dict(success=False)
 

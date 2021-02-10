@@ -1,7 +1,7 @@
 from XenGarden.VDI import VDI
 
 
-def serialize(vdi: VDI):
+async def serialize(vdi: VDI):
     return dict(
         name=vdi.get_name(),
         description=vdi.get_description(),

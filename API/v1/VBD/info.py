@@ -24,7 +24,7 @@ async def vbd_get_by_uuid(cluster_id: str, vbd_uuid: str):
         vbd: VBD = VBD.get_by_uuid(session=session, uuid=vbd_uuid)
 
         if vbd is not None:
-            ret = dict(success=True, data=serialize(vbd))
+            ret = dict(success=True, data=await serialize(vbd))
         else:
             ret = dict(success=False)
 

@@ -27,7 +27,7 @@ async def vbd_list(cluster_id: str, vdi_uuid: str):
         __vbd_list = []
         for vbd in vbds:
             if vbd.get_VDI().get_uuid() == vdi_uuid:
-                __vbd_list.append(serialize(vbd))
+                __vbd_list.append(await serialize(vbd))
 
         if vbds is not None:
             ret = dict(success=True, data=__vbd_list)

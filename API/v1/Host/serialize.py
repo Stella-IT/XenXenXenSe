@@ -5,7 +5,7 @@ def replace_under_bar(t):
     return dict((key.replace("-", "_"), value) for (key, value) in t.items())
 
 
-def serialize(host: Host):
+async def serialize(host: Host):
     return dict(
         uuid=host.get_uuid(),
         name=host.get_name(),

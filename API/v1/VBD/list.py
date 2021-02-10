@@ -25,7 +25,7 @@ async def vbd_list(cluster_id: str):
 
         __vbd_list = []
         for vbd in vbds:
-            __vbd_list.append(serialize(vbd))
+            __vbd_list.append(await serialize(vbd))
 
         if vbds is not None:
             ret = dict(success=True, data=__vbd_list)

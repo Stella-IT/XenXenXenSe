@@ -1,7 +1,7 @@
 from XenGarden.VM import VM
 
 
-def serialize(vm: VM):
+async def serialize(vm: VM):
     return dict(
         name=vm.get_name(),
         bios=vm.get_bios_strings(),

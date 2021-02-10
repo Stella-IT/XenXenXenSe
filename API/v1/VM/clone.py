@@ -26,7 +26,7 @@ async def instance_clone(cluster_id: str, vm_uuid: str, args: NameArgs):
         _vm: VM = VM.get_by_uuid(session=session, uuid=vm_uuid)
         new_vm = _vm.clone(args.name)
         if new_vm is not None:
-            ret = dict(success=True, data=serialize(new_vm))
+            ret = dict(success=True, data=await serialize(new_vm))
         else:
             ret = dict(success=False)
 
