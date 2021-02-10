@@ -20,9 +20,13 @@
 1. Clone this repository
 2. Copy config.example.json to config.json
 3. Enter your credentials in JSON form!
-4. run `pip install -r requirements.txt`  
+4. install mysql library:
+   * Ubuntu/Debian:
+     `apt install libmysqlclient-dev -y` or
+     `apt install libmariadbclient-dev -y`
+5. run `pip install -r requirements.txt`  
    (or `pip3 install -r requirements.txt` if you are using both python versions)
-5. run server via `python3 main.py`
+6. run server via `python3 main.py`
 
 ### API Docs
 Working in progress.  
