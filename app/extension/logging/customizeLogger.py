@@ -17,7 +17,9 @@ class CustomizeLogger:
         logging_config = config["logger"]
         
         filepath = Path(logging_config["path"])
-        filepath.joinpath(logging_config['filename'])
+        filepath.mkdir(0o777, True, True)
+
+        filepath = filepath.joinpath(logging_config['filename'])
 
         _logger = cls.customize_logging(
             filepath=filepath,
