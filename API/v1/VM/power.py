@@ -49,7 +49,7 @@ async def vm_start(cluster_id: str, vm_uuid: str):
         )
 
         _vm: VM = VM.get_by_uuid(session=session, uuid=vm_uuid)
-        ret = dict(success=_vm.start())
+        ret = dict(success=await _vm.start())
 
         session.xenapi.session.logout()
         return ret
@@ -76,7 +76,7 @@ async def vm_shutdown(cluster_id: str, vm_uuid: str):
         )
 
         _vm: VM = VM.get_by_uuid(session=session, uuid=vm_uuid)
-        ret = dict(success=_vm.shutdown())
+        ret = dict(success=await _vm.shutdown())
 
         session.xenapi.session.logout()
         return ret
@@ -102,7 +102,7 @@ async def vm_power_force_shutdown(cluster_id: str, vm_uuid: str):
         )
 
         _vm: VM = VM.get_by_uuid(session=session, uuid=vm_uuid)
-        ret = dict(success=_vm.force_shutdown())
+        ret = dict(success=await _vm.force_shutdown())
 
         session.xenapi.session.logout()
         return ret
@@ -129,7 +129,7 @@ async def vm_power_restart(cluster_id: str, vm_uuid: str):
         )
 
         _vm: VM = VM.get_by_uuid(session=session, uuid=vm_uuid)
-        ret = dict(success=_vm.reboot())
+        ret = dict(success=await _vm.reboot())
 
         session.xenapi.session.logout()
         return ret
@@ -155,7 +155,7 @@ async def vm_power_suspend(cluster_id: str, vm_uuid: str):
         )
 
         _vm: VM = VM.get_by_uuid(session=session, uuid=vm_uuid)
-        ret = dict(success=_vm.suspend())
+        ret = dict(success=await _vm.suspend())
 
         session.xenapi.session.logout()
         return ret
@@ -181,7 +181,7 @@ async def vm_power_resume(cluster_id: str, vm_uuid: str):
         )
 
         _vm: VM = VM.get_by_uuid(session=session, uuid=vm_uuid)
-        ret = dict(success=_vm.resume())
+        ret = dict(success=await _vm.resume())
 
         session.xenapi.session.logout()
         return ret
@@ -207,7 +207,7 @@ async def vm_power_pause(cluster_id: str, vm_uuid: str):
         )
 
         _vm: VM = VM.get_by_uuid(session=session, uuid=vm_uuid)
-        ret = dict(success=_vm.pause())
+        ret = dict(success=await _vm.pause())
 
         session.xenapi.session.logout()
         return ret
@@ -233,7 +233,7 @@ async def vm_power_unpause(cluster_id: str, vm_uuid: str):
         )
 
         _vm: VM = VM.get_by_uuid(session=session, uuid=vm_uuid)
-        ret = dict(success=_vm.unpause())
+        ret = dict(success=await _vm.unpause())
 
         session.xenapi.session.logout()
         return ret

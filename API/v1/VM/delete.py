@@ -21,7 +21,7 @@ async def vm_delete(cluster_id: str, vm_uuid: str):
         )
 
         _vm: VM = VM.get_by_uuid(session=session, uuid=vm_uuid)
-        ret = dict(success=_vm.delete())
+        ret = dict(success=await _vm.delete())
 
         session.xenapi.session.logout()
         return ret

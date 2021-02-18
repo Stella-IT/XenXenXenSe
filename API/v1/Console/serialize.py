@@ -2,8 +2,10 @@ from XenGarden.Console import Console
 
 
 async def serialize(console: Console):
+    record = console.get_record()
+    
     return dict(
-        location=console.get_location(),
-        protocol=console.get_protocol(),
-        uuid=console.get_uuid(),
+        location=record['location'],
+        protocol=record['protocol'],
+        uuid=record['uuid'],
     )

@@ -15,7 +15,7 @@ from app.services.info import Info
 # https://developer-docs.citrix.com/projects/citrix-hypervisor-management-api/en/latest/api-ref-autogen/
 
 __author__ = "Stella IT <admin@stella-it.com>"
-__copyright__ = "Copyright 2020, Stella IT"
+__copyright__ = "Copyright 2020-2021 Stella IT"
 __version__ = Info.get_version()
 
 # Override XML RPC Settings for 64bit support
@@ -40,7 +40,7 @@ if __name__ == "__main__":
     # Create an application
     app = Controller(
         host=args.host,
-        port=8080,
+        port=args.port,
         sock=args.sock,
         title=Info.get_name(),
         description=Info.get_description(),
