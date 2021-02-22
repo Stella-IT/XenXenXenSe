@@ -29,7 +29,7 @@ jobs:
         XXXS_VERSION=$(python3 ./main.py --version)
         cd /tmp; git clone https://github.com/fade-project/fade
         cd fade; yarn install
-        yarn start --init --name xenxenxense --path $GITHUB_WORKSPACE --version $XXXS_VERSION-$PYTHON_VERSION \
+        yarn start --init --name xenxenxense --path $GITHUB_WORKSPACE --version $XXXS_VERSION-py$PYTHON_VERSION \
         --description "A Modern RESTful API implemenation of XenAPI for Citrix Hypervisor(R) and XCP-ng." \
         --url "https://github.com/Stella-IT/XenXenXenSe" --priority optional --architecture all \
         --cmdline "python3 main.py" --dependency python$PYTHON_VERSION --dependency python3-pip \
@@ -38,13 +38,15 @@ jobs:
         sudo -H -u xenxenxense python3 -m pip install -r requirements.txt
         echo "WARNING: config.py is currently default; please edit before use."
         EOF
-        node dist/ --create-deb --path $GITHUB_WORKSPACE --output $GITHUB_WORKSPACE/xenxenxense_$XXXS_VERSION-$PYTHON_VERSION\_all.deb
+        node dist/ --create-deb --path $GITHUB_WORKSPACE --output $GITHUB_WORKSPACE/xenxenxense_$XXXS_VERSION-py$PYTHON_VERSION\_all.deb
       env:
         PYTHON_VERSION: ${{ matrix.python-version }}
-    - name: Upload to release
-      uses: JasonEtco/upload-to-release@master
+    - name: Upload packages to release
+      uses: svenstaro/upload-release-action@v2
       with:
-        args: xenxenxense_*_all.deb
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        file: xenxenxense_*_all.deb
+        tag: ${{ github.ref }}
+        overwrite: true
+        file_glob: true
     
