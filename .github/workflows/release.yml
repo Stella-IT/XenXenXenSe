@@ -1,0 +1,50 @@
+name: Generate FADe Package for Release
+
+on:
+  release:
+    types: [created]
+
+jobs:
+  deploy:
+
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.7, 3.8, 3.9]
+    timeout-minutes: 1200
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Get required libraries
+      run: |
+        pip3 install -r requirements.txt
+    - name: Build Debian Package
+      run: |
+        sudo npm install -g typescript
+        COMMIT=$(git rev-parse HEAD | head -c 7)
+        XXXS_VERSION=$(python3 ./main.py --version)
+        cd /tmp; git clone https://github.com/fade-project/fade
+        cd fade; yarn install
+        yarn start --init --name xenxenxense --path $GITHUB_WORKSPACE --version $XXXS_VERSION-$PYTHON_VERSION \
+        --description "A Modern RESTful API implemenation of XenAPI for Citrix Hypervisor(R) and XCP-ng." \
+        --url "https://github.com/Stella-IT/XenXenXenSe" --priority optional --architecture all \
+        --cmdline "python3 main.py" --dependency python$PYTHON_VERSION --dependency python3-pip \
+        --maintainer-name "Stella IT" --maintainer-email "admin@stella-it.com" --type service
+        node dist/ --edit --path $GITHUB_WORKSPACE --input-postinst-payload /dev/stdin << EOF
+        sudo -H -u xenxenxense python3 -m pip install -r requirements.txt
+        echo "WARNING: config.py is currently default; please edit before use."
+        EOF
+        node dist/ --create-deb --path $GITHUB_WORKSPACE --output $GITHUB_WORKSPACE/xenxenxense_$XXXS_VERSION-$PYTHON_VERSION\_all.deb
+      env:
+        PYTHON_VERSION: ${{ matrix.python-version }}
+    - name: Upload to release
+      uses: JasonEtco/upload-to-release@master
+      with:
+        args: xenxenxense_*_all.deb
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }
+    
