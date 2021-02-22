@@ -1,6 +1,6 @@
 [project]
 name = "XenXenXenSe"
-version = "1.1.1"
+version = "1.1.2"
 description = "An easy-to-use HTTP API of XenAPI for Web Application Developers."
 authors = [
     "Alex4386 <alex4386@stella-it.com>",
