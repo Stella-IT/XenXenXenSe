@@ -11,6 +11,7 @@ from API.v1.SR.find import router as _sr_find
 from API.v1.SR.info import router as _sr_info
 from API.v1.SR.list import router as _sr_list
 from API.v1.SR.scan import router as _sr_scan
+from API.v1.SR.vdis import router as _sr_vdis
 from app.settings import Settings
 
 

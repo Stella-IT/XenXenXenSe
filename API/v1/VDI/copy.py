@@ -4,36 +4,37 @@ from xmlrpc.client import Fault
 from fastapi import APIRouter, HTTPException
 from XenAPI.XenAPI import Failure
 from XenGarden.session import create_session
-from XenGarden.VM import VM
+from XenGarden.VDI import VDI
+from XenGarden.SR import SR
+
 from starlette.responses import RedirectResponse
 
 from API.v1.Common import xenapi_failure_jsonify
-from API.v1.Interface import CloneArgs
-from API.v1.VM.serialize import serialize
+from API.v1.VDI.serialize import serialize
 from app.settings import Settings
 
 router = APIRouter()
 
 
-@router.post("/{cluster_id}/vm/{vm_uuid}/clone")
-@router.post("/{cluster_id}/template/{vm_uuid}/clone")
-async def instance_clone(cluster_id: str, vm_uuid: str, args: CloneArgs):
-    """ Clone Instance (VM/Template) """
+@router.post("/{cluster_id}/vdi/{vdi_uuid}/copy")
+async def vdi_copy(cluster_id: str, vdi_uuid: str, args: SRCopyArgs):
+    """ Get VDI by UUID """
     try:
         session = create_session(
             _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()
         )
 
-        _vm: VM = VM.get_by_uuid(session=session, uuid=vm_uuid)
-        new_vm = await _vm.clone(args.name)
+        vdi: VDI = VDI.get_by_uuid(session=session, uuid=vdi_uuid)
+        sr: SR = SR.get_by_uuid(session=session, uuid=args.sr_uuid)
 
-        if new_vm is not None:
-            if args.provision:
-                await new_vm.provision()
+        new_vdi: VDI = vdi.copy(sr)
+
+        if new_vdi is not None:
+            vdi_uuid = new_vdi
                 
-            new_vm_uuid = new_vm.get_uuid()
+            new_vdi_uuid = new_vdi.get_uuid()
 
-            ret = RedirectResponse(f"/v1/{cluster_id}/vm/{new_vm_uuid}")
+            ret = RedirectResponse(f"/v1/{cluster_id}/vdi/{new_vdi_uuid}")
         else:
             ret = dict(success=False)
 
