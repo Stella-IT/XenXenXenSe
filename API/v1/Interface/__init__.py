@@ -20,7 +20,7 @@ class CopyArgs(NameArgs):
     provision: bool = True
 
 
-class SRCopyArgs:
+class SRCopyArgs(BaseModel):
     sr_uuid: str
 
 
