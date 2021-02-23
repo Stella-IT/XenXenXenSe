@@ -9,8 +9,8 @@ from XenGarden.SR import SR
 from XenGarden.VDI import VDI
 
 from API.v1.Common import xenapi_failure_jsonify
-from app.settings import Settings
 from API.v1.Interface import SRCopyArgs
+from app.settings import Settings
 
 router = APIRouter()
 
