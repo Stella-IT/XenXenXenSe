@@ -7,11 +7,11 @@ from XenGarden.session import create_session
 from XenGarden.VDI import VDI
 
 from API.v1.Common import xenapi_failure_jsonify
+from API.v1.VDI.copy import router as _vdi_copy
 from API.v1.VDI.delete import router as _vdi_delete
 from API.v1.VDI.find import router as _vdi_find
 from API.v1.VDI.info import router as _vdi_info
 from API.v1.VDI.list import router as _vdi_list
-from API.v1.VDI.copy import router as _vdi_copy
 from API.v1.VDI.sr import router as _vdi_sr
 from app.settings import Settings
 

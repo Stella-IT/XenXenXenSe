@@ -2,16 +2,14 @@ from http.client import RemoteDisconnected
 from xmlrpc.client import Fault
 
 from fastapi import APIRouter, HTTPException
+from starlette.responses import RedirectResponse
 from XenAPI.XenAPI import Failure
 from XenGarden.session import create_session
-from XenGarden.VM import VM
 from XenGarden.SR import SR
-
-from starlette.responses import RedirectResponse
+from XenGarden.VM import VM
 
 from API.v1.Common import xenapi_failure_jsonify
 from API.v1.Interface import CopyArgs
-from API.v1.VM.serialize import serialize
 from app.settings import Settings
 
 router = APIRouter()
@@ -28,7 +26,7 @@ async def instance_copy(cluster_id: str, vm_uuid: str, args: CopyArgs):
 
         _vm: VM = VM.get_by_uuid(session=session, uuid=vm_uuid)
         _sr: SR = SR.get_by_uuid(session=session, uuid=args.sr_uuid)
-        
+
         new_vm = await _vm.copy(args.name, _sr)
 
         if new_vm is not None:

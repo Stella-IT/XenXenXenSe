@@ -2,14 +2,13 @@ from http.client import RemoteDisconnected
 from xmlrpc.client import Fault
 
 from fastapi import APIRouter, HTTPException
+from starlette.responses import RedirectResponse
 from XenAPI.XenAPI import Failure
 from XenGarden.session import create_session
 from XenGarden.VM import VM
-from starlette.responses import RedirectResponse
 
 from API.v1.Common import xenapi_failure_jsonify
 from API.v1.Interface import CloneArgs
-from API.v1.VM.serialize import serialize
 from app.settings import Settings
 
 router = APIRouter()
@@ -30,7 +29,7 @@ async def instance_clone(cluster_id: str, vm_uuid: str, args: CloneArgs):
         if new_vm is not None:
             if args.provision:
                 await new_vm.provision()
-                
+
             new_vm_uuid = new_vm.get_uuid()
 
             ret = RedirectResponse(f"/v1/{cluster_id}/vm/{new_vm_uuid}")

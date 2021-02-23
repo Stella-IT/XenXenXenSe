@@ -2,15 +2,13 @@ from http.client import RemoteDisconnected
 from xmlrpc.client import Fault
 
 from fastapi import APIRouter, HTTPException
+from starlette.responses import RedirectResponse
 from XenAPI.XenAPI import Failure
 from XenGarden.session import create_session
-from XenGarden.VDI import VDI
 from XenGarden.SR import SR
-
-from starlette.responses import RedirectResponse
+from XenGarden.VDI import VDI
 
 from API.v1.Common import xenapi_failure_jsonify
-from API.v1.VDI.serialize import serialize
 from app.settings import Settings
 
 router = APIRouter()
@@ -31,7 +29,7 @@ async def vdi_copy(cluster_id: str, vdi_uuid: str, args: SRCopyArgs):
 
         if new_vdi is not None:
             vdi_uuid = new_vdi
-                
+
             new_vdi_uuid = new_vdi.get_uuid()
 
             ret = RedirectResponse(f"/v1/{cluster_id}/vdi/{new_vdi_uuid}")

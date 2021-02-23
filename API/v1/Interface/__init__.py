@@ -18,9 +18,11 @@ class NameArgs(BaseModel):
 class CopyArgs(NameArgs):
     sr_uuid: str
     provision: bool = True
-    
-class SRCopyArgs():
+
+
+class SRCopyArgs:
     sr_uuid: str
+
 
 class CloneArgs(NameArgs):
     provision: bool = True

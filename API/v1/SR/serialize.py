@@ -1,6 +1,5 @@
-import asyncio
-
 from XenGarden.SR import SR
+
 
 async def serialize(sr: SR):
     return dict(
