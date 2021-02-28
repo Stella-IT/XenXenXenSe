@@ -3,7 +3,7 @@ databases[mysql]
 mysqlclient
 requests
 schedule
-XenGarden==1.2.4
+XenGarden==1.2.5
 pyfiglet
 fastapi
 uvicorn
