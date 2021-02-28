@@ -6,12 +6,19 @@ def replace_under_bar(t):
 
 
 async def serialize(host: Host):
+    record = host.get_record()
+    
     return dict(
-        uuid=host.get_uuid(),
-        name=host.get_name(),
-        enabled=host.get_enabled(),
-        memory=dict(free=host.get_free_memory(), total=host.get_total_memory()),
-        cpu=host.get_cpu_info(),
-        bios=replace_under_bar(host.get_bios_strings()),
-        version=host.get_software_version(),
+        uuid=record['uuid'],
+        name=record['name_label'],
+        enabled=record['enabled'],
+        memory=dict(
+            overhead=record['memory_overhead'], 
+            
+            free=host.get_free_memory(), 
+            total=host.get_total_memory()
+        ),
+        cpu=record['cpu_info'],
+        bios=record['bios_strings'],
+        version=record['software_version'],
     )
