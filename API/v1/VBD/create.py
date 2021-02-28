@@ -5,37 +5,41 @@ from fastapi import APIRouter, HTTPException
 from starlette.responses import Response
 from XenAPI.XenAPI import Failure
 from XenGarden.session import create_session
+from XenGarden.VBD import VBD
+from XenGarden.VDI import VDI
 from XenGarden.VM import VM
 
 from API.v1.Common import xenapi_failure_jsonify
-from API.v1.Interface import CloneArgs
+from API.v1.Interface import VBDCreateArgs
 from app.settings import Settings
 
 router = APIRouter()
 
 
-@router.post("/{cluster_id}/vm/{vm_uuid}/clone")
-@router.post("/{cluster_id}/template/{vm_uuid}/clone")
-async def instance_clone(cluster_id: str, vm_uuid: str, args: CloneArgs):
-    """ Clone Instance (VM/Template) """
+@router.post("/{cluster_id}/vbd/create")
+async def vbd_create(cluster_id: str, create_args: VBDCreateArgs):
+    """ Create VBD """
     try:
         session = create_session(
-            _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()
+            cluster_id, get_xen_clusters=Settings.get_xen_clusters()
         )
 
-        _vm: VM = VM.get_by_uuid(session=session, uuid=vm_uuid)
-        new_vm = await _vm.clone(args.name)
+        vm = VM.get_by_uuid(session, create_args.vm_uuid)
+        vdi = VDI.get_by_uuid(session, create_args.vdi_uuid)
 
-        if new_vm is not None:
-            if args.provision:
-                await new_vm.provision()
+        vbd: VBD = VBD.create(
+            session,
+            vm,
+            vdi,
+            **create_args.dict(),
+        )
 
-            new_vm_uuid = new_vm.get_uuid()
-
+        if vbd is not None:
+            vbd_uuid = vbd.get_uuid()
             ret = Response(
                 "",
                 status_code=302,
-                headers={"Location": f"/v1/{cluster_id}/vm/{new_vm_uuid}"},
+                headers={"Location": f"/v1/{cluster_id}/vbd/{vbd_uuid}"},
             )
         else:
             ret = dict(success=False)

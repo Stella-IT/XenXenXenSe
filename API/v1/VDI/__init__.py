@@ -12,6 +12,7 @@ from API.v1.VDI.delete import router as _vdi_delete
 from API.v1.VDI.find import router as _vdi_find
 from API.v1.VDI.info import router as _vdi_info
 from API.v1.VDI.list import router as _vdi_list
+from API.v1.VDI.resize import router as _vdi_resize
 from API.v1.VDI.sr import router as _vdi_sr
 from app.settings import Settings
 
@@ -47,8 +48,10 @@ async def verify_vdi_uuid(cluster_id: str, vdi_uuid: Optional[str] = None):
 # === Router Actions ===
 vdi_router = APIRouter(dependencies=[Depends(verify_vdi_uuid)])
 
+vdi_router.include_router(_vdi_copy, tags=["vdi"])
 vdi_router.include_router(_vdi_list, tags=["vdi"])
 vdi_router.include_router(_vdi_find, tags=["vdi"])
 vdi_router.include_router(_vdi_info, tags=["vdi"])
+vdi_router.include_router(_vdi_resize, tags=["vdi"])
 vdi_router.include_router(_vdi_delete, tags=["vdi"])
 vdi_router.include_router(_vdi_sr, tags=["vdi"])

@@ -11,6 +11,7 @@ from API.v1.VM.bios import router as _vm_bios
 from API.v1.VM.cd import router as _vm_cd
 from API.v1.VM.clone import router as _vm_clone
 from API.v1.VM.console import router as _vm_console
+from API.v1.VM.copy import router as _vm_copy
 from API.v1.VM.delete import router as _vm_delete
 from API.v1.VM.first_vif import router as _vm_first_vif
 from API.v1.VM.guest import router as _vm_guest
@@ -56,6 +57,7 @@ vm_router = APIRouter(dependencies=[Depends(verify_vm_uuid)])
 
 vm_router.include_router(_vm_bios, tags=["vm"])
 vm_router.include_router(_vm_cd, tags=["vm"])
+vm_router.include_router(_vm_copy, tags=["vm"])
 vm_router.include_router(_vm_clone, tags=["vm"])
 vm_router.include_router(_vm_delete, tags=["vm"])
 vm_router.include_router(_vm_guest, tags=["vm"])

@@ -2,7 +2,7 @@ from http.client import RemoteDisconnected
 from xmlrpc.client import Fault
 
 from fastapi import APIRouter, HTTPException
-from starlette.responses import RedirectResponse
+from starlette.responses import Response
 from XenAPI.XenAPI import Failure
 from XenGarden.session import create_session
 from XenGarden.SR import SR
@@ -35,7 +35,11 @@ async def instance_copy(cluster_id: str, vm_uuid: str, args: CopyArgs):
 
             new_vm_uuid = new_vm.get_uuid()
 
-            ret = RedirectResponse(f"/v1/{cluster_id}/vm/{new_vm_uuid}")
+            ret = Response(
+                "",
+                status_code=302,
+                headers={"Location": f"/v1/{cluster_id}/vm/{new_vm_uuid}"},
+            )
         else:
             ret = dict(success=False)
 

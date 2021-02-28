@@ -24,6 +24,21 @@ class SRCopyArgs(BaseModel):
     sr_uuid: str
 
 
+class VBDCreateArgs(BaseModel):
+    vm_uuid: str
+    vdi_uuid: str
+    userdevice: str = "0"
+    bootable: bool = True
+    mode: str = "RW"
+    type: str = "Disk"
+    empty: bool = False
+    qos_algorithm_type: str = ""
+    qos_algorithm_params: dict = {}
+    other_config: dict = {}
+    unpluggable: Optional[bool] = True
+    currently_attached: Optional[bool] = False
+
+
 class CloneArgs(NameArgs):
     provision: bool = True
 
@@ -35,3 +50,7 @@ class NameDescriptionArgs(BaseModel):
 
 class UUIDArgs(BaseModel):
     uuid: str
+
+
+class SizeArgs(BaseModel):
+    size: str

@@ -7,11 +7,13 @@ from XenGarden.session import create_session
 from XenGarden.VBD import VBD
 
 from API.v1.Common import xenapi_failure_jsonify
+from API.v1.VBD.create import router as _vbd_create
 from API.v1.VBD.delete import router as _vbd_delete
 from API.v1.VBD.find_vdi import router as _vbd_find_by_vdi
 from API.v1.VBD.info import router as _vbd_info
 from API.v1.VBD.list import router as _vbd_list
 from API.v1.VBD.media import router as _vbd_media
+from API.v1.VBD.plug import router as _vbd_plug
 from app.settings import Settings
 
 
@@ -47,7 +49,9 @@ async def verify_vbd_uuid(cluster_id: str, vbd_uuid: Optional[str] = None):
 vbd_router = APIRouter(dependencies=[Depends(verify_vbd_uuid)])
 
 vbd_router.include_router(_vbd_list, tags=["vbd"])
+vbd_router.include_router(_vbd_create, tags=["vbd"])
 vbd_router.include_router(_vbd_info, tags=["vbd"])
+vbd_router.include_router(_vbd_plug, tags=["vbd"])
 vbd_router.include_router(_vbd_find_by_vdi, tags=["vbd"])
 vbd_router.include_router(_vbd_media, tags=["vbd"])
 vbd_router.include_router(_vbd_delete, tags=["vbd"])
