@@ -25,8 +25,8 @@ class SRCopyArgs(BaseModel):
 
 
 class QoSTypeArgs(BaseModel):
-    type: str
-    info: dict
+    type: Optional[str]
+    info: Optional[dict]
 
 
 class VBDCreateArgs(BaseModel):

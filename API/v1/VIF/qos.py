@@ -57,11 +57,11 @@ async def vif_get_qos_type_by_uuid(cluster_id: str, vif_uuid: str, data: QoSType
         vif: VIF = VIF.get_by_uuid(session=session, uuid=vif_uuid)
 
         result = True
-        if data["type"] is not None:
-            vif.set_qos_type(data["type"])
+        if data.type is not None:
+            vif.set_qos_type(data.type)
 
-        if data["info"] is not None:
-            vif.set_qos_info(data["info"])
+        if data.info is not None:
+            vif.set_qos_info(data.info)
 
         ret = dict(success=True, data=result)
 
