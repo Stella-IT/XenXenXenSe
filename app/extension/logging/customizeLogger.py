@@ -1,4 +1,5 @@
 import logging
+import os
 import sys
 from pathlib import Path
 
@@ -7,14 +8,26 @@ from loguru import logger
 
 from app.extension.logging.interceptHandler import InterceptHandler
 
+default_config = {
+    "path": "./logs",
+    "filename": "x3s_access.log",
+    "level": "info",
+    "rotation": "20 days",
+    "retention": "1 months",
+    "format": "<level>{level: <8}</level> <green>{time:YYYY-MM-DD HH:mm:ss.SSS}</green> request id: {extra[request_id]} - <cyan>{name}</cyan>:<cyan>{function}</cyan> - <level>{message}</level>",
+}
+
 
 class CustomizeLogger:
     default_config_path = "logging_config.json"
 
     @classmethod
     def make_logger(cls, config_path=default_config_path):
-        config = cls.load_logging_config(config_path)
-        logging_config = config["logger"]
+        logging_config = default_config
+
+        if os.path.exists(config_path):
+            config = cls.load_logging_config(config_path)
+            logging_config = config["logger"]
 
         filepath = Path(logging_config["path"])
         filepath.mkdir(0o777, True, True)
@@ -28,6 +41,7 @@ class CustomizeLogger:
             rotation=logging_config["rotation"],
             _format=logging_config["format"],
         )
+
         return _logger
 
     @classmethod
