@@ -7,6 +7,7 @@ from XenGarden.session import create_session
 from XenGarden.VIF import VIF
 
 from API.v1.Common import xenapi_failure_jsonify
+from API.v1.Interface import QoSTypeArgs
 from app.settings import Settings
 
 router = APIRouter()
@@ -46,7 +47,7 @@ async def vif_get_qos_by_uuid(cluster_id: str, vif_uuid: str):
 
 
 @router.put("/{cluster_id}/vif/{vif_uuid}/qos")
-async def vif_get_qos_type_by_uuid(cluster_id: str, vif_uuid: str, data):
+async def vif_get_qos_type_by_uuid(cluster_id: str, vif_uuid: str, data: QoSTypeArgs):
     """ Set VIF QoS Data by UUID """
     try:
         session = create_session(

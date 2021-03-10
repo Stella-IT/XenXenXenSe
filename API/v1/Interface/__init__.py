@@ -24,6 +24,11 @@ class SRCopyArgs(BaseModel):
     sr_uuid: str
 
 
+class QoSTypeArgs(BaseModel):
+    type: str
+    info: dict
+
+
 class VBDCreateArgs(BaseModel):
     vm_uuid: str
     vdi_uuid: str
