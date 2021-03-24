@@ -8,7 +8,6 @@ from XenGarden.session import create_session
 from XenGarden.SR import SR
 
 from API.v1.Common import xenapi_failure_jsonify
-from API.v1.SR.serialize import serialize
 from app.settings import Settings
 
 router = APIRouter()
@@ -32,7 +31,7 @@ async def sr_vdis(cluster_id: str, sr_uuid: str):
             vdis = await asyncio.gather(*[_vdi_serialize(vdi) for vdi in vdis])
         else:
             pass
-        
+
         if sr is not None:
             ret = dict(success=True, data=vdis)
         else:
