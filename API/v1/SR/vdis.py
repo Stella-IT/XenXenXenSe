@@ -29,12 +29,12 @@ async def sr_vdis(cluster_id: str, sr_uuid: str):
 
         vdis = sr.get_VDIs()
         if vdis is not None:
-            await asyncio.gather(*[_vdi_serialize(vdi) for vdi in vdis])
+            vdis = await asyncio.gather(*[_vdi_serialize(vdi) for vdi in vdis])
         else:
             pass
-
+        
         if sr is not None:
-            ret = dict(success=True, data=await serialize(sr))
+            ret = dict(success=True, data=vdis)
         else:
             ret = dict(success=False)
 
