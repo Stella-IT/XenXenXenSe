@@ -18,6 +18,7 @@ from API.v1.VM.guest import router as _vm_guest
 from API.v1.VM.info import router as _vm_info
 from API.v1.VM.list import router as _vm_list
 from API.v1.VM.metadata import router as _vm_metadata
+from API.v1.VM.metrics import router as _vm_metrics
 from API.v1.VM.platform import router as _vm_platform
 from API.v1.VM.power import router as _vm_power
 from API.v1.VM.specs import router as _vm_specs
@@ -65,6 +66,7 @@ vm_router.include_router(_vm_list, tags=["vm"])
 vm_router.include_router(_vm_console, tags=["vm"])
 vm_router.include_router(_vm_info, tags=["vm"])
 vm_router.include_router(_vm_metadata, tags=["vm"])
+vm_router.include_router(_vm_metrics, tags=["vm"])
 vm_router.include_router(_vm_platform, tags=["vm"])
 vm_router.include_router(_vm_power, tags=["vm"])
 vm_router.include_router(_vm_specs, tags=["vm"])
