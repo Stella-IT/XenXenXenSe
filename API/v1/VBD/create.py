@@ -18,7 +18,7 @@ router = APIRouter()
 
 @router.post("/{cluster_id}/vbd/create")
 async def vbd_create(cluster_id: str, create_args: VBDCreateArgs):
-    """ Create VBD """
+    """Create VBD"""
     try:
         session = create_session(
             cluster_id, get_xen_clusters=Settings.get_xen_clusters()

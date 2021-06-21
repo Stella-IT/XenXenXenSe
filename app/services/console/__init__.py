@@ -68,7 +68,7 @@ class Console:
 
     @classmethod
     def show_banner(cls, add_padding: bool = False) -> None:
-        """ Show banner for XenXenXenSe Project """
+        """Show banner for XenXenXenSe Project"""
 
         figlet = Figlet()
 
@@ -84,7 +84,7 @@ class Console:
 
     @staticmethod
     def print_xen_hostnames(show_title: bool = False) -> None:
-        """ Print Xen Hostnames to screen """
+        """Print Xen Hostnames to screen"""
         if show_title:
             print("Detected Clusters")
 

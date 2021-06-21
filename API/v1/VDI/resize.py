@@ -15,7 +15,7 @@ router = APIRouter()
 
 @router.post("/{cluster_id}/vdi/{vdi_uuid}/resize")
 async def vdi_resize(cluster_id: str, vdi_uuid: str, args: SizeArgs):
-    """ Resize VDI """
+    """Resize VDI"""
     try:
         session = create_session(
             _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()

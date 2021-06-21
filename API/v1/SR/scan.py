@@ -14,7 +14,7 @@ router = APIRouter()
 
 @router.get("/{cluster_id}/sr/{sr_uuid}/scan")
 async def sr_scan(cluster_id: str, sr_uuid: str):
-    """ Scan Storage Repository """
+    """Scan Storage Repository"""
     try:
         session = create_session(
             cluster_id, get_xen_clusters=Settings.get_xen_clusters()

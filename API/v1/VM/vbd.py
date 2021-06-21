@@ -16,7 +16,7 @@ router = APIRouter()
 
 @router.get("/{cluster_id}/vm/{vm_uuid}/vbds")
 async def instance_vbds(cluster_id: str, vm_uuid: str):
-    """ Show Instance VBDs """
+    """Show Instance VBDs"""
     try:
         session = create_session(
             _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()

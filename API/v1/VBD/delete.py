@@ -15,7 +15,7 @@ router = APIRouter()
 @router.delete("/{cluster_id}/vbd/{vbd_uuid}")
 @router.get("/{cluster_id}/vbd/{vbd_uuid}/delete")
 async def vbd_delete(cluster_id: str, vbd_uuid: str):
-    """ Destroy VBD by UUID """
+    """Destroy VBD by UUID"""
     try:
         session = create_session(
             cluster_id, get_xen_clusters=Settings.get_xen_clusters()

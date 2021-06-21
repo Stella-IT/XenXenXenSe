@@ -15,7 +15,7 @@ router = APIRouter()
 
 @router.get("/{cluster_id}/vif/{vif_uuid}")
 async def vif_get_by_uuid(cluster_id: str, vif_uuid: str):
-    """ Get VIF by UUID """
+    """Get VIF by UUID"""
     try:
         session = create_session(
             _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()

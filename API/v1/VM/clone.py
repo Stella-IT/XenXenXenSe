@@ -17,7 +17,7 @@ router = APIRouter()
 @router.post("/{cluster_id}/vm/{vm_uuid}/clone")
 @router.post("/{cluster_id}/template/{vm_uuid}/clone")
 async def instance_clone(cluster_id: str, vm_uuid: str, args: CloneArgs):
-    """ Clone Instance (VM/Template) """
+    """Clone Instance (VM/Template)"""
     try:
         session = create_session(
             _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()

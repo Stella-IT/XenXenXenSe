@@ -15,7 +15,7 @@ router = APIRouter()
 
 @router.get("/{cluster_id}/sr/{sr_uuid}")
 async def sr_get_by_uuid(cluster_id: str, sr_uuid: str):
-    """ Get SR by UUID """
+    """Get SR by UUID"""
     try:
         session = create_session(
             cluster_id, get_xen_clusters=Settings.get_xen_clusters()

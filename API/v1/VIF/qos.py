@@ -15,7 +15,7 @@ router = APIRouter()
 
 @router.get("/{cluster_id}/vif/{vif_uuid}/qos")
 async def vif_get_qos_by_uuid(cluster_id: str, vif_uuid: str):
-    """ Set VIF QoS by UUID """
+    """Set VIF QoS by UUID"""
     try:
         session = create_session(
             _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()
@@ -48,7 +48,7 @@ async def vif_get_qos_by_uuid(cluster_id: str, vif_uuid: str):
 
 @router.put("/{cluster_id}/vif/{vif_uuid}/qos")
 async def vif_get_qos_type_by_uuid(cluster_id: str, vif_uuid: str, data: QoSTypeArgs):
-    """ Set VIF QoS Data by UUID """
+    """Set VIF QoS Data by UUID"""
     try:
         session = create_session(
             _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()

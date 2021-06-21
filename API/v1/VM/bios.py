@@ -16,7 +16,7 @@ router = APIRouter()
 @router.get("/{cluster_id}/vm/{vm_uuid}/bios")
 @router.get("/{cluster_id}/template/{vm_uuid}/bios")
 async def instance_get_bios(cluster_id: str, vm_uuid: str):
-    """ Get Instance (VM/Template) BIOS """
+    """Get Instance (VM/Template) BIOS"""
     try:
         session = create_session(
             _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()
@@ -43,7 +43,7 @@ async def instance_get_bios(cluster_id: str, vm_uuid: str):
 @router.put("/{cluster_id}/vm/{vm_uuid}/bios")
 @router.put("/{cluster_id}/template/{vm_uuid}/bios")
 async def instance_set_bios_property(request: Request, cluster_id: str, vm_uuid: str):
-    """ Set Instance (VM/Template) BIOS Property by Name """
+    """Set Instance (VM/Template) BIOS Property by Name"""
     try:
         body = ujson.decode(await request.body())
 

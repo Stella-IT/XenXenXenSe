@@ -18,7 +18,7 @@ async def guest_get_by_uuid(
     cluster_id: str = Path(default=None, title="cluster_id", description="Cluster ID"),
     guest_uuid: str = Path(default=None, title="guest_uuid", description="Guest UUID"),
 ):
-    """ Get GuestMetrics by UUID """
+    """Get GuestMetrics by UUID"""
     try:
         session = create_session(
             cluster_id, get_xen_clusters=Settings.get_xen_clusters()

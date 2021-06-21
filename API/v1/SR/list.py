@@ -16,7 +16,7 @@ router = APIRouter()
 
 @router.get("/{cluster_id}/sr/list")
 async def sr_list(cluster_id: str):
-    """ Get All from Storage Repos """
+    """Get All from Storage Repos"""
     try:
         session = create_session(
             cluster_id, get_xen_clusters=Settings.get_xen_clusters()

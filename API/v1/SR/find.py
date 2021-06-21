@@ -16,7 +16,7 @@ router = APIRouter()
 
 @router.post("/{cluster_id}/sr/find")
 async def find_cd_by_name(cluster_id: str, args: NameArgs):
-    """ Find SR by Name """
+    """Find SR by Name"""
     try:
         session = create_session(
             _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()

@@ -19,7 +19,7 @@ router = APIRouter()
 @router.put("/{cluster_id}/vm/{vm_uuid}/first_vif{url_after:path}")
 @router.delete("/{cluster_id}/vm/{vm_uuid}/first_vif{url_after:path}")
 async def get_first_vif(cluster_id: str, vm_uuid: str, url_after: str = ""):
-    """ Redirect To First Instance VIFs """
+    """Redirect To First Instance VIFs"""
     try:
         session = create_session(
             _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()

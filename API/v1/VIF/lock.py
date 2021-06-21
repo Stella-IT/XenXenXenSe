@@ -16,7 +16,7 @@ router = APIRouter()
 
 @router.get("/{cluster_id}/vif/{vif_uuid}/lock")
 async def vif_get_lock_by_uuid(cluster_id: str, vif_uuid: str):
-    """ Get VIF Lock by UUID """
+    """Get VIF Lock by UUID"""
     try:
         session = create_session(
             _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()
@@ -42,7 +42,7 @@ async def vif_get_lock_by_uuid(cluster_id: str, vif_uuid: str):
 
 @router.put("/{cluster_id}/vif/{vif_uuid}/lock")
 async def vif_set_lock_by_uuid(cluster_id: str, vif_uuid: str, data: ModeModel):
-    """ Set VIF Lock Data by UUID """
+    """Set VIF Lock Data by UUID"""
     try:
         session = create_session(
             _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()
@@ -70,7 +70,7 @@ async def vif_set_lock_by_uuid(cluster_id: str, vif_uuid: str, data: ModeModel):
 
 @router.delete("/{cluster_id}/vif/{vif_uuid}/lock")
 async def vif_clear_lock_by_uuid(cluster_id: str, vif_uuid: str, data: ModeModel):
-    """ Clear VIF Lock Data to Default by UUID """
+    """Clear VIF Lock Data to Default by UUID"""
     try:
         session = create_session(
             _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()

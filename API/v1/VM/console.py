@@ -21,7 +21,7 @@ router = APIRouter()
 @router.put("/{cluster_id}/vm/{vm_uuid}/console{url_after:path}")
 @router.delete("/{cluster_id}/vm/{vm_uuid}/console{url_after:path}")
 async def vm_console(cluster_id: str, vm_uuid: str, url_after: str = ""):
-    """ Get the first console of the VM """
+    """Get the first console of the VM"""
 
     try:
         session = create_session(
@@ -58,7 +58,7 @@ async def vm_console(cluster_id: str, vm_uuid: str, url_after: str = ""):
 
 @router.get("/{cluster_id}/vm/{vm_uuid}/consoles")
 async def vm_consoles(cluster_id: str, vm_uuid: str):
-    """ Get all consoles are available to the VM """
+    """Get all consoles are available to the VM"""
     try:
         session = create_session(
             _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()

@@ -19,7 +19,7 @@ router = APIRouter()
 @router.put("/{cluster_id}/vdi/{vdi_uuid}/sr{url_after:path}")
 @router.delete("/{cluster_id}/vdi/{vdi_uuid}/sr{url_after:path}")
 async def vdi_get_sr(cluster_id: str, vdi_uuid: str, url_after: str = ""):
-    """ Redirect To SR """
+    """Redirect To SR"""
     try:
         session = create_session(
             _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()

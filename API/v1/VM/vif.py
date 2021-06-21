@@ -16,7 +16,7 @@ router = APIRouter()
 
 @router.get("/{cluster_id}/vm/{vm_uuid}/vifs")
 async def instance_vifs(cluster_id: str, vm_uuid: str):
-    """ Show Instnace VIFs """
+    """Show Instnace VIFs"""
     try:
         session = create_session(
             _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()

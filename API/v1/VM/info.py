@@ -16,7 +16,7 @@ router = APIRouter()
 @router.get("/{cluster_id}/vm/{vm_uuid}")
 @router.get("/{cluster_id}/template/{vm_uuid}")
 async def instance_info(cluster_id: str, vm_uuid: str):
-    """ Get an Info of VM or Template """
+    """Get an Info of VM or Template"""
     try:
         session = create_session(
             _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()

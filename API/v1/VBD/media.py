@@ -16,7 +16,7 @@ router = APIRouter()
 
 @router.put("/{cluster_id}/vbd/{vbd_uuid}/insert")
 async def _vbd_insert_vdi_by_uuid(cluster_id: str, vbd_uuid: str, res: UUIDArgs):
-    """ Insert VDI into VBD by UUID """
+    """Insert VDI into VBD by UUID"""
     try:
         session = create_session(
             _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()
@@ -54,7 +54,7 @@ async def _vbd_insert_vdi_by_uuid(cluster_id: str, vbd_uuid: str, res: UUIDArgs)
 @router.delete("/{cluster_id}/vbd/{vbd_uuid}/insert")
 @router.get("/{cluster_id}/vbd/{vbd_uuid}/eject")
 async def vbd_eject_vdi(cluster_id: str, vbd_uuid: str):
-    """ Eject VDI from VBD """
+    """Eject VDI from VBD"""
     try:
         session = create_session(
             _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()

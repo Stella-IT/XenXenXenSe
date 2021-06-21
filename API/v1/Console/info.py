@@ -18,7 +18,7 @@ async def console_get_by_uuid(
     cluster_id: str,
     console_uuid: str,
 ):
-    """ Get Console by UUID """
+    """Get Console by UUID"""
     try:
         pass
 

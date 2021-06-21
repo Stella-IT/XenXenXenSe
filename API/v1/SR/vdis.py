@@ -15,7 +15,7 @@ router = APIRouter()
 
 @router.get("/{cluster_id}/sr/{sr_uuid}/vdis")
 async def sr_vdis(cluster_id: str, sr_uuid: str):
-    """ Get VDIs by SR """
+    """Get VDIs by SR"""
 
     from API.v1.VDI.serialize import serialize as _vdi_serialize
 

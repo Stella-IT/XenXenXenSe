@@ -16,7 +16,7 @@ router = APIRouter()
 
 @router.get("/{cluster_id}/vif/{vif_uuid}/ipv4/allowed")
 async def vif_get_ipv4_by_uuid(cluster_id: str, vif_uuid: str):
-    """ Get VIF Allowed IPv4 by UUID """
+    """Get VIF Allowed IPv4 by UUID"""
     try:
         session = create_session(
             _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()
@@ -45,7 +45,7 @@ async def vif_get_ipv4_by_uuid(cluster_id: str, vif_uuid: str):
 
 @router.post("/{cluster_id}/vif/{vif_uuid}/ipv4/allowed")
 async def vif_add_ipv4_by_uuid(cluster_id: str, vif_uuid: str, address: IPAddressModel):
-    """ Add VIF Allowed IPv4 by UUID """
+    """Add VIF Allowed IPv4 by UUID"""
     try:
         session = create_session(
             _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()
@@ -77,7 +77,7 @@ async def vif_add_ipv4_by_uuid(cluster_id: str, vif_uuid: str, address: IPAddres
 async def vif_set_ipv4_by_uuid(
     cluster_id: str, vif_uuid: str, addresses: IPAddressesModel
 ):
-    """ Set VIF Allowed IPv4 by UUID """
+    """Set VIF Allowed IPv4 by UUID"""
     try:
         session = create_session(
             _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()
@@ -109,7 +109,7 @@ async def vif_set_ipv4_by_uuid(
 async def vif_reset_ipv4_by_uuid(
     cluster_id: str, vif_uuid: str, address: IPAddressModel
 ):
-    """ Set VIF Allowed IPv4 by UUID """
+    """Set VIF Allowed IPv4 by UUID"""
     try:
         session = create_session(
             _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()

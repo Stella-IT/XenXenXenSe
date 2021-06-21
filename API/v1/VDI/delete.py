@@ -15,7 +15,7 @@ router = APIRouter()
 @router.get("/{cluster_id}/vdi/{vdi_uuid}/delete")
 @router.delete("/{cluster_id}/vdi/{vdi_uuid}")
 async def vdi_get_by_uuid(cluster_id: str, vdi_uuid: str):
-    """ Delete SR by UUID """
+    """Delete SR by UUID"""
     try:
         session = create_session(
             _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()

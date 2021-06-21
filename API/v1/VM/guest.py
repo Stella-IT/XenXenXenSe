@@ -20,7 +20,7 @@ router = APIRouter()
 @router.delete("/{cluster_id}/vm/{vm_uuid}/guest{url_after:path}")
 @router.patch("/{cluster_id}/vm/{vm_uuid}/guest{url_after:path}")
 async def vm_guest(cluster_id: str, vm_uuid: str, url_after: str):
-    """ Get VM Guest Info """
+    """Get VM Guest Info"""
     try:
         session = create_session(
             _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()

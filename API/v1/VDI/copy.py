@@ -17,7 +17,7 @@ router = APIRouter()
 
 @router.post("/{cluster_id}/vdi/{vdi_uuid}/copy")
 async def vdi_copy(cluster_id: str, vdi_uuid: str, args: SRCopyArgs):
-    """ Get VDI by UUID """
+    """Get VDI by UUID"""
     try:
         session = create_session(
             _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()

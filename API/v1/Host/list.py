@@ -18,7 +18,7 @@ router = APIRouter()
 async def host_list(
     cluster_id: str = Path(default=None, title="cluster_id", description="Cluster ID")
 ):
-    """ Get All from Existance Host """
+    """Get All from Existance Host"""
     try:
         session = create_session(
             cluster_id, get_xen_clusters=Settings.get_xen_clusters()

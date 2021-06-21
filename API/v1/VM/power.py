@@ -14,7 +14,7 @@ router = APIRouter()
 
 @router.get("/{cluster_id}/vm/{vm_uuid}/power")
 async def vm_power(cluster_id: str, vm_uuid: str):
-    """ Get VM's power status, Can be "Paused", "Halted", "Running" """
+    """Get VM's power status, Can be "Paused", "Halted", "Running" """
     try:
         session = create_session(
             _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()
@@ -95,7 +95,7 @@ async def vm_shutdown(cluster_id: str, vm_uuid: str):
 
 @router.get("/{cluster_id}/vm/{vm_uuid}/power/force_off")
 async def vm_power_force_shutdown(cluster_id: str, vm_uuid: str):
-    """ Force Shutdown the VM """
+    """Force Shutdown the VM"""
     try:
         session = create_session(
             _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()
@@ -148,7 +148,7 @@ async def vm_power_restart(cluster_id: str, vm_uuid: str):
 
 @router.get("/{cluster_id}/vm/{vm_uuid}/power/suspend")
 async def vm_power_suspend(cluster_id: str, vm_uuid: str):
-    """ Suspend the VM """
+    """Suspend the VM"""
     try:
         session = create_session(
             _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()
@@ -174,7 +174,7 @@ async def vm_power_suspend(cluster_id: str, vm_uuid: str):
 
 @router.get("/{cluster_id}/vm/{vm_uuid}/power/resume")
 async def vm_power_resume(cluster_id: str, vm_uuid: str):
-    """ Resume the VM """
+    """Resume the VM"""
     try:
         session = create_session(
             _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()
@@ -200,7 +200,7 @@ async def vm_power_resume(cluster_id: str, vm_uuid: str):
 
 @router.get("/{cluster_id}/vm/{vm_uuid}/power/pause")
 async def vm_power_pause(cluster_id: str, vm_uuid: str):
-    """ Pause the VM """
+    """Pause the VM"""
     try:
         session = create_session(
             _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()
@@ -226,7 +226,7 @@ async def vm_power_pause(cluster_id: str, vm_uuid: str):
 
 @router.get("/{cluster_id}/vm/{vm_uuid}/power/unpause")
 async def vm_power_unpause(cluster_id: str, vm_uuid: str):
-    """ Unpause the VM """
+    """Unpause the VM"""
     try:
         session = create_session(
             _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()

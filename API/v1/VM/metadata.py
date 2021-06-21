@@ -16,7 +16,7 @@ router = APIRouter()
 @router.get("/{cluster_id}/vm/{vm_uuid}/metadata")
 @router.get("/{cluster_id}/template/{vm_uuid}/metadata")
 async def instance_get_metadata(cluster_id: str, vm_uuid: str):
-    """ Get Instance (VM/Template) Metadata """
+    """Get Instance (VM/Template) Metadata"""
     try:
         session = create_session(
             _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()
@@ -48,7 +48,7 @@ async def instance_get_metadata(cluster_id: str, vm_uuid: str):
 async def instance_set_description(
     cluster_id: str, vm_uuid: str, args: NameDescriptionArgs
 ):
-    """ Set Instance (VM/Template) Description """
+    """Set Instance (VM/Template) Description"""
     try:
         session = create_session(
             _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()

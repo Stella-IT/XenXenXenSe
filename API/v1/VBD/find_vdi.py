@@ -15,7 +15,7 @@ router = APIRouter()
 
 @router.get("/{cluster_id}/vbd/find-by-vdi/{vdi_uuid}")
 async def vbd_list(cluster_id: str, vdi_uuid: str):
-    """ Get VBD by UUID """
+    """Get VBD by UUID"""
 
     try:
         session = create_session(

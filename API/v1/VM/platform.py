@@ -15,7 +15,7 @@ router = APIRouter()
 @router.get("/{cluster_id}/vm/{vm_uuid}/platform")
 @router.get("/{cluster_id}/template/{vm_uuid}/platform")
 async def instance_get_platform(cluster_id: str, vm_uuid: str):
-    """ Get Instance (VM/Template) Platform """
+    """Get Instance (VM/Template) Platform"""
     try:
         session = create_session(
             _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()
@@ -45,7 +45,7 @@ async def instance_get_platform(cluster_id: str, vm_uuid: str):
 @router.post("/{cluster_id}/vm/{vm_uuid}/platform")
 @router.post("/{cluster_id}/template/{vm_uuid}/platform")
 async def instance_set_platform_property(cluster_id: str, vm_uuid: str, data):
-    """ Set Instance (VM/Template) Platform Property """
+    """Set Instance (VM/Template) Platform Property"""
     try:
         session = create_session(
             _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()

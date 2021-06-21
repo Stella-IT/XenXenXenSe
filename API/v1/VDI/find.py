@@ -16,7 +16,7 @@ router = APIRouter()
 
 @router.post("/{cluster_id}/vdi/find")
 async def find_VDI_by_name(cluster_id: str, args: NameArgs):
-    """ Find VDI by Name """
+    """Find VDI by Name"""
     try:
         session = create_session(
             _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()

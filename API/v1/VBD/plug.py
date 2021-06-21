@@ -15,7 +15,7 @@ router = APIRouter()
 @router.get("/{cluster_id}/vbd/{vbd_uuid}/plug")
 @router.post("/{cluster_id}/vbd/{vbd_uuid}/plug")
 async def _vbd_plug(cluster_id: str, vbd_uuid: str):
-    """ Plug into VBD """
+    """Plug into VBD"""
     try:
         session = create_session(
             _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()
@@ -47,7 +47,7 @@ async def _vbd_plug(cluster_id: str, vbd_uuid: str):
 @router.get("/{cluster_id}/vbd/{vbd_uuid}/unplug")
 @router.post("/{cluster_id}/vbd/{vbd_uuid}/unplug")
 async def vbd_unplug(cluster_id: str, vbd_uuid: str):
-    """ Unplug from VBD """
+    """Unplug from VBD"""
     try:
         session = create_session(
             _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()

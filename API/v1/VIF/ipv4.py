@@ -16,7 +16,7 @@ router = APIRouter()
 
 @router.get("/{cluster_id}/vif/{vif_uuid}/ipv4")
 async def vif_get_ipv4_by_uuid(cluster_id: str, vif_uuid: str):
-    """ Get VIF IPv4 by UUID """
+    """Get VIF IPv4 by UUID"""
     try:
         session = create_session(
             _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()
@@ -48,7 +48,7 @@ async def vif_get_ipv4_by_uuid(cluster_id: str, vif_uuid: str):
 
 @router.put("/{cluster_id}/vif/{vif_uuid}/ipv4")
 async def vif_set_ipv4_by_uuid(cluster_id: str, vif_uuid: str, data: IPModel):
-    """ Set VIF IPv4 Data by UUID """
+    """Set VIF IPv4 Data by UUID"""
     try:
         session = create_session(
             _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()
