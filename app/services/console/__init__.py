@@ -22,8 +22,8 @@ class Console:
             "--host",
             dest="host",
             type=str,
-            default="127.0.0.1",
-            help="The host " + name + " will listen to (default: 127.0.0.1)",
+            default="0.0.0.0",
+            help="The host " + name + " will listen to (default: 0.0.0.0)",
         )
         parser.add_argument(
             "--port",
