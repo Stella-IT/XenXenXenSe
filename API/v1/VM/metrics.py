@@ -1,8 +1,8 @@
 import math
 import time
-from typing import Optional
 import xml.etree.ElementTree as ET
 from http.client import RemoteDisconnected
+from typing import Optional
 
 import requests
 from fastapi import APIRouter, HTTPException, Path
