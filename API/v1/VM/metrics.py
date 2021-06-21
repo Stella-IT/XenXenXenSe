@@ -1,5 +1,6 @@
 import math
 import time
+from typing import Optional
 import xml.etree.ElementTree as ET
 from http.client import RemoteDisconnected
 
@@ -15,6 +16,8 @@ router = APIRouter()
 async def instance_get_metrics(
     cluster_id: str = Path(default=None, title="cluster_id", description="Cluster ID"),
     vm_uuid: str = Path(default=None, title="vm_uuid", description="VM UUID"),
+    start: Optional[int] = None,
+    interval: Optional[int] = 60,
 ):
     """Get Xen Host Metrics"""
 
@@ -28,16 +31,14 @@ async def instance_get_metrics(
 
         url = cluster_data["host"] + "/rrd_updates"
 
-        epoch = math.floor(time.time())
-
-        data_collection = 60
-        start_epoch = epoch - data_collection
+        if start is None:
+            start = math.floor(time.time() - interval)
 
         response = session.get(
             url,
             params=dict(
-                start=start_epoch,
-                interval=data_collection,
+                start=start,
+                interval=interval,
                 cf="AVERAGE",
             ),
         )
