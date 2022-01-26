@@ -84,7 +84,7 @@ async def vif_set_ipv6_by_uuid(
         )
 
         vif: VIF = VIF.get_by_uuid(session=session, uuid=vif_uuid)
-        vif.set_allowed_address_v6(addresses.address)
+        vif.set_allowed_address_v6(addresses.addresses)
 
         ret = dict(
             success=True,
