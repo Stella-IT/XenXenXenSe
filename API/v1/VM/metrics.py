@@ -102,14 +102,14 @@ async def instance_get_metrics(
                 for i, entry in enumerate(values):
                     if not (i in relevant_indeces):
                         values_kill_list.append(entry)
-                
+
                 for value in values_kill_list:
                     row.remove(value)
 
-            x_metadata.find('columns').text = str(len(relevant_indeces))
+            x_metadata.find("columns").text = str(len(relevant_indeces))
 
-            xml_string = ET.tostring(xml_root, encoding='utf8', method='xml')
-            return Response(content=xml_string, media_type='application/xml')
+            xml_string = ET.tostring(xml_root, encoding="utf8", method="xml")
+            return Response(content=xml_string, media_type="application/xml")
 
         return dict(
             success=True,
