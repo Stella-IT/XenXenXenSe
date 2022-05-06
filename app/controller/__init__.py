@@ -1,6 +1,6 @@
 import asyncio
 from asyncio import AbstractEventLoop
-from typing import List, Optional
+from typing import Optional
 
 from fastapi import Depends
 

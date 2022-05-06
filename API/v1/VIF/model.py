@@ -7,8 +7,8 @@ class VIFCreateModel(BaseModel):
     device: str
     network: str
     vm: str
-    mac: str
-    mtu: int
+    mac: Optional[str]
+    mtu: Optional[int]
     other_config: Optional[dict]
     qos_algorithm_type: Optional[str]
     qos_algorithm_params: Optional[dict]

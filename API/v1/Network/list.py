@@ -1,32 +1,34 @@
+import asyncio
 from http.client import RemoteDisconnected
 from xmlrpc.client import Fault
 
 from fastapi import APIRouter, HTTPException
 from XenAPI.XenAPI import Failure
-from XenGarden.PIF import PIF
+from XenGarden.Network import Network
 from XenGarden.session import create_session
 
 from API.v1.Common import xenapi_failure_jsonify
-from API.v1.PIF.serialize import serialize
+from API.v1.Network.serialize import serialize
 from app.settings import Settings
 
 router = APIRouter()
 
 
-@router.get("/{cluster_id}/pif/{pif_uuid}")
-async def pif_get_by_uuid(cluster_id: str, pif_uuid: str):
-    """Get PIF by UUID"""
+@router.get("/{cluster_id}/network/list")
+async def network_list(cluster_id: str):
+    """Get All Virtual Network from cluster"""
+
     try:
         session = create_session(
             _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()
         )
 
-        pif: PIF = PIF.get_by_uuid(session=session, uuid=pif_uuid)
+        networks = Network.get_all(session=session)
+        __santilized_networks = await asyncio.gather(
+            *[serialize(network) for network in networks]
+        )
 
-        if pif is not None:
-            ret = dict(success=True, data=await serialize(pif))
-        else:
-            ret = dict(success=False)
+        ret = dict(success=True, data=__santilized_networks)
 
         session.xenapi.session.logout()
         return ret
