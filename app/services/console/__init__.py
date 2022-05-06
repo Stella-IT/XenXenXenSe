@@ -76,7 +76,7 @@ class Console:
         print(Info.get_name() + " - " + "ver." + Info.get_version())
         print(Info.get_description())
         print()
-        print("Copyright (c) Stella IT.")
+        print("Copyright (c) Stella IT Inc.")
         print("This software is distributed under MIT License.")
 
         if add_padding:

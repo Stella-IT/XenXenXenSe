@@ -7,6 +7,7 @@ from XenGarden.session import create_session
 from XenGarden.VIF import VIF
 
 from API.v1.Common import xenapi_failure_jsonify
+from API.v1.VIF.create import router as _vif_create
 from API.v1.VIF.info import router as _vif_info
 from API.v1.VIF.ipv4 import router as _vif_ipv4
 from API.v1.VIF.ipv4_allowed import router as _vif_ipv4_allowed
@@ -49,6 +50,7 @@ async def verify_vif_uuid(cluster_id: str, vif_uuid: Optional[str] = None):
 # === Router Actions ===
 vif_router = APIRouter(dependencies=[Depends(verify_vif_uuid)])
 
+vif_router.include_router(_vif_create, tags=["vif"])
 vif_router.include_router(_vif_list, tags=["vif"])
 vif_router.include_router(_vif_info, tags=["vif"])
 vif_router.include_router(_vif_ipv4, tags=["vif"])

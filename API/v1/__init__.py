@@ -4,6 +4,7 @@ from XenGarden.session import create_session
 from API.v1.Console import console_router
 from API.v1.GuestMetrics import guest_router
 from API.v1.Host import host_router
+from API.v1.PIF import pif_router
 from API.v1.root import root_router
 from API.v1.SR import sr_router
 from API.v1.VBD import vbd_router
@@ -49,6 +50,7 @@ _api_router.include_router(sr_router)
 _api_router.include_router(vbd_router)
 _api_router.include_router(vdi_router)
 _api_router.include_router(vif_router)
+_api_router.include_router(pif_router)
 _api_router.include_router(vm_router)
 _api_router.include_router(guest_router)
 
