@@ -14,8 +14,8 @@ from API.v1.VIF.ipv4_allowed import router as _vif_ipv4_allowed
 from API.v1.VIF.ipv6 import router as _vif_ipv6
 from API.v1.VIF.ipv6_allowed import router as _vif_ipv6_allowed
 from API.v1.VIF.list import router as _vif_list
-from API.v1.VIF.network import router as _vif_network
 from API.v1.VIF.lock import router as _vif_lock
+from API.v1.VIF.network import router as _vif_network
 from API.v1.VIF.qos import router as _vif_qos
 from app.settings import Settings
 

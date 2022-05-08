@@ -2,8 +2,8 @@ from XenGarden.VIF import VIF
 
 
 async def serialize(vif: VIF):
-    from API.v1.VM.serialize import serialize as _vm_serialize
     from API.v1.Network.serialize import serialize as _network_serialize
+    from API.v1.VM.serialize import serialize as _vm_serialize
 
     vm = vif.get_vm()
     if vm is not None:

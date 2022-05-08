@@ -2,8 +2,8 @@ from http.client import RemoteDisconnected
 from xmlrpc.client import Fault
 
 from fastapi import APIRouter, HTTPException
-from XenAPI.XenAPI import Failure
 from starlette.responses import RedirectResponse
+from XenAPI.XenAPI import Failure
 from XenGarden.session import create_session
 from XenGarden.VIF import VIF
 
@@ -36,12 +36,12 @@ async def vif_get_network(cluster_id: str, vif_uuid: str, url_after: str = ""):
 
         network = vif.get_network()
 
-        if network is None: 
+        if network is None:
             session.xenapi.session.logout()
             raise HTTPException(
                 status_code=404, detail=f"VIF {vif_uuid} does not exist on ANY Network"
             )
-        
+
         network_uuid = network.get_uuid()
 
         session.xenapi.session.logout()
