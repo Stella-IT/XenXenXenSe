@@ -7,7 +7,6 @@ from XenGarden.session import create_session
 from XenGarden.VIF import VIF
 
 from API.v1.Common import xenapi_failure_jsonify
-from API.v1.VIF.serialize import serialize
 from app.settings import Settings
 
 router = APIRouter()

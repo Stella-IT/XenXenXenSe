@@ -1,7 +1,6 @@
 from fastapi import APIRouter
 
 from API.v1 import v1_router as _v1_router
-from app.services.console import Console
 from app.services.info import Info
 from app.settings import Settings
 
