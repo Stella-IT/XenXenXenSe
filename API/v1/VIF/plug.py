@@ -43,6 +43,7 @@ async def vif_plug(cluster_id: str, vif_uuid: str):
     except RemoteDisconnected as rd_error:
         raise HTTPException(status_code=500, detail=rd_error.strerror)
 
+
 @router.delete("/{cluster_id}/vbd/{vbd_uuid}/plug")
 @router.get("/{cluster_id}/vbd/{vbd_uuid}/unplug")
 @router.post("/{cluster_id}/vbd/{vbd_uuid}/unplug")
