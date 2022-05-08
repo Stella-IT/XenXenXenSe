@@ -4,27 +4,28 @@ from xmlrpc.client import Fault
 from fastapi import APIRouter, HTTPException
 from XenAPI.XenAPI import Failure
 from XenGarden.session import create_session
-from XenGarden.VBD import VBD
+from XenGarden.VIF import VIF
 
 from API.v1.Common import xenapi_failure_jsonify
+from API.v1.VIF.serialize import serialize
 from app.settings import Settings
 
 router = APIRouter()
 
 
-@router.get("/{cluster_id}/vbd/{vbd_uuid}/plug")
-@router.post("/{cluster_id}/vbd/{vbd_uuid}/plug")
-async def _vbd_plug(cluster_id: str, vbd_uuid: str):
-    """Plug VBD into VM"""
+@router.get("/{cluster_id}/vif/{vif_uuid}/plug")
+@router.post("/{cluster_id}/vif/{vif_uuid}/plug")
+async def vif_plug(cluster_id: str, vif_uuid: str):
+    """Plug VIF into VM"""
     try:
         session = create_session(
             _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()
         )
 
-        vbd: VBD = VBD.get_by_uuid(session=session, uuid=vbd_uuid)
+        vif: VIF = VIF.get_by_uuid(session=session, uuid=vif_uuid)
 
-        if vbd is not None:
-            ret = dict(success=vbd.plug())
+        if vif is not None:
+            ret = dict(success=vif.plug())
         else:
             ret = dict(success=False)
 
@@ -42,20 +43,20 @@ async def _vbd_plug(cluster_id: str, vbd_uuid: str):
     except RemoteDisconnected as rd_error:
         raise HTTPException(status_code=500, detail=rd_error.strerror)
 
-
 @router.delete("/{cluster_id}/vbd/{vbd_uuid}/plug")
 @router.get("/{cluster_id}/vbd/{vbd_uuid}/unplug")
 @router.post("/{cluster_id}/vbd/{vbd_uuid}/unplug")
-async def vbd_unplug(cluster_id: str, vbd_uuid: str):
-    """Unplug from VBD"""
+async def vif_unplug(cluster_id: str, vif_uuid: str):
+    """Unplug VIF from VM"""
     try:
         session = create_session(
             _id=cluster_id, get_xen_clusters=Settings.get_xen_clusters()
         )
-        vbd: VBD = VBD.get_by_uuid(session=session, uuid=vbd_uuid)
 
-        if vbd is not None:
-            ret = dict(success=vbd.unplug())
+        vif: VIF = VIF.get_by_uuid(session=session, uuid=vif_uuid)
+
+        if vif is not None:
+            ret = dict(success=vif.unplug())
         else:
             ret = dict(success=False)
 
