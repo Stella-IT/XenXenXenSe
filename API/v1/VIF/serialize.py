@@ -3,14 +3,20 @@ from XenGarden.VIF import VIF
 
 async def serialize(vif: VIF):
     from API.v1.VM.serialize import serialize as _vm_serialize
+    from API.v1.Network.serialize import serialize as _network_serialize
 
     vm = vif.get_vm()
     if vm is not None:
         vm = await _vm_serialize(vm)
 
+    network = vif.get_network()
+    if network is not None:
+        network = await _network_serialize(network)
+
     return dict(
         attached=vif.get_attached(),
         vm=vm,
+        network=network,
         uuid=vif.get_uuid(),
         mac=vif.get_mac(),
         mtu=vif.get_mtu(),
