@@ -1,1 +1,3 @@
-__main__ = ["logging"]
+from .logging.customizeLogger import CustomizeLogger
+
+__main__ = ["CustomizeLogger"]
