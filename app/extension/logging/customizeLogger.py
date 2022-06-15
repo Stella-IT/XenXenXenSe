@@ -22,12 +22,12 @@ class CustomizeLogger:
     default_config_path = "logging_config.json"
 
     @classmethod
-    def make_logger(cls):
+    def make_logger(cls, config_path=default_config_path):
 
         logging_config = default_config
 
-        if os.path.exists(cls.default_config_path):
-            config = cls.load_logging_config(cls.default_config_path)
+        if os.path.exists(config_path):
+            config = cls.load_logging_config(config_path)
             logging_config = config["logger"]
 
         filepath = Path(logging_config["path"])
