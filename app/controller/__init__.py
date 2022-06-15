@@ -2,7 +2,6 @@ import asyncio
 from asyncio import AbstractEventLoop
 from typing import Optional
 
-
 from app.services.console import Console
 from app.services.info import Info
 from app.services.server import Server

@@ -35,7 +35,7 @@ class Server(FastAPI):
         self._asgi_debug = asgi_debug
         super().__init__(*args, **kwargs)
 
-    def make_process(self) -> None:
+    def make_process(self):
         _connect_option = {
             "host": self._host,
             "port": self._port,
@@ -44,7 +44,7 @@ class Server(FastAPI):
         if self._sock is not None:
             _connect_option = {"uds": self._sock}
 
-        return self.server.run(
+        self.server.run(
             app=self,
             debug=self._asgi_debug,
             log_config=self._log_config,
