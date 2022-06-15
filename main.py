@@ -1,8 +1,6 @@
-import os
 import xmlrpc
 
 import uvicorn
-from fastapi import Depends
 from fastapi.responses import UJSONResponse
 
 from API import router as _api_router
