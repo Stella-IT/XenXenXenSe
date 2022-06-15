@@ -22,11 +22,12 @@ class CustomizeLogger:
     default_config_path = "logging_config.json"
 
     @classmethod
-    def make_logger(cls, config_path=default_config_path):
+    def make_logger(cls):
+
         logging_config = default_config
 
-        if os.path.exists(config_path):
-            config = cls.load_logging_config(config_path)
+        if os.path.exists(cls.default_config_path):
+            config = cls.load_logging_config(cls.default_config_path)
             logging_config = config["logger"]
 
         filepath = Path(logging_config["path"])
@@ -73,8 +74,7 @@ class CustomizeLogger:
 
         # noinspection PyArgumentList
         # logging.basicConfig(handlers=[InterceptHandler()], level=0)
-        logging.getLogger("uvicorn.access").handlers = [InterceptHandler()]
-        for _log in ["fastapi", "uvicorn", "uvicorn.error"]:
+        for _log in ["fastapi", "uvicorn.error", "uvicorn.access"]:
             _logger = logging.getLogger(_log)
             _logger.handlers = [InterceptHandler()]
 
