@@ -1,2 +1,3 @@
+from .customizeLogger import CustomizeLogger
 
-__all__ = ["customizeLogger"]
+__all__ = ["CustomizeLogger"]

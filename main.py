@@ -1,8 +1,6 @@
-import os
 import xmlrpc
 
 import uvicorn
-from fastapi import Depends
 from fastapi.responses import UJSONResponse
 
 from API import router as _api_router
@@ -52,13 +50,9 @@ if __name__ == "__main__":
 
     # Server initialization
     app.startup()
-
-    if os.path.exists(CustomizeLogger.default_config_path):
-        app.register_dependency(Depends(CustomizeLogger.make_logger()))
-
+    app.core.add_event_handler("startup", CustomizeLogger.make_logger)
     app.core.include_router(
         _api_router,
         default_response_class=UJSONResponse,
-        dependencies=[Depends(CustomizeLogger.make_logger)],
     )
     app.start()
