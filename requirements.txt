@@ -1,8 +1,5 @@
 # Xen RESTful API
-databases[mysql]
-mysqlclient
 requests
-schedule
 XenGarden==1.2.10
 pyfiglet
 fastapi
@@ -10,5 +7,4 @@ uvicorn
 loguru
 ujson
 pydantic
-SQLAlchemy
 tomlkit
