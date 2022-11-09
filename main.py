@@ -17,8 +17,8 @@ __copyright__ = "Copyright 2020-2021 Stella IT"
 __version__ = Info.get_version()
 
 # Override XML RPC Settings for 64bit support
-xmlrpc.client.MAXINT = 2**63 - 1
-xmlrpc.client.MININT = -(2**63)
+xmlrpc.client.MAXINT = 2 ** 63 - 1
+xmlrpc.client.MININT = -(2 ** 63)
 
 uvicorn_log_config = uvicorn.config.LOGGING_CONFIG
 del uvicorn_log_config["loggers"]["uvicorn"]

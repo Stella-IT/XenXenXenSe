@@ -1,11 +1,8 @@
-import os
 import secrets
-from typing import Dict, Union
-
-import ujson
 
 from fastapi import Depends, HTTPException, status
 from fastapi.security import HTTPBasic, HTTPBasicCredentials
+
 from .settings import Settings
 
 
@@ -26,7 +23,7 @@ class Security:
 
         if config is None:
             return None
-        
+
         return lower(config["type"])
 
     @classmethod
@@ -45,7 +42,9 @@ class Security:
             return cls.authenticate_basic(*args)
 
     @classmethod
-    def authenticate_basic(cls, credentials: HTTPBasicCredentials = Depends(fastapi_basic)):
+    def authenticate_basic(
+        cls, credentials: HTTPBasicCredentials = Depends(fastapi_basic)
+    ):
         if cls.load_authentication_type() == "basic":
             match_found = False
 
@@ -63,15 +62,12 @@ class Security:
                     password_bytes, account_password_bytes
                 )
 
-                if (username_match and password_match):
+                if username_match and password_match:
                     match_found = True
 
             if not match_found:
                 raise HTTPException(
                     status_code=status.HTTP_401_UNAUTHORIZED,
                     detail={"type": "unauthorized"},
-                    headers={"WWW-Authenticate": "Basic"}
+                    headers={"WWW-Authenticate": "Basic"},
                 )
-
-
-    

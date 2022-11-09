@@ -31,10 +31,9 @@ class Settings:
         """get xen credentials"""
         xen_clusters = cls.get_config_json()["xen_clusters"]
         return xen_clusters
-        
+
     @classmethod
     def get_authentication_config(cls) -> Union[Dict, None]:
         """get xen credentials"""
         authentication = cls.get_config_json()["authentication"]
         return authentication
-    
