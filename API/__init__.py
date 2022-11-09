@@ -1,14 +1,16 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
 
 from API.v1 import v1_router as _v1_router
 from app.services.info import Info
+from app.security import Security
 from app.settings import Settings
 
-router = APIRouter()
+from fastapi.security import HTTPBasic, HTTPBasicCredentials
+
+router = APIRouter(dependencies=[Depends(Security.run_authentication)])
 
 _v1_prefix = "/v1"
 router.include_router(_v1_router, prefix=_v1_prefix)
-
 
 @router.get("/")
 async def root():

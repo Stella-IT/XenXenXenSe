@@ -6,4 +6,13 @@
             "password": "my-password"
         }
     },
+    "authentication": {
+        "type": "basic",
+        "accounts": [
+            {
+                "username": "root",
+                "password": "toor"
+            }
+        ]
+    }
 }
