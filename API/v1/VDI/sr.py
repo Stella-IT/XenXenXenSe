@@ -32,7 +32,6 @@ async def vdi_get_sr(cluster_id: str, vdi_uuid: str, url_after: str = ""):
             sr = vdi.get_SR()
         except Exception as e:
             session.xenapi.session.logout()
-            print(e)
             raise HTTPException(
                 status_code=404, detail=f"VDI {vdi_uuid} does not have proper SR"
             )

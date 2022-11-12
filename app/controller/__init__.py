@@ -69,5 +69,4 @@ class Controller:
             asyncio.ensure_future(self.core.make_process(), loop=self.loop)
             self.loop.run_forever()
         except TypeError as e:
-            raise e
             pass
