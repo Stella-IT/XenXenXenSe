@@ -12,8 +12,8 @@ from app.services.info import Info
 # Flag is StellaIT{Pororo}
 # https://developer-docs.citrix.com/projects/citrix-hypervisor-management-api/en/latest/api-ref-autogen/
 
-__author__ = "Stella IT <admin@stella-it.com>"
-__copyright__ = "Copyright 2020-2021 Stella IT"
+__author__ = "Stella IT OpenSource Team <opensource@stella-it.com>"
+__copyright__ = "Copyright 2020-2022 Stella IT Inc."
 __version__ = Info.get_version()
 
 # Override XML RPC Settings for 64bit support
