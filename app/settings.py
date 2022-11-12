@@ -84,8 +84,11 @@ class Settings:
     @classmethod
     def get_authentication_config(cls) -> Union[Dict, None]:
         """get authentication settings"""
-        authentication = cls.get_config_json()["authentication"]
-        return authentication
+        config = cls.get_config_json()
+        if "authentication" in config:
+            return config["authentication"]
+
+        return None
 
 class MissingConfigFile(IOError):
     'Missing local settings file'
