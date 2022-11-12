@@ -8,14 +8,10 @@ from .settings import Settings
 
 class Security:
     fastapi_basic = HTTPBasic()
-    auth_config_cache = None
 
     @classmethod
     def load_authentication_config(cls):
-        if cls.auth_config_cache is None:
-            cls.auth_config_cache = Settings.get_authentication_config()
-
-        return cls.auth_config_cache
+        return Settings.get_authentication_config()
 
     @classmethod
     def load_authentication_type(cls):
@@ -65,7 +61,6 @@ class Security:
                 password_match = secrets.compare_digest(
                     password_bytes, account_password_bytes
                 )
-
                 if username_match and password_match:
                     match_found = True
 
