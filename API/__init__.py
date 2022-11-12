@@ -6,7 +6,11 @@ from app.security import Security
 from app.services.info import Info
 from app.settings import Settings
 
-router = APIRouter(dependencies=[Depends(Security.run_authentication)])
+router = APIRouter(
+    dependencies=[
+        *Security.get_authentication_dependencies(),
+    ]
+)
 
 _v1_prefix = "/v1"
 router.include_router(_v1_router, prefix=_v1_prefix)

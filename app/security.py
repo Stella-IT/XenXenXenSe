@@ -24,7 +24,7 @@ class Security:
         if config is None:
             return None
 
-        return lower(config["type"])
+        return str(config["type"]).lower()
 
     @classmethod
     def load_accounts(cls):
@@ -37,9 +37,13 @@ class Security:
         return accounts
 
     @classmethod
-    def run_authentication(cls, *args):
+    def get_authentication_dependencies(cls):
+        dependencies = []
+
         if cls.load_authentication_type() == "basic":
-            return cls.authenticate_basic(*args)
+            dependencies.append(Depends(cls.authenticate_basic))
+
+        return dependencies
 
     @classmethod
     def authenticate_basic(
