@@ -46,7 +46,8 @@ class Server(FastAPI):
 
         self.server.run(
             app=self,
-            debug=self._asgi_debug,
+            # https://github.com/encode/uvicorn/pull/1640
+            # debug=self._asgi_debug,
             log_config=self._log_config,
             **_connect_option,
         )
