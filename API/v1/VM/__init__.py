@@ -24,6 +24,7 @@ from API.v1.VM.power import router as _vm_power
 from API.v1.VM.specs import router as _vm_specs
 from API.v1.VM.vbd import router as _vm_vbd
 from API.v1.VM.vif import router as _vm_vif
+from API.v1.VM.xenstore import router as _vm_xenstore
 from app.settings import Settings
 
 
@@ -72,4 +73,5 @@ vm_router.include_router(_vm_power, tags=["vm"])
 vm_router.include_router(_vm_specs, tags=["vm"])
 vm_router.include_router(_vm_vbd, tags=["vm"])
 vm_router.include_router(_vm_vif, tags=["vm"])
+vm_router.include_router(_vm_xenstore, tags=["vm"])
 vm_router.include_router(_vm_first_vif, tags=["vm"])

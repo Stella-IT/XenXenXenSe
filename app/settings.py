@@ -1,8 +1,8 @@
 import os
+import time
 from typing import Dict, Union
 
 import ujson
-import time
 
 
 class Settings:
@@ -35,7 +35,7 @@ class Settings:
                 cls.config_cache = result
                 cls.config_last_fetched = time.time()
                 return result
-        except Exception as e:
+        except Exception:
             print("Failed")
 
     @classmethod
@@ -56,7 +56,10 @@ class Settings:
 
     @classmethod
     def _is_config_last_modified_cache_expired(cls) -> bool:
-        return cls.config_last_modified_fetched_at < time.time() - cls.config_last_modified_fetched_at_age
+        return (
+            cls.config_last_modified_fetched_at
+            < time.time() - cls.config_last_modified_fetched_at_age
+        )
 
     @classmethod
     def get_config_json(cls) -> dict:
@@ -71,7 +74,9 @@ class Settings:
             else:
                 print("Error: XenXenXenSe has failed to initialize!")
                 print()
-                print("both config.json file and docker config environment variable (DOCKER_XXXS_CONFIG) are missing!")
+                print(
+                    "both config.json file and docker config environment variable (DOCKER_XXXS_CONFIG) are missing!"
+                )
                 print("Please configure XenXenXenSe!")
                 exit(1)
 
@@ -90,6 +95,6 @@ class Settings:
 
         return None
 
+
 class MissingConfigFile(IOError):
-    'Missing local settings file'
-    pass
+    "Missing local settings file"
