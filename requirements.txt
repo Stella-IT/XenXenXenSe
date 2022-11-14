@@ -1,6 +1,6 @@
 # Xen RESTful API
 requests
-XenGarden==1.2.12
+XenGarden==1.2.13
 pyfiglet
 fastapi
 uvicorn
