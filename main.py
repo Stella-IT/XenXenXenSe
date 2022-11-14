@@ -20,7 +20,7 @@ try:
     # for legacy support. xmlrpc prior to 3.5 has it in __init__.py
     xmlrpc.client.MAXINT = 2**63 - 1
     xmlrpc.client.MININT = -(2**63)
-except:
+except Exception as e:
     from xmlrpc import client
 
     client.MAXINT = 2**63 - 1
