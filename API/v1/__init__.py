@@ -1,6 +1,9 @@
 from xmlrpc.client import Fault
+import traceback
 
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Request
+from fastapi.responses import JSONResponse
+
 from XenAPI.XenAPI import Failure
 from XenGarden.session import create_session
 
@@ -43,7 +46,6 @@ async def verify_cluster_id(cluster_id: str):
             status_code=int(xml_rpc_error.faultCode),
             detail=xml_rpc_error.faultString,
         )
-
 
 # === API Functions ===
 

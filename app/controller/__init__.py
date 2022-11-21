@@ -1,6 +1,11 @@
 import asyncio
+import logging 
+
 from asyncio import AbstractEventLoop
 from typing import Optional
+
+from fastapi import HTTPException, Request
+from fastapi.responses import JSONResponse
 
 from app.services.console import Console
 from app.services.info import Info
@@ -59,6 +64,34 @@ class Controller:
             debug=self.fast_api_debug,
             version=self.version,
         )
+
+        @self.core.exception_handler(Exception)
+        async def _fake_exception_handler(req: Request, exception: Exception):
+            return self.exception_handler(req, exception)
+
+    def exception_handler(self, req: Request, exception: Exception):
+        exception_data = self.core._exception_to_json(exception)        
+        debug_data = {}
+
+        if exception_data is not None:
+            debug_data["exception"] = exception_data
+
+        if (type(exception) == HTTPException):
+            return JSONResponse(
+                status_code=exception.status_code,
+                content={
+                    **exception.details,
+                    **debug_data
+                },
+            )
+        else:
+            return JSONResponse(
+                status_code=500,
+                content={
+                    "type": "exception",
+                    **debug_data
+                },
+            )
 
     def start(self) -> None:
         try:
