@@ -8,3 +8,4 @@ loguru
 ujson
 pydantic
 tomlkit
+sentry-sdk[fastapi]

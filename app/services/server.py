@@ -1,10 +1,8 @@
+import traceback
 from typing import Optional
 
 import uvicorn
-from fastapi import FastAPI, Request
-
-import traceback
-import logging
+from fastapi import FastAPI
 
 
 class Server(FastAPI):
@@ -38,7 +36,7 @@ class Server(FastAPI):
         self._exception_debug = debug
         self._asgi_debug = asgi_debug
         super().__init__(*args, **kwargs)
-    
+
     def _exception_to_json(self, exception: BaseException):
         if self._exception_debug:
             return {
@@ -49,7 +47,6 @@ class Server(FastAPI):
             }
         else:
             return None
-            
 
     def make_process(self):
         _connect_option = {

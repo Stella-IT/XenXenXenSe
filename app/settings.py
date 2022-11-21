@@ -95,6 +95,26 @@ class Settings:
 
         return None
 
+    @classmethod
+    def get_sentry_config(cls) -> Union[Dict, None]:
+        """get sentry settings"""
+        config = cls.get_config_json()
+        if "sentry" in config:
+            return config["sentry"]
+
+        return None
+
+    @classmethod
+    def get_sentry_dsn(cls) -> Union[str, None]:
+        """get sentry dsn"""
+        if cls.get_sentry_config() is not None:
+            sentry = cls.get_sentry_config()
+
+            if "dsn" in sentry:
+                return sentry["dsn"]
+
+        return None
+
 
 class MissingConfigFile(IOError):
     "Missing local settings file"

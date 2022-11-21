@@ -1,6 +1,5 @@
 import asyncio
-import logging 
-
+import logging
 from asyncio import AbstractEventLoop
 from typing import Optional
 
@@ -27,6 +26,7 @@ class Controller:
         version: str = Info.get_version(),
         loop: Optional[AbstractEventLoop] = None,
         quiet: bool = False,
+        **kwargs,
     ) -> None:
         self.loop = loop or self._loop()
         self.host = host
@@ -41,6 +41,7 @@ class Controller:
         self.version = version
         self.quiet = quiet
         self.core: Optional[Server] = None
+        self._sentry_dsn = kwargs.get("sentry_dsn")
 
     @staticmethod
     def _loop() -> AbstractEventLoop:
@@ -50,7 +51,25 @@ class Controller:
     def __console() -> Console:
         return Console()
 
+    def _initialize_sentry(self):
+        if self._sentry_dsn is not None:
+            try:
+                import sentry_sdk
+
+                sentry_sdk.init(
+                    dsn=self._sentry_dsn,
+                    traces_sample_rate=1.0,
+                )
+
+                return True
+            except ImportError:
+                return False
+
+        return None
+
     def startup(self) -> None:
+        self._initialize_sentry()
+
         self.core = Server(
             ctx=self,
             host=self.host,
@@ -70,27 +89,21 @@ class Controller:
             return self.exception_handler(req, exception)
 
     def exception_handler(self, req: Request, exception: Exception):
-        exception_data = self.core._exception_to_json(exception)        
+        exception_data = self.core._exception_to_json(exception)
         debug_data = {}
 
         if exception_data is not None:
             debug_data["exception"] = exception_data
 
-        if (type(exception) == HTTPException):
+        if type(exception) == HTTPException:
             return JSONResponse(
                 status_code=exception.status_code,
-                content={
-                    **exception.details,
-                    **debug_data
-                },
+                content={**exception.details, **debug_data},
             )
         else:
             return JSONResponse(
                 status_code=500,
-                content={
-                    "type": "exception",
-                    **debug_data
-                },
+                content={"type": "exception", **debug_data},
             )
 
     def start(self) -> None:
