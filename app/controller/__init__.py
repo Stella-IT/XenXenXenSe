@@ -103,7 +103,6 @@ class Controller:
         else:
             return None
 
-
     def exception_handler(self, req: Request, exception: Exception):
         exception_data = self._serialize_exception_on_debug(exception)
 
@@ -116,12 +115,14 @@ class Controller:
             }
 
         if type(exception) == HTTPException:
-            if ("exception" in exception.details) and (exception.details.exception is not None):
+            if ("exception" in exception.details) and (
+                exception.details.exception is not None
+            ):
                 details = exception.details
 
                 if exception_data is None:
                     del details["exception"]
-                
+
                 return JSONResponse(
                     status_code=exception.status_code,
                     content=details,
