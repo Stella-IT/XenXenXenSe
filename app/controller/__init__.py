@@ -1,5 +1,5 @@
 import asyncio
-import logging
+import traceback
 from asyncio import AbstractEventLoop
 from typing import Optional
 
@@ -88,18 +88,49 @@ class Controller:
         async def _fake_exception_handler(req: Request, exception: Exception):
             return self.exception_handler(req, exception)
 
+    @classmethod
+    def _serialize_exception(cls, exception: BaseException):
+        return {
+            "name": exception.__class__.__name__,
+            "fullname": exception.__class__.__qualname__,
+            "args": exception.args,
+            "stack": "\n".join(traceback.format_exception(exception)),
+        }
+
+    def _serialize_exception_on_debug(self, exception: BaseException):
+        if self._exception_debug:
+            return self._serialize_exception(exception)
+        else:
+            return None
+
+
     def exception_handler(self, req: Request, exception: Exception):
-        exception_data = self.core._exception_to_json(exception)
+        exception_data = self._serialize_exception_on_debug(exception)
+
         debug_data = {}
 
         if exception_data is not None:
-            debug_data["exception"] = exception_data
+            debug_data = {
+                **debug_data,
+                exception: exception_data,
+            }
 
         if type(exception) == HTTPException:
-            return JSONResponse(
-                status_code=exception.status_code,
-                content={**exception.details, **debug_data},
-            )
+            if ("exception" in exception.details) and (exception.details.exception is not None):
+                details = exception.details
+
+                if exception_data is None:
+                    del details["exception"]
+                
+                return JSONResponse(
+                    status_code=exception.status_code,
+                    content=details,
+                )
+            else:
+                return JSONResponse(
+                    status_code=exception.status_code,
+                    content={**exception.details, **debug_data},
+                )
         else:
             return JSONResponse(
                 status_code=500,
