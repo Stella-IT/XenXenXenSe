@@ -7,6 +7,7 @@ from app.controller import Controller
 from app.extension import CustomizeLogger
 from app.services.console import Console
 from app.services.info import Info
+from app.settings import Settings
 
 # Flag is StellaIT{Pororo}
 # https://developer-docs.citrix.com/projects/citrix-hypervisor-management-api/en/latest/api-ref-autogen/
@@ -52,6 +53,7 @@ if __name__ == "__main__":
         asgi_debug=args.debug_mode,
         log_config=uvicorn_log_config,
         quiet=args.quiet_mode,
+        sentry_dsn=Settings.get_sentry_dsn(),
     )
 
     # Server initialization
