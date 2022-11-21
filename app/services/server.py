@@ -37,17 +37,6 @@ class Server(FastAPI):
         self._asgi_debug = asgi_debug
         super().__init__(*args, **kwargs)
 
-    def _exception_to_json(self, exception: BaseException):
-        if self._exception_debug:
-            return {
-                "name": exception.__class__.__name__,
-                "fullname": exception.__class__.__qualname__,
-                "args": exception.args,
-                "stack": "\n".join(traceback.format_exception(exception)),
-            }
-        else:
-            return None
-
     def make_process(self):
         _connect_option = {
             "host": self._host,
