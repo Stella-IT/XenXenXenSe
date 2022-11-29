@@ -95,7 +95,7 @@ class Controller:
             "name": exception.__class__.__name__,
             "fullname": exception.__class__.__qualname__,
             "args": exception.args,
-            "stack": "\n".join(traceback.format_exception(exception)),
+            "stack": "\n".join(traceback.format_exception(exception[0], exception[1], exception[2], None)),
         }
 
     def _serialize_exception_on_debug(self, exception: BaseException):
