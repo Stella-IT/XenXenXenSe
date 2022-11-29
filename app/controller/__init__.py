@@ -42,6 +42,7 @@ class Controller:
         self.quiet = quiet
         self.core: Optional[Server] = None
         self._sentry_dsn = kwargs.get("sentry_dsn")
+        self._exception_debug = fast_api_debug
 
     @staticmethod
     def _loop() -> AbstractEventLoop:
