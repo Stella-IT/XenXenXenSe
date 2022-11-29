@@ -19,13 +19,13 @@ __version__ = Info.get_version()
 # Override XML RPC Settings for 64bit support
 try:
     # for legacy support. xmlrpc prior to 3.5 has it in __init__.py
-    xmlrpc.client.MAXINT = 2 ** 63 - 1
-    xmlrpc.client.MININT = -(2 ** 63)
+    xmlrpc.client.MAXINT = 2**63 - 1
+    xmlrpc.client.MININT = -(2**63)
 except Exception:
     from xmlrpc import client
 
-    client.MAXINT = 2 ** 63 - 1
-    client.MININT = -(2 ** 63)
+    client.MAXINT = 2**63 - 1
+    client.MININT = -(2**63)
 
 uvicorn_log_config = uvicorn.config.LOGGING_CONFIG
 del uvicorn_log_config["loggers"]["uvicorn"]
