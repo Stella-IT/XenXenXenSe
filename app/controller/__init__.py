@@ -91,11 +91,21 @@ class Controller:
 
     @classmethod
     def _serialize_exception(cls, exception: BaseException):
+        traceback_obj = {}
+
+        if exception.__traceback__ is not None:
+            try:
+                traceback_obj = {
+                    "traceback": "\n".join(traceback.format_tb(exception.__traceback__))
+                }
+            except:
+                pass
+
         return {
             "name": exception.__class__.__name__,
             "fullname": exception.__class__.__qualname__,
             "args": exception.args,
-            "stack": "\n".join(traceback.format_exception(exception[0], exception[1], exception[2], None)),
+            **traceback_obj,
         }
 
     def _serialize_exception_on_debug(self, exception: BaseException):
